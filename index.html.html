@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#b7df72" />
+  <meta name="description" content="Iqra Future Generation Salah Journey" />
+  <title>Iqra Future Generation – Salah Journey</title>
+  <style>
+    :root{
+      --bg1:#c9ea90;--bg2:#eef8df;--card:#fff;--green:#165b2a;--green2:#2f9c3e;
+      --muted:#62656b;--line:#e2eadb;--shadow:0 12px 30px rgba(37,91,42,.13);--radius:26px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#18351f;
+      background:radial-gradient(circle at 10% 8%,rgba(255,255,255,.55),transparent 24%),
+      radial-gradient(circle at 92% 12%,rgba(255,255,255,.45),transparent 20%),
+      linear-gradient(180deg,var(--bg1),var(--bg2))}
+    button,input{font:inherit} button{cursor:pointer} a{color:inherit}.hidden{display:none!important}
+    .app{max-width:920px;margin:auto;padding:18px 14px 120px}
+    .topbar{display:grid;grid-template-columns:58px 1fr 58px;gap:12px;align-items:center}
+    .round,.brand{background:#fff;box-shadow:var(--shadow);border:0}
+    .round{width:56px;height:56px;border-radius:50%;font-size:26px;color:var(--green)}
+    .brand{border-radius:22px;padding:15px;text-align:center;font-weight:900;font-size:clamp(20px,4vw,34px);color:var(--green)}
+    .hero{text-align:center;padding:28px 8px 8px}.hero h1{font-size:clamp(38px,8vw,70px);line-height:1.02;margin:0;color:#0f5125}
+    .date{margin-top:12px;color:#6a657b;font-size:clamp(18px,3vw,28px);font-weight:800}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+    .stat,.section{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .stat{padding:20px 8px;text-align:center}.stat-icon{font-size:30px}
+    .stat-value{font-size:clamp(42px,7vw,62px);font-weight:900;color:#0f5125;line-height:1}
+    .stat-label{font-weight:800;color:#5e6265;font-size:20px;margin-top:8px}
+    .section{padding:18px;margin-top:18px}.title{display:flex;align-items:center;gap:10px;font-size:clamp(24px,4vw,34px);font-weight:900;color:#164f27;margin:0 0 14px}
+    .garden{min-height:300px;border-radius:22px;position:relative;overflow:hidden;background:linear-gradient(#94d9ff 0 65%,#74c948 65%);border:1px solid #d9eddf}
+    .sun{position:absolute;right:10%;top:10%;width:64px;height:64px;border-radius:50%;background:#ffd53e;box-shadow:0 0 0 8px rgba(255,213,62,.25)}
+    .cloud{position:absolute;background:#fff;border-radius:40px;width:90px;height:30px;top:18%;left:8%}
+    .cloud:before,.cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}.cloud:before{width:40px;height:40px;left:10px;top:-18px}.cloud:after{width:48px;height:48px;right:10px;top:-24px}
+    .cloud.two{left:auto;right:18%;top:28%;transform:scale(.78)}
+    .plant-wrap{position:absolute;left:50%;bottom:13%;transform:translateX(-50%);text-align:center}.plant{font-size:108px;filter:drop-shadow(0 8px 4px rgba(0,0,0,.12))}
+    .soil{width:165px;height:50px;background:#71421f;border-radius:50%;margin:-22px auto 0;box-shadow:inset 0 -8px 0 rgba(0,0,0,.12)}
+    .milestones{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px}.mile{text-align:center;color:#4b4d52;font-weight:800;font-size:13px}
+    .mile-dot{width:50px;height:50px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;background:#f2f2f2;border:2px solid #ddd;color:#777;font-size:22px}.mile.active .mile-dot{background:#fff;border-color:#2aa31e;color:#1a7c22}
+    .message{text-align:center;color:#155325;font-weight:900;font-size:clamp(20px,3vw,28px);margin:16px 0 0}
+    .prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.prayer{border:2px solid #e8eddf;background:#fff;border-radius:20px;padding:12px 4px;text-align:center;transition:.18s}
+    .prayer.checked{background:#effadf;border-color:#64bd45}.picon{font-size:38px}.pname{font-weight:900;color:#174d28;margin:6px 0}
+    .check{width:30px;height:30px;border:3px solid #c9c6b8;border-radius:50%;margin:auto;display:grid;place-items:center}.checked .check{background:#53b839;border-color:#53b839;color:#fff}
+    .bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px}.rewardbox{background:#fff7d7;border-radius:20px;padding:16px;text-align:center}.bigstar{font-size:90px}
+    .progress{display:flex;gap:18px;align-items:center}.ring{--p:0;width:145px;height:145px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#72c44d calc(var(--p)*1%),#e5f0d8 0)}
+    .ring>div{width:112px;height:112px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center}
+    .month-table{width:100%;border-collapse:collapse;font-size:14px}.month-table th,.month-table td{padding:9px 6px;border-bottom:1px solid #edf0e9;text-align:center}.month-table th:first-child,.month-table td:first-child{text-align:left}
+    .badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.badge{background:#f7fbf3;border-radius:18px;padding:16px;text-align:center;border:2px solid #e3ebdc}.badge.locked{filter:grayscale(1);opacity:.55}.badge .emoji{font-size:42px}
+    .card-link{display:block;text-decoration:none;text-align:center;padding:13px;border-radius:15px;font-weight:900;background:#eef8df;color:#165b2a}.card-link.facebook{background:#eaf2ff;color:#2456a4}
+    .drawer-backdrop{position:fixed;inset:0;background:rgba(13,34,17,.42);opacity:0;visibility:hidden;transition:.25s;z-index:49}
+    .drawer{position:fixed;top:0;left:0;width:min(340px,86vw);height:100%;padding:24px 18px;background:#fff;box-shadow:12px 0 35px rgba(0,0,0,.18);transform:translateX(-105%);transition:.28s;z-index:50;display:flex;flex-direction:column;gap:10px}
+    .drawer.open{transform:translateX(0)}.drawer-backdrop.open{opacity:1;visibility:visible}.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px}
+    .drawer-head strong{font-size:22px;color:var(--green)}.drawer-head small{display:block;color:#777;margin-top:4px}.drawer-close{width:42px;height:42px;border:0;border-radius:50%;background:#edf7df;color:var(--green);font-size:28px}
+    .drawer-item{border:0;border-radius:16px;background:transparent;padding:15px;text-align:left;font-weight:900;font-size:18px;color:#29432f;text-decoration:none}.drawer-item:active{background:#eaf6d8}
+    .drawer-footer{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);text-align:center;color:#777;font-weight:800}
+    .profile-page,.page{position:fixed;inset:0;z-index:70;overflow-y:auto;padding:18px 14px 80px;background:linear-gradient(180deg,#b7df72,#eef8df);transform:translateX(105%);transition:.28s}
+    .profile-page.open,.page.open{transform:translateX(0)}.page-top{max-width:780px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+    .back{width:48px;height:48px;border:0;border-radius:50%;background:#fff;color:var(--green);font-size:25px;box-shadow:var(--shadow)}.page-title{font-size:28px;font-weight:900;color:var(--green)}
+    .container{max-width:780px;margin:18px auto}.profile-card{background:#fff;border-radius:25px;padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}.profile-heading{margin:0 0 14px;color:var(--green);font-size:22px}
+    .avatar-current{width:110px;height:110px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;background:#eef8df;font-size:60px}.profile-name{text-align:center;font-size:27px;font-weight:900;color:#174d28}.profile-age{text-align:center;color:#6a6c72;font-weight:800}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.fields label{font-weight:900;color:#36523d}.fields input{width:100%;margin-top:5px;padding:11px;border:2px solid #dfe9d7;border-radius:13px}
+    .avatar-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.avatar-choice{border:2px solid transparent;border-radius:17px;background:#f3fae8;padding:9px 3px;font-size:34px}.avatar-choice.selected{border-color:#48a83d;background:#e0f5c8}
+    .row{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:14px;background:#f7fbf3;font-weight:900;margin:8px 0}
+    .number-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.number-box{background:#f7fbf3;border-radius:16px;padding:12px}.number-box label{display:block;font-weight:900;margin-bottom:6px}.number-box input{width:100%;padding:10px;border:2px solid #dfe9d7;border-radius:12px}
+    .save{width:100%;border:0;border-radius:15px;padding:14px;background:#2f9c3e;color:#fff;font-weight:900;font-size:17px}
+    .fields select{width:100%;margin-top:5px;padding:11px;border:2px solid #dfe9d7;border-radius:13px;background:#fff}
+    .clickable-row{border:0;width:100%;color:inherit;text-align:left}.clickable-row:active{background:#e6f4d8}
+    .batch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .batch-card{border:2px solid #e2ecd9;background:#fff;border-radius:20px;padding:18px;text-align:left;box-shadow:var(--shadow)}
+    .batch-card strong{display:block;color:var(--green);font-size:21px}.batch-card span{display:block;color:#6b716c;margin-top:7px;font-weight:800}
+    .student-list{display:grid;gap:10px}.student-row{display:flex;align-items:center;gap:12px;background:#f7fbf3;border:2px solid #e3ecd9;border-radius:18px;padding:12px}
+    .student-open{flex:1;border:0;background:transparent;text-align:left;padding:0}.student-open strong{display:block;color:#174d28;font-size:18px}.student-open small{color:#727672}
+    .student-avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#eaf6d8;font-size:28px}
+    .mini-delete{border:0;background:#fff0f0;color:#a72c2c;border-radius:12px;padding:9px 11px;font-weight:900}
+    .batch-toolbar{display:flex;gap:10px;margin-bottom:14px}.batch-toolbar button{flex:1;border:0;border-radius:15px;padding:13px;font-weight:900}
+    .add-student{background:#2f9c3e;color:#fff}.all-batches{background:#edf7df;color:#17602c}
+    .nav{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);width:min(880px,calc(100% - 20px));display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.15);padding:8px;z-index:20}
+    .nav button{border:0;background:transparent;padding:8px;border-radius:16px;font-weight:800;color:#555}.nav button.active{background:#eaf6d8;color:#2b7b31}.ni{display:block;font-size:23px}
+    .toast{position:fixed;left:50%;bottom:105px;transform:translateX(-50%) translateY(20px);background:#173f24;color:#fff;padding:12px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s;z-index:100}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media(max-width:650px){.app{padding-left:10px;padding-right:10px}.stats{gap:8px}.prayers{gap:5px}.picon{font-size:28px}.pname{font-size:13px}.bottom{grid-template-columns:1fr}.avatar-grid{grid-template-columns:repeat(4,1fr)}.fields,.number-grid{grid-template-columns:1fr}.milestones{grid-template-columns:repeat(3,1fr);row-gap:12px}.badge-grid{grid-template-columns:1fr 1fr}.batch-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="menuDrawer">
+    <div class="drawer-head"><div><strong>🌱 Salah Journey</strong><small id="drawerName">Maryam</small></div><button class="drawer-close" id="closeDrawer">×</button></div>
+    <button class="drawer-item" data-home>🏠 Home</button>
+    <button class="drawer-item" data-scroll="#gardenSection">🌱 Mein Garten</button>
+    <button class="drawer-item" data-scroll="#prayerSection">🕌 Gebete heute</button>
+    <button class="drawer-item" id="drawerRewards">🎁 Belohnungen</button>
+    <button class="drawer-item" id="drawerProfile">👤 Profil</button>
+    <button class="drawer-item" id="drawerStudents">👩‍🏫 Batches & Schüler</button>
+    <a class="drawer-item" href="https://www.google.com/maps/search/?api=1&query=MDI+Center+Otto-Hahn-Stra%C3%9Fe+2+85609+Aschheim" target="_blank">🕌 MDI Center besuchen</a>
+    <div class="drawer-footer">Iqra Future Generation<br>under Munich Dawah Initiative (MDI)</div>
+  </aside>
+
+  <main class="app">
+    <header class="topbar"><button class="round" id="menuBtn">☰</button><div class="brand">🌱 MEIN SALAH GARTEN</div><button class="round" id="profileBtn">👤</button></header>
+    <section class="hero"><h1>Assalamu alaikum,<br><span id="studentName">Maryam</span>!</h1><div class="date" id="todayDate"></div></section>
+    <section class="stats">
+      <article class="stat"><div class="stat-icon">📅</div><div class="stat-value" id="todayCount">0/5</div><div class="stat-label">Heute</div></article>
+      <article class="stat"><div class="stat-icon">⭐</div><div class="stat-value" id="starCount">0</div><div class="stat-label">Sterne</div></article>
+      <article class="stat"><div class="stat-icon">🌱</div><div class="stat-value" id="monthPercent">0%</div><div class="stat-label">Monat</div></article>
+    </section>
+    <section class="section" id="gardenSection">
+      <h2 class="title">🌱 Mein wachsender Garten</h2>
+      <div class="garden"><div class="cloud"></div><div class="cloud two"></div><div class="sun"></div><div class="plant-wrap"><div class="plant" id="plantEmoji">🌱</div><div class="soil"></div></div></div>
+      <div class="milestones" id="milestones"></div><p class="message">Dein Garten wächst mit jedem Salah! 🌱</p>
+    </section>
+    <section class="section" id="prayerSection"><h2 class="title">🪴 Heutige Gebete</h2><div class="prayers" id="prayerList"></div><p class="message" style="font-size:18px;color:#6a6c72">🌸 Erledige alle 5 Salah und lass deinen Garten wachsen!</p></section>
+    <section class="bottom">
+      <article class="section"><h2 class="title">🎁 Belohnung</h2><div class="rewardbox"><div class="bigstar">⭐</div><div class="stat-value" id="rewardStars">0</div><div class="stat-label">Sterne</div></div></article>
+      <article class="section"><h2 class="title">📅 Monatlicher Fortschritt</h2><div class="progress"><div class="ring" id="ring"><div><strong id="ringPct" style="font-size:38px">0%</strong><small>Diesen Monat</small></div></div><div><strong id="monthSalah">0</strong> / <span id="monthGoal">150</span> Salah<br><small id="remainingText">Noch 150</small></div></div></article>
+    </section>
+    <section class="section"><h2 class="title">🕌 MDI Center</h2><p><strong>Munich Dawah Initiative (MDI)</strong></p><p>Otto-Hahn-Straße 2<br>85609 Aschheim</p><a class="card-link" href="https://www.google.com/maps/search/?api=1&query=MDI+Center+Otto-Hahn-Stra%C3%9Fe+2+85609+Aschheim" target="_blank">📍 In Google Maps öffnen</a></section>
+  </main>
+
+  <nav class="nav"><button class="active" id="navHome"><span class="ni">🏠</span>Home</button><button id="navGarden"><span class="ni">🌱</span>Garten</button><button id="navPrayers"><span class="ni">🕌</span>Gebete</button><button id="navRewards"><span class="ni">🎁</span>Belohnungen</button><button id="navProfile"><span class="ni">👤</span>Profil</button></nav>
+
+  <section class="profile-page" id="profilePage">
+    <div class="page-top"><button class="back" id="closeProfile">←</button><div class="page-title">Mein Profil</div><div style="width:48px"></div></div>
+    <div class="container">
+      <div class="profile-card"><div class="avatar-current" id="selectedAvatar">🌷</div><div class="profile-name" id="profileDisplayName">Maryam</div><div class="profile-age" id="profileDisplayAge">7 Jahre</div>
+        <div class="fields">
+          <label>Name<input id="nameField"></label>
+          <label>Alter<input id="ageField" type="number" min="3" max="18"></label>
+          <label>Batch / Klasse
+            <select id="batchField">
+              <option>Batch 1</option><option>Batch 2</option><option>Batch 3</option><option>Batch 4</option>
+              <option>Batch 5</option><option>Batch 6</option><option>Batch 7</option>
+            </select>
+          </label>
+          <label>Name der Eltern<input id="parentField"></label>
+        </div>
+      </div>
+      <div class="profile-card"><h3 class="profile-heading">Mein Avatar</h3><div class="avatar-grid" id="avatarGrid"></div></div>
+      <div class="profile-card"><h3 class="profile-heading">📊 Mein Fortschritt</h3><div class="row"><span>🕌 Gesamte Salah</span><strong id="profileTotalSalah">0</strong></div><div class="row"><span>⭐ Sterne</span><strong id="profileTotalStars">0</strong></div><div class="row"><span>🌱 Garten-Level</span><strong id="profileGardenLevel">1</strong></div><button class="row clickable-row" id="profileBadgesButton"><span>🏆 Badges ansehen</span><strong id="profileBadgeCount">0 ›</strong></button></div>
+      <div class="profile-card"><h3 class="profile-heading">📚 Lernfortschritt</h3><div class="number-grid"><div class="number-box"><label>📖 Gelernte Suren</label><input id="surahField" type="number" min="0" max="50"></div><div class="number-box"><label>🌸 Asmaul Husna</label><input id="asmaField" type="number" min="0" max="99"></div><div class="number-box"><label>📝 Qur'anische Wörter</label><input id="wordField" type="number" min="0" max="200"></div><div class="number-box"><label>🤲 Gelernte Duas</label><input id="duaField" type="number" min="0" max="100"></div></div></div>
+      <div class="profile-card"><h3 class="profile-heading">💚 Contact Us</h3><a class="card-link facebook" id="facebookLink" href="#" target="_blank">📘 Iqra Future Generation Facebook Page</a><p id="facebookHint" style="text-align:center;color:#777;margin-bottom:0">Facebook-Link kann später eingesetzt werden.</p></div>
+      <button class="save" id="saveProfile">Profil speichern</button>
+    </div>
+  </section>
+
+
+  <section class="page" id="studentsPage">
+    <div class="page-top"><button class="back" id="closeStudents">←</button><div class="page-title" id="studentsPageTitle">Batches & Schüler</div><div style="width:48px"></div></div>
+    <div class="container">
+      <div class="batch-toolbar">
+        <button class="all-batches hidden" id="showAllBatches">← Alle Batches</button>
+        <button class="add-student hidden" id="addStudentButton">＋ Schüler hinzufügen</button>
+      </div>
+      <div class="batch-grid" id="batchGrid"></div>
+      <div class="student-list hidden" id="studentList"></div>
+      <div class="profile-card hidden" id="emptyBatch" style="text-align:center">
+        <div style="font-size:52px">👧</div>
+        <h3>Noch keine Schüler</h3>
+        <p>Füge den ersten Schüler zu diesem Batch hinzu.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="rewardsPage">
+    <div class="page-top"><button class="back" id="closeRewards">←</button><div class="page-title">Belohnungen</div><div style="width:48px"></div></div>
+    <div class="container">
+      <div class="profile-card"><h3 class="profile-heading">⭐ Deine Sterne</h3><div class="stat-value" id="rewardPageStars" style="text-align:center">0</div></div>
+      <div class="profile-card"><h3 class="profile-heading">🏆 Badges</h3><div class="badge-grid" id="badgeGrid"></div></div>
+      <div class="profile-card"><h3 class="profile-heading">📅 Monatsübersicht</h3><div style="overflow:auto"><table class="month-table" id="monthTable"></table></div></div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const FACEBOOK_URL = "";
+    const PRAYERS=[{key:"fajr",name:"Fajr",icon:"🌙"},{key:"dhuhr",name:"Dhuhr",icon:"☀️"},{key:"asr",name:"Asr",icon:"🌤️"},{key:"maghrib",name:"Maghrib",icon:"🌅"},{key:"isha",name:"Isha",icon:"🌌"}];
+    const MILESTONES=[{at:0,label:"Tag 1",icon:"🌱"},{at:10,label:"10 Salah",icon:"🌿"},{at:50,label:"50 Salah",icon:"🪴"},{at:100,label:"100 Salah",icon:"🌳"},{at:200,label:"200 Salah",icon:"🌸"},{at:500,label:"500 Salah",icon:"✨"}];
+    const BADGES=[{at:1,icon:"🌱",name:"Erster Schritt"},{at:10,icon:"🌿",name:"10 Salah"},{at:50,icon:"🪴",name:"50 Salah"},{at:100,icon:"🌳",name:"100 Salah"},{at:200,icon:"🌸",name:"200 Salah"},{at:500,icon:"✨",name:"500 Salah"}];
+    const AVATARS=["🌹","🌷","🌻","🌼","🌺","🪻","🌱","🌳","🌴","🌲","🍃","🌿","🍎","🍓","🍉","🍊","🍌","🍇","🚗","🚂","🚲","✈️","🚜","🚢","☀️","🌙","⭐","🏔️","☁️","🌊","🕌","🏮"];
+    const STORAGE_KEY="iqraSalahJourneyFullV1";
+    const DIRECTORY_KEY="iqraSalahJourneyStudentsV2";
+    const BATCHES=["Batch 1","Batch 2","Batch 3","Batch 4","Batch 5","Batch 6","Batch 7"];
+    const newStudent=(name="Maryam",batch="Batch 1")=>({id:`s_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,name,batch,records:{},stars:0,profile:{age:7,parent:"",avatar:"🌷",surahs:0,asma:0,words:0,duas:0}});
+    const normalizeStudent=s=>{const base=newStudent();return {...base,...s,profile:{...base.profile,...(s.profile||{})},batch:BATCHES.includes(s.batch)?s.batch:"Batch 1"}};
+    function loadDirectory(){
+      try{
+        const saved=localStorage.getItem(DIRECTORY_KEY);
+        if(saved){
+          const d=JSON.parse(saved),students=(d.students||[]).map(normalizeStudent);
+          if(students.length){return {students,activeId:students.some(s=>s.id===d.activeId)?d.activeId:students[0].id}}
+        }
+        const legacy=localStorage.getItem(STORAGE_KEY);
+        const first=legacy?normalizeStudent({...JSON.parse(legacy),id:`s_${Date.now()}`,batch:"Batch 1"}):newStudent();
+        return {students:[first],activeId:first.id};
+      }catch{
+        const first=newStudent();return {students:[first],activeId:first.id};
+      }
+    }
+    let directory=loadDirectory();
+    let state=directory.students.find(s=>s.id===directory.activeId)||directory.students[0];
+    const dateKey=(d=new Date())=>d.toLocaleDateString("en-CA"),monthKey=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`,daysInMonth=(d=new Date())=>new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+    const saveState=()=>{
+      const i=directory.students.findIndex(s=>s.id===state.id);
+      if(i>=0)directory.students[i]=state;
+      directory.activeId=state.id;
+      localStorage.setItem(DIRECTORY_KEY,JSON.stringify(directory));
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+    };
+    function todayRecord(){const k=dateKey();if(!state.records[k])state.records[k]={};return state.records[k]}
+    const totalCompleted=()=>Object.values(state.records).reduce((s,r)=>s+PRAYERS.filter(p=>r[p.key]).length,0);
+    const monthCompleted=()=>Object.entries(state.records).filter(([k])=>k.startsWith(monthKey())).reduce((s,[,r])=>s+PRAYERS.filter(p=>r[p.key]).length,0);
+    const levelFor=t=>t>=500?6:t>=200?5:t>=100?4:t>=50?3:t>=10?2:1;
+    const plantFor=t=>t>=500?"🌟":t>=200?"🌸":t>=100?"🌳":t>=50?"🪴":t>=10?"🌿":"🌱";
+    const badgeCount=()=>BADGES.filter(b=>totalCompleted()>=b.at).length;
+    function showToast(m){toast.textContent=m;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),1800)}
+    function render(){
+      studentName.textContent=state.name;drawerName.textContent=state.name;todayDate.textContent=new Date().toLocaleDateString("de-DE",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
+      const rec=todayRecord(),today=PRAYERS.filter(p=>rec[p.key]).length,month=monthCompleted(),goal=daysInMonth()*5,pct=Math.min(100,Math.round(month/goal*100)),total=totalCompleted();
+      todayCount.textContent=`${today}/5`;starCount.textContent=state.stars;rewardStars.textContent=state.stars;rewardPageStars.textContent=state.stars;monthPercent.textContent=`${pct}%`;ringPct.textContent=`${pct}%`;ring.style.setProperty("--p",pct);monthSalah.textContent=month;monthGoal.textContent=goal;remainingText.textContent=`Noch ${Math.max(0,goal-month)}`;plantEmoji.textContent=plantFor(total);
+      prayerList.innerHTML="";PRAYERS.forEach(p=>{const b=document.createElement("button");b.className="prayer"+(rec[p.key]?" checked":"");b.innerHTML=`<div class="picon">${p.icon}</div><div class="pname">${p.name}</div><div class="check">${rec[p.key]?"✓":""}</div>`;b.onclick=()=>togglePrayer(p.key);prayerList.appendChild(b)});
+      milestones.innerHTML="";MILESTONES.forEach(m=>{const e=document.createElement("div");e.className="mile"+(total>=m.at?" active":"");e.innerHTML=`<div class="mile-dot">${total>=m.at?m.icon:"🔒"}</div><div>${m.label}</div>`;milestones.appendChild(e)});saveState();
+    }
+    function togglePrayer(key){const r=todayRecord(),before=PRAYERS.filter(p=>r[p.key]).length;r[key]=!r[key];const after=PRAYERS.filter(p=>r[p.key]).length;if(after>before){state.stars+=1;if(after===5&&before!==5)state.stars+=5}else{state.stars=Math.max(0,state.stars-1);if(before===5&&after!==5)state.stars=Math.max(0,state.stars-5)}render()}
+    const openDrawer=()=>{menuDrawer.classList.add("open");drawerBackdrop.classList.add("open")},closeDrawerFn=()=>{menuDrawer.classList.remove("open");drawerBackdrop.classList.remove("open")};
+    function buildAvatarGrid(){avatarGrid.innerHTML="";AVATARS.forEach(a=>{const b=document.createElement("button");b.className="avatar-choice"+(state.profile.avatar===a?" selected":"");b.textContent=a;b.onclick=()=>{state.profile.avatar=a;selectedAvatar.textContent=a;buildAvatarGrid()};avatarGrid.appendChild(b)})}
+    function openProfile(){closeDrawerFn();studentsPage.classList.remove("open");nameField.value=state.name;ageField.value=state.profile.age;batchField.value=state.batch||"Batch 1";parentField.value=state.profile.parent;surahField.value=state.profile.surahs;asmaField.value=state.profile.asma;wordField.value=state.profile.words;duaField.value=state.profile.duas;profileDisplayName.textContent=state.name;profileDisplayAge.textContent=`${state.profile.age} Jahre · ${state.batch||"Batch 1"}`;selectedAvatar.textContent=state.profile.avatar;profileTotalSalah.textContent=totalCompleted();profileTotalStars.textContent=state.stars;profileGardenLevel.textContent=levelFor(totalCompleted());profileBadgeCount.textContent=`${badgeCount()} ›`;buildAvatarGrid();profilePage.classList.add("open")}
+    function saveProfileData(){state.name=nameField.value.trim()||"Maryam";state.batch=batchField.value;state.profile.age=Number(ageField.value)||7;state.profile.parent=parentField.value.trim();state.profile.surahs=Math.max(0,Number(surahField.value)||0);state.profile.asma=Math.max(0,Number(asmaField.value)||0);state.profile.words=Math.max(0,Number(wordField.value)||0);state.profile.duas=Math.max(0,Number(duaField.value)||0);saveState();render();openProfile();showToast("Profil gespeichert ✓")}
+
+    let selectedBatch=null;
+    function setActiveStudent(id){
+      const found=directory.students.find(s=>s.id===id);
+      if(!found)return;
+      state=found;directory.activeId=id;saveState();render();openProfile();
+    }
+    function renderBatchOverview(){
+      selectedBatch=null;studentsPageTitle.textContent="Batches & Schüler";
+      batchGrid.classList.remove("hidden");studentList.classList.add("hidden");emptyBatch.classList.add("hidden");
+      showAllBatches.classList.add("hidden");addStudentButton.classList.add("hidden");
+      batchGrid.innerHTML="";
+      BATCHES.forEach(batch=>{
+        const count=directory.students.filter(s=>s.batch===batch).length;
+        const b=document.createElement("button");b.className="batch-card";
+        b.innerHTML=`<strong>📁 ${batch}</strong><span>${count} ${count===1?"Schüler":"Schülerinnen/Schüler"} ›</span>`;
+        b.onclick=()=>openBatch(batch);batchGrid.appendChild(b);
+      });
+    }
+    function openStudents(){
+      closeDrawerFn();profilePage.classList.remove("open");renderBatchOverview();studentsPage.classList.add("open");
+    }
+    function openBatch(batch){
+      selectedBatch=batch;studentsPageTitle.textContent=batch;
+      batchGrid.classList.add("hidden");studentList.classList.remove("hidden");
+      showAllBatches.classList.remove("hidden");addStudentButton.classList.remove("hidden");
+      const students=directory.students.filter(s=>s.batch===batch);
+      studentList.innerHTML="";emptyBatch.classList.toggle("hidden",students.length>0);
+      students.forEach(s=>{
+        const row=document.createElement("div");row.className="student-row";
+        row.innerHTML=`<div class="student-avatar">${s.profile.avatar||"🌷"}</div><button class="student-open"><strong>${escapeHtml(s.name)}</strong><small>${s.profile.age||7} Jahre · Profil öffnen</small></button><button class="mini-delete" title="Löschen">🗑️</button>`;
+        row.querySelector(".student-open").onclick=()=>setActiveStudent(s.id);
+        row.querySelector(".mini-delete").onclick=()=>deleteStudent(s.id);
+        studentList.appendChild(row);
+      });
+    }
+    function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+    function addStudent(){
+      if(!selectedBatch)return;
+      const s=newStudent("Neuer Schüler",selectedBatch);
+      directory.students.push(s);directory.activeId=s.id;state=s;saveState();openProfile();showToast(`${selectedBatch}: Profil angelegt`);
+    }
+    function deleteStudent(id){
+      const s=directory.students.find(x=>x.id===id);if(!s)return;
+      if(!confirm(`${s.name} wirklich löschen?`))return;
+      if(directory.students.length===1){showToast("Mindestens ein Profil muss bleiben");return}
+      directory.students=directory.students.filter(x=>x.id!==id);
+      if(directory.activeId===id){state=directory.students[0];directory.activeId=state.id}
+      saveState();openBatch(selectedBatch);render();showToast("Profil gelöscht");
+    }
+    function buildRewards(){const total=totalCompleted();badgeGrid.innerHTML="";BADGES.forEach(b=>{const e=document.createElement("div");e.className="badge"+(total<b.at?" locked":"");e.innerHTML=`<div class="emoji">${total>=b.at?b.icon:"🔒"}</div><strong>${b.name}</strong><div>${total>=b.at?"Freigeschaltet":`${b.at} Salah`}</div>`;badgeGrid.appendChild(e)});let h="<tr><th>Tag</th>"+PRAYERS.map(p=>`<th>${p.name}</th>`).join("")+"</tr>";for(let d=1;d<=daysInMonth();d++){const k=`${monthKey()}-${String(d).padStart(2,"0")}`,r=state.records[k]||{};h+=`<tr><td>${d}</td>${PRAYERS.map(p=>`<td>${r[p.key]?"✓":"·"}</td>`).join("")}</tr>`}monthTable.innerHTML=h}
+    function openRewards(){closeDrawerFn();buildRewards();rewardsPage.classList.add("open")}
+    function scrollHome(s){closeDrawerFn();document.querySelector(s).scrollIntoView({behavior:"smooth"})}
+    menuBtn.onclick=openDrawer;closeDrawer.onclick=closeDrawerFn;drawerBackdrop.onclick=closeDrawerFn;
+    document.querySelectorAll("[data-scroll]").forEach(b=>b.onclick=()=>scrollHome(b.dataset.scroll));
+    document.querySelector("[data-home]").onclick=()=>{closeDrawerFn();window.scrollTo({top:0,behavior:"smooth"})};
+    profileBtn.onclick=openProfile;navProfile.onclick=openProfile;drawerProfile.onclick=openProfile;closeProfile.onclick=()=>profilePage.classList.remove("open");saveProfile.onclick=saveProfileData;
+    navRewards.onclick=openRewards;drawerRewards.onclick=openRewards;closeRewards.onclick=()=>rewardsPage.classList.remove("open");
+    drawerStudents.onclick=openStudents;closeStudents.onclick=()=>studentsPage.classList.remove("open");
+    showAllBatches.onclick=renderBatchOverview;addStudentButton.onclick=addStudent;
+    profileBadgesButton.onclick=()=>{profilePage.classList.remove("open");openRewards()};
+    navHome.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});navGarden.onclick=()=>scrollHome("#gardenSection");navPrayers.onclick=()=>scrollHome("#prayerSection");
+    if(FACEBOOK_URL){facebookLink.href=FACEBOOK_URL;facebookHint.classList.add("hidden")}else{facebookLink.onclick=e=>{e.preventDefault();showToast("Facebook Page Link এখনও যোগ করা হয়নি")}}
+    render();
+  </script>
+</body>
+</html>
