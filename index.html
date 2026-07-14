@@ -25,9 +25,137 @@
     .nav{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);width:min(860px,calc(100% - 20px));display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.15);padding:8px;z-index:20}.nav button{border:0;background:transparent;padding:8px;border-radius:16px;color:#555;font-weight:800}.nav button.active{background:#eaf6d8;color:#2b7b31}.nav .ni{display:block;font-size:24px;margin-bottom:2px}
     .modal{position:fixed;inset:0;background:rgba(13,34,17,.4);display:none;place-items:center;z-index:30;padding:20px}.modal.open{display:grid}.dialog{background:white;border-radius:24px;padding:22px;width:min(420px,100%);box-shadow:var(--shadow)}.dialog h2{margin-top:0;color:#164f27}.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field input{padding:12px 14px;border:2px solid #dfe8d7;border-radius:14px}.dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}.btn{border:0;border-radius:14px;padding:11px 16px;font-weight:900}.btn.primary{background:#2f9c3e;color:#fff}.btn.ghost{background:#eef2eb}
     @media(max-width:650px){.app{padding-left:10px;padding-right:10px}.topbar{grid-template-columns:52px 1fr 52px}.icon-btn,.avatar{width:48px;height:48px}.brand-pill{padding:12px 10px;font-size:18px}.stats{gap:10px}.stat-card{min-height:145px}.prayers{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.prayer{padding:9px 2px}.prayer-icon{font-size:30px}.prayer-name{font-size:13px}.bottom-grid{grid-template-columns:1fr}.milestones{grid-template-columns:repeat(3,1fr);row-gap:12px}.section{padding:14px}}
+  .drawer-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(13,34,17,.42);
+  opacity:0;
+  visibility:hidden;
+  transition:.25s;
+  z-index:49;
+}
+
+.drawer{
+  position:fixed;
+  top:0;
+  left:0;
+  width:min(330px,86vw);
+  height:100%;
+  padding:24px 18px;
+  background:#fff;
+  box-shadow:12px 0 35px rgba(0,0,0,.18);
+  transform:translateX(-105%);
+  transition:.28s ease;
+  z-index:50;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.drawer.open{
+  transform:translateX(0);
+}
+
+.drawer-backdrop.open{
+  opacity:1;
+  visibility:visible;
+}
+
+.drawer-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 4px 20px;
+  border-bottom:1px solid #e7ebdf;
+  margin-bottom:10px;
+  color:#165b2a;
+  font-size:22px;
+}
+
+.drawer-head small{
+  display:block;
+  margin-top:5px;
+  color:#6a6c72;
+  font-size:15px;
+}
+
+.drawer-close{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#edf7df;
+  color:#165b2a;
+  font-size:28px;
+}
+
+.drawer-item{
+  border:0;
+  border-radius:16px;
+  background:transparent;
+  padding:15px;
+  text-align:left;
+  font-weight:900;
+  font-size:18px;
+  color:#29432f;
+}
+
+.drawer-item:hover,
+.drawer-item:active{
+  background:#eaf6d8;
+  color:#165b2a;
+}
+
+.drawer-footer{
+  margin-top:auto;
+  padding:18px 6px;
+  border-top:1px solid #e7ebdf;
+  color:#7a7d80;
+  text-align:center;
+  font-weight:800;
+}
+
+body.drawer-open{
+  overflow:hidden;
+}
   </style>
 </head>
 <body>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+<aside class="drawer" id="menuDrawer">
+
+  <div class="drawer-head">
+
+    <div>
+
+      <strong>🌱 Salah Journey</strong>
+
+      <small id="drawerStudentName">Maryam</small>
+
+    </div>
+
+    <button class="drawer-close" id="closeDrawer">×</button>
+
+  </div>
+
+  <button class="drawer-item" data-target=".hero">🏠 Home</button>
+
+  <button class="drawer-item" data-target=".garden-stage">🌱 Mein Garten</button>
+
+  <button class="drawer-item" data-target="#prayerList">🕌 Gebete heute</button>
+
+  <button class="drawer-item" data-target="#rewardStars">🎁 Belohnungen</button>
+
+  <button class="drawer-item" id="drawerProfile">👤 Profil</button>
+
+  <div class="drawer-footer">
+
+    Iqra Future Generation
+
+  </div>
+
+</aside>
   <main class="app">
     <header class="topbar"><button class="icon-btn" id="menuBtn" aria-label="Menü">☰</button><div class="brand-pill">🌱 MEIN SALAH GARTEN</div><button class="avatar" id="profileBtn" aria-label="Profil">👤</button></header>
     <section class="hero"><h1>Assalamu alaikum,<br><span id="studentName">Maryam</span>!</h1><div class="date" id="todayDate"></div></section>
@@ -52,6 +180,32 @@
     function render(){document.getElementById('studentName').textContent=state.name||'Maryam';const now=new Date();document.getElementById('todayDate').textContent=now.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});const today=completedToday(),month=monthCompleted(),goal=daysInMonth(now)*5,pct=Math.min(100,Math.round(month/goal*100)),total=totalCompleted();document.getElementById('todayCount').textContent=`${today}/5`;document.getElementById('starCount').textContent=state.stars||0;document.getElementById('monthPercent').textContent=`${pct}%`;document.getElementById('rewardStars').textContent=state.stars||0;document.getElementById('monthSalah').textContent=month;document.getElementById('monthGoal').textContent=goal;document.getElementById('remainingCount').textContent=Math.max(0,goal-month);document.getElementById('ringPercent').textContent=`${pct}%`;document.getElementById('progressRing').style.setProperty('--p',pct);document.getElementById('plantEmoji').textContent=currentPlant(total).icon;const rec=getTodayRecord(),list=document.getElementById('prayerList');list.innerHTML='';PRAYERS.forEach(p=>{const b=document.createElement('button');b.className='prayer'+(rec[p.key]?' checked':'');b.innerHTML=`<div class="prayer-icon">${p.icon}</div><div class="prayer-name">${p.name}</div><div class="check">${rec[p.key]?'✓':''}</div>`;b.onclick=()=>togglePrayer(p.key);list.appendChild(b)});const ms=document.getElementById('milestones');ms.innerHTML='';MILESTONES.forEach(m=>{const el=document.createElement('div');el.className='mile'+(total>=m.at?' active':'');el.innerHTML=`<div class="mile-dot">${total>=m.at?m.icon:'🔒'}</div><div>${m.label}</div>`;ms.appendChild(el)});saveState()}
     function togglePrayer(key){const rec=getTodayRecord(),before=PRAYERS.filter(p=>rec[p.key]).length;rec[key]=!rec[key];const after=PRAYERS.filter(p=>rec[p.key]).length;if(after>before){state.stars=(state.stars||0)+1;if(after===5&&before!==5)state.stars+=5}else{state.stars=Math.max(0,(state.stars||0)-1);if(before===5&&after!==5)state.stars=Math.max(0,state.stars-5)}render()}
     const modal=document.getElementById('profileModal'),nameInput=document.getElementById('nameInput');function openProfile(){nameInput.value=state.name||'';modal.classList.add('open');nameInput.focus()}function closeProfile(){modal.classList.remove('open')}document.getElementById('profileBtn').onclick=openProfile;document.getElementById('navProfile').onclick=openProfile;document.getElementById('cancelProfile').onclick=closeProfile;document.getElementById('saveProfile').onclick=()=>{const v=nameInput.value.trim();if(v)state.name=v;closeProfile();render()};modal.onclick=e=>{if(e.target===modal)closeProfile()};document.getElementById('menuBtn').onclick=()=>alert('Menü-Funktionen kommen als Nächstes: Schülerwechsel, Datensicherung und Monatsansicht.');render();
+ const drawer = document.getElementById("menuDrawer");
+const backdrop = document.getElementById("drawerBackdrop");
+const menuBtn = document.getElementById("menuBtn");
+const closeDrawer = document.getElementById("closeDrawer");
+
+function openDrawer() {
+  drawer.classList.add("open");
+  backdrop.classList.add("open");
+  document.body.classList.add("drawer-open");
+}
+
+function closeMenu() {
+  drawer.classList.remove("open");
+  backdrop.classList.remove("open");
+  document.body.classList.remove("drawer-open");
+}
+
+menuBtn.addEventListener("click", openDrawer);
+closeDrawer.addEventListener("click", closeMenu);
+backdrop.addEventListener("click", closeMenu);
+
+document.querySelectorAll(".drawer-item").forEach(btn => {
+  btn.addEventListener("click", () => {
+    closeMenu();
+  });
+});
   </script>
 </body>
 </html>
