@@ -154,7 +154,6 @@ body.drawer-open{
     Iqra Future Generation
 
   </div>
-
 </aside>
   <main class="app">
     <header class="topbar"><button class="icon-btn" id="menuBtn" aria-label="Menü">☰</button><div class="brand-pill">🌱 MEIN SALAH GARTEN</div><button class="avatar" id="profileBtn" aria-label="Profil">👤</button></header>
@@ -205,6 +204,10 @@ document.querySelectorAll(".drawer-item").forEach(btn => {
   btn.addEventListener("click", () => {
     closeMenu();
   });
+});
+document.getElementById("drawerProfile").addEventListener("click", () => {
+  closeMenu();
+  openProfile();
 });
   </script>
 </body>
