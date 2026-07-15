@@ -1,4 +1,4 @@
-const CACHE_NAME = "iqra-future-generation-logo-v3";
+const CACHE_NAME = "iqra-parent-signup-v5";
 const APP_SHELL = [
   "./",
   "./index.html",

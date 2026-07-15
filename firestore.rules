@@ -1,0 +1,101 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == "teacher.iqra2023@gmail.com";
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function myMemberData() {
+      return get(/databases/$(database)/documents/members/$(request.auth.uid)).data;
+    }
+
+    function sameBatch(batchName) {
+      return signedIn() && myMemberData().batch == batchName;
+    }
+
+    function inviteDocId(batchName) {
+      return batchName == "Batch 1" ? "batch-1"
+        : batchName == "Batch 2" ? "batch-2"
+        : batchName == "Batch 3" ? "batch-3"
+        : batchName == "Batch 4" ? "batch-4"
+        : batchName == "Batch 5" ? "batch-5"
+        : batchName == "Batch 6" ? "batch-6"
+        : "batch-7";
+    }
+
+    function validInvite(batchName, code) {
+      let invite = get(/databases/$(database)/documents/inviteCodes/$(inviteDocId(batchName))).data;
+      return invite.active == true
+        && invite.batch == batchName
+        && invite.code == code;
+    }
+
+    match /inviteCodes/{codeId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /members/{userId} {
+      allow get, list: if isAdmin()
+        || (signedIn() && sameBatch(resource.data.batch));
+
+      allow create: if isAdmin()
+        || (
+          isOwner(userId)
+          && request.resource.data.role == "student"
+          && request.resource.data.studentId is string
+          && request.resource.data.batch in ["Batch 1","Batch 2","Batch 3","Batch 4","Batch 5","Batch 6","Batch 7"]
+          && validInvite(request.resource.data.batch, request.resource.data.inviteCode)
+        );
+
+      allow update: if isAdmin()
+        || (
+          isOwner(userId)
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(["name", "age", "avatar"])
+        );
+
+      allow delete: if isAdmin();
+    }
+
+    match /progress/{userId} {
+      allow get, list: if isAdmin()
+        || (signedIn() && sameBatch(resource.data.batch));
+
+      allow create: if isAdmin()
+        || (
+          isOwner(userId)
+          && request.resource.data.userId == request.auth.uid
+          && request.resource.data.batch == myMemberData().batch
+        );
+
+      allow update: if isAdmin()
+        || (
+          isOwner(userId)
+          && request.resource.data.userId == resource.data.userId
+          && request.resource.data.batch == resource.data.batch
+        );
+
+      allow delete: if isAdmin();
+    }
+
+    match /privateProfiles/{userId} {
+      allow read: if isAdmin() || isOwner(userId);
+      allow create, update: if isAdmin() || isOwner(userId);
+      allow delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

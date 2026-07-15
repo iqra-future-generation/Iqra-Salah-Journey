@@ -247,12 +247,32 @@
     <form class="auth-card" id="loginForm">
       <div class="auth-logo">🌱</div>
       <h1>Iqra Salah Journey</h1>
-      <p>Mit deiner E-Mail-Adresse und deinem Passwort anmelden.</p>
-      <label>E-Mail<input id="loginEmail" type="email" autocomplete="username" required></label>
+      <p>Schüler melden sich mit ihrer Student-ID an. Lehrkräfte nutzen ihre E-Mail-Adresse.</p>
+      <label>Student-ID oder Lehrer-E-Mail<input id="loginEmail" type="text" autocomplete="username" placeholder="z. B. maryam-b1" required></label>
       <label>Passwort<input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required></label>
       <button class="auth-submit" id="loginButton" type="submit">Anmelden</button>
+      <button class="auth-submit" id="openSignupButton" type="button" style="background:#edf7df;color:#17602c;margin-top:10px">Neues Schülerkonto erstellen</button>
       <div class="auth-error" id="loginError"></div>
-      <p class="auth-note">Zugangsdaten erhältst du von deiner Lehrerin.</p>
+      <p class="auth-note">Deine Student-ID und dein Passwort erhältst du von deiner Lehrerin.</p>
+    </form>
+  </section>
+
+
+  <section class="modal-backdrop hidden" id="signupModal">
+    <form class="modal-card" id="signupForm">
+      <div class="modal-title"><h2>Schülerkonto erstellen</h2><button class="modal-close" id="closeSignupModal" type="button">×</button></div>
+      <p style="text-align:left">Eltern erstellen hier einmalig das Konto. Danach bleibt die Anmeldung auf diesem Gerät gespeichert, bis man sich abmeldet.</p>
+      <label>Name des Kindes<input id="signupStudentName" required></label>
+      <label>Alter<input id="signupStudentAge" type="number" min="3" max="18" value="7" required></label>
+      <label>Batch<select id="signupBatch"></select></label>
+      <label>Batch-Einladungscode<input id="signupInviteCode" type="text" autocomplete="off" required></label>
+      <label>Student-ID<input id="signupStudentId" type="text" placeholder="z. B. maryam-b1" pattern="[A-Za-z0-9._-]{3,30}" required></label>
+      <div class="auth-note" style="text-align:left;margin-top:6px">Nur Buchstaben, Zahlen, Punkt, Unterstrich oder Bindestrich. Keine Leerzeichen.</div>
+      <label>Passwort<input id="signupPassword" type="password" minlength="6" required></label>
+      <label>Passwort wiederholen<input id="signupPassword2" type="password" minlength="6" required></label>
+      <label>Name der Eltern<input id="signupParentName" required></label>
+      <button class="auth-submit" id="signupSubmitButton" type="submit">Konto erstellen</button>
+      <div class="auth-error" id="signupError"></div>
     </form>
   </section>
 
@@ -262,7 +282,8 @@
       <label>Name<input id="newStudentName" required></label>
       <label>Alter<input id="newStudentAge" type="number" min="3" max="18" value="7" required></label>
       <label>Batch<select id="newStudentBatch"></select></label>
-      <label>E-Mail<input id="newStudentEmail" type="email" required></label>
+      <label>Student-ID<input id="newStudentEmail" type="text" placeholder="z. B. maryam-b1" pattern="[A-Za-z0-9._-]{3,30}" required></label>
+      <div class="auth-note" style="text-align:left;margin-top:6px">Nur Buchstaben, Zahlen, Punkt, Unterstrich oder Bindestrich. Keine Leerzeichen.</div>
       <label>Start-Passwort<input id="newStudentPassword" type="password" minlength="6" required></label>
       <label>Name der Eltern<input id="newStudentParent"></label>
       <button class="auth-submit" id="createStudentButton" type="submit">Konto erstellen</button>
@@ -288,6 +309,7 @@
     const ADMIN_EMAIL = "teacher.iqra2023@gmail.com";
     const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=100078858246868";
     const BATCHES=["Batch 1","Batch 2","Batch 3","Batch 4","Batch 5","Batch 6","Batch 7"];
+    const DEFAULT_INVITE_CODES={"Batch 1": "IQRA-1-DCSSGY", "Batch 2": "IQRA-2-BAU3B2", "Batch 3": "IQRA-3-9PWWU4", "Batch 4": "IQRA-4-LJ6HSF", "Batch 5": "IQRA-5-MCU7TK", "Batch 6": "IQRA-6-B9YDE5", "Batch 7": "IQRA-7-3U3JJC"};
     const PRAYERS=[{key:"fajr",name:"Fajr",icon:"🌙"},{key:"dhuhr",name:"Dhuhr",icon:"☀️"},{key:"asr",name:"Asr",icon:"🌤️"},{key:"maghrib",name:"Maghrib",icon:"🌅"},{key:"isha",name:"Isha",icon:"🌌"}];
     const MILESTONES=[{at:0,label:"Tag 1",icon:"🌱"},{at:10,label:"10 Salah",icon:"🌿"},{at:50,label:"50 Salah",icon:"🪴"},{at:100,label:"100 Salah",icon:"🌳"},{at:200,label:"200 Salah",icon:"🌸"},{at:500,label:"500 Salah",icon:"✨"}];
     const BADGES=[{at:1,icon:"🌱",name:"Erster Schritt"},{at:10,icon:"🌿",name:"10 Salah"},{at:50,icon:"🪴",name:"50 Salah"},{at:100,icon:"🌳",name:"100 Salah"},{at:200,icon:"🌸",name:"200 Salah"},{at:500,icon:"✨",name:"500 Salah"}];
@@ -295,11 +317,12 @@
 
     const $=id=>document.getElementById(id);
     const els={};
-    ["drawerBackdrop","menuDrawer","drawerName","closeDrawer","drawerRewards","drawerProfile","drawerStudents","drawerDownloads","logoutButton","menuBtn","profileBtn","studentName","todayDate","todayCount","starCount","monthPercent","gardenSection","plantEmoji","milestones","prayerSection","prayerList","rewardStars","ring","ringPct","monthSalah","monthGoal","remainingText","navHome","navGarden","navPrayers","navRewards","navProfile","profilePage","closeProfile","selectedAvatar","profileDisplayName","profileDisplayAge","nameField","ageField","batchField","parentField","avatarGrid","profileTotalSalah","profileTotalStars","profileGardenLevel","profileBadgesButton","profileBadgeCount","surahField","asmaField","wordField","duaField","facebookLink","facebookHint","saveProfile","readonlyNote","studentsPage","closeStudents","downloadsPage","closeDownloads","studentsPageTitle","showAllBatches","addStudentButton","batchGrid","studentList","emptyBatch","rewardsPage","closeRewards","rewardPageStars","badgeGrid","monthTable","toast","authScreen","loginForm","loginEmail","loginPassword","loginButton","loginError","studentModal","studentForm","closeStudentModal","newStudentName","newStudentAge","newStudentBatch","newStudentEmail","newStudentPassword","newStudentParent","createStudentButton","studentFormError","syncPill"].forEach(id=>els[id]=$(id));
+    ["drawerBackdrop","menuDrawer","drawerName","closeDrawer","drawerRewards","drawerProfile","drawerStudents","drawerDownloads","logoutButton","menuBtn","profileBtn","studentName","todayDate","todayCount","starCount","monthPercent","gardenSection","plantEmoji","milestones","prayerSection","prayerList","rewardStars","ring","ringPct","monthSalah","monthGoal","remainingText","navHome","navGarden","navPrayers","navRewards","navProfile","profilePage","closeProfile","selectedAvatar","profileDisplayName","profileDisplayAge","nameField","ageField","batchField","parentField","avatarGrid","profileTotalSalah","profileTotalStars","profileGardenLevel","profileBadgesButton","profileBadgeCount","surahField","asmaField","wordField","duaField","facebookLink","facebookHint","saveProfile","readonlyNote","studentsPage","closeStudents","downloadsPage","closeDownloads","studentsPageTitle","showAllBatches","addStudentButton","batchGrid","studentList","emptyBatch","rewardsPage","closeRewards","rewardPageStars","badgeGrid","monthTable","toast","authScreen","loginForm","loginEmail","loginPassword","loginButton","openSignupButton","loginError","signupModal","signupForm","closeSignupModal","signupStudentName","signupStudentAge","signupBatch","signupInviteCode","signupStudentId","signupPassword","signupPassword2","signupParentName","signupSubmitButton","signupError","studentModal","studentForm","closeStudentModal","newStudentName","newStudentAge","newStudentBatch","newStudentEmail","newStudentPassword","newStudentParent","createStudentButton","studentFormError","syncPill"].forEach(id=>els[id]=$(id));
     Object.assign(window,els);
 
     firebase.initializeApp(firebaseConfig);
     const auth=firebase.auth();
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.error);
     const db=firebase.firestore();
     let secondaryApp=null, secondaryAuth=null;
 
@@ -313,7 +336,7 @@
     let batchProgress=new Map();
 
     const emptyState=(uid,name="Schüler",batch="Batch 1")=>({
-      id:uid,name,batch,role:"student",
+      id:uid,name,batch,role:"student",studentId:"",
       profile:{age:7,parent:"",avatar:"🌷",surahs:0,asma:0,words:0,duas:0},
       records:{},stars:0
     });
@@ -327,6 +350,15 @@
     const plantFor=t=>t>=500?"🌟":t>=200?"🌸":t>=100?"🌳":t>=50?"🪴":t>=10?"🌿":"🌱";
     const badgeCount=s=>BADGES.filter(b=>totalCompleted(s)>=b.at).length;
     const escapeHtml=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+    const STUDENT_LOGIN_DOMAIN="iqra.local";
+    function normalizeStudentId(value){
+      return String(value||"").trim().toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9._-]/g,"");
+    }
+    function loginIdentifierToEmail(value){
+      const v=String(value||"").trim().toLowerCase();
+      return v.includes("@") ? v : `${normalizeStudentId(v)}@${STUDENT_LOGIN_DOMAIN}`;
+    }
+
 
     function showToast(message){
       toast.textContent=message;toast.classList.add("show");
@@ -340,7 +372,8 @@
     function friendlyError(error){
       const code=error?.code||"";
       if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found"))return "E-Mail oder Passwort ist falsch.";
-      if(code.includes("email-already-in-use"))return "Diese E-Mail wird bereits verwendet.";
+      if(code.includes("email-already-in-use"))return "Diese Student-ID wird bereits verwendet.";
+      if(code.includes("invalid-email"))return "Bitte eine gültige Student-ID eingeben."
       if(code.includes("weak-password"))return "Das Passwort muss mindestens 6 Zeichen haben.";
       if(code.includes("unauthorized-domain"))return "Diese Website-Domain muss in Firebase Authentication freigegeben werden.";
       if(code.includes("permission-denied"))return "Keine Berechtigung für diese Aktion.";
@@ -349,7 +382,7 @@
 
     function memberFromDoc(doc){
       const d=doc.data()||{};
-      return {id:doc.id,name:d.name||"Schüler",batch:d.batch||"Batch 1",role:d.role||"student",
+      return {id:doc.id,name:d.name||"Schüler",batch:d.batch||"Batch 1",role:d.role||"student",studentId:d.studentId||"",
         profile:{age:Number(d.age)||7,parent:"",avatar:d.avatar||"🌷",surahs:0,asma:0,words:0,duas:0},records:{},stars:0};
     }
     function mergeProgress(state,data={}){
@@ -386,6 +419,13 @@
         await ref.set({name:"Iqra Teacher",age:18,avatar:"🌿",batch:"Admin",role:"admin",email:user.email});
         await db.collection("progress").doc(user.uid).set({userId:user.uid,batch:"Admin",records:{},stars:0,surahs:0,asma:0,words:0,duas:0});
         await db.collection("privateProfiles").doc(user.uid).set({parent:""});
+      }
+      for(const batch of BATCHES){
+        const ref=db.collection("inviteCodes").doc(batch.replace(" ","-").toLowerCase());
+        const snap=await ref.get();
+        if(!snap.exists){
+          await ref.set({batch,code:DEFAULT_INVITE_CODES[batch],active:true});
+        }
       }
     }
 
@@ -588,7 +628,7 @@
           const total=totalCompleted(s);
           row.innerHTML=`<div class="student-avatar">${s.profile.avatar||"🌷"}</div>
             <button class="student-open"><strong>${escapeHtml(s.name)}</strong>
-            <div class="student-meta">⭐ ${s.stars} · 🕌 ${total} Salah · 🌱 Level ${levelFor(total)}</div></button>
+            <div class="student-meta">${s.studentId?`🪪 ${escapeHtml(s.studentId)} · `:""}⭐ ${s.stars} · 🕌 ${total} Salah · 🌱 Level ${levelFor(total)}</div></button>
             ${isAdmin?'<button class="mini-delete" title="Profil-Daten löschen">🗑️</button>':''}`;
           row.querySelector(".student-open").onclick=async()=>{
             const full=await loadStudent(s.id,{includePrivate:isAdmin});
@@ -623,7 +663,7 @@
       event.preventDefault();if(!isAdmin)return;
       studentFormError.textContent="";createStudentButton.disabled=true;createStudentButton.textContent="Erstellen…";
       const name=newStudentName.value.trim(),age=Number(newStudentAge.value)||7,batch=newStudentBatch.value;
-      const email=newStudentEmail.value.trim().toLowerCase(),password=newStudentPassword.value,parent=newStudentParent.value.trim();
+      const studentId=normalizeStudentId(newStudentEmail.value),email=`${studentId}@${STUDENT_LOGIN_DOMAIN}`,password=newStudentPassword.value,parent=newStudentParent.value.trim();
       let createdUser=null;
       try{
         if(!secondaryApp){
@@ -633,11 +673,11 @@
         const cred=await secondaryAuth.createUserWithEmailAndPassword(email,password);
         createdUser=cred.user;
         const uid=createdUser.uid;
-        await db.collection("members").doc(uid).set({name,age,avatar:"🌷",batch,role:"student",email});
+        await db.collection("members").doc(uid).set({name,age,avatar:"🌷",batch,role:"student",studentId,email});
         await db.collection("progress").doc(uid).set({userId:uid,batch,records:{},stars:0,surahs:0,asma:0,words:0,duas:0});
         await db.collection("privateProfiles").doc(uid).set({parent});
         await secondaryAuth.signOut();
-        studentModal.classList.add("hidden");showToast("Schülerkonto erstellt ✓");await openBatch(batch);
+        studentModal.classList.add("hidden");alert(`Schülerkonto erstellt!\n\nStudent-ID: ${studentId}\nPasswort: ${password}\n\nBitte diese Zugangsdaten sicher an die Eltern weitergeben.`);showToast("Schülerkonto erstellt ✓");await openBatch(batch);
       }catch(e){
         if(createdUser){try{await createdUser.delete()}catch(_){}}
         studentFormError.textContent=friendlyError(e);
@@ -656,12 +696,69 @@
     }
     function openRewards(){closeDrawerFn();buildRewards();rewardsPage.classList.add("open")}
 
+
+    async function createParentStudentAccount(event){
+      event.preventDefault();
+      signupError.textContent="";
+      const name=signupStudentName.value.trim();
+      const age=Number(signupStudentAge.value)||7;
+      const batch=signupBatch.value;
+      const inviteCode=signupInviteCode.value.trim().toUpperCase();
+      const studentId=normalizeStudentId(signupStudentId.value);
+      const email=`${studentId}@${STUDENT_LOGIN_DOMAIN}`;
+      const password=signupPassword.value;
+      const password2=signupPassword2.value;
+      const parent=signupParentName.value.trim();
+
+      if(password!==password2){
+        signupError.textContent="Die Passwörter stimmen nicht überein.";
+        return;
+      }
+      signupSubmitButton.disabled=true;
+      signupSubmitButton.textContent="Erstellen…";
+      let user=null;
+      try{
+        const cred=await auth.createUserWithEmailAndPassword(email,password);
+        user=cred.user;
+        const uid=user.uid;
+
+        await db.collection("members").doc(uid).set({
+          name,age,avatar:"🌷",batch,role:"student",studentId,email,inviteCode
+        });
+        await db.collection("progress").doc(uid).set({
+          userId:uid,batch,records:{},stars:0,surahs:0,asma:0,words:0,duas:0
+        });
+        await db.collection("privateProfiles").doc(uid).set({parent});
+
+        signupModal.classList.add("hidden");
+        showToast("Konto erstellt ✓");
+        // Firebase keeps the user signed in on this device by default.
+      }catch(e){
+        signupError.textContent=friendlyError(e);
+        if(user){
+          try{await user.delete()}catch(_){}
+        }
+      }finally{
+        signupSubmitButton.disabled=false;
+        signupSubmitButton.textContent="Konto erstellen";
+      }
+    }
+
     loginForm.addEventListener("submit",async e=>{
       e.preventDefault();loginError.textContent="";loginButton.disabled=true;loginButton.textContent="Anmelden…";
-      try{await auth.signInWithEmailAndPassword(loginEmail.value.trim(),loginPassword.value)}
+      try{await auth.signInWithEmailAndPassword(loginIdentifierToEmail(loginEmail.value),loginPassword.value)}
       catch(err){loginError.textContent=friendlyError(err)}
       finally{loginButton.disabled=false;loginButton.textContent="Anmelden"}
     });
+
+    openSignupButton.onclick=()=>{
+      signupForm.reset();signupStudentAge.value=7;signupError.textContent="";
+      signupModal.classList.remove("hidden");
+    };
+    closeSignupModal.onclick=()=>signupModal.classList.add("hidden");
+    signupModal.addEventListener("click",e=>{if(e.target===signupModal)signupModal.classList.add("hidden")});
+    signupForm.addEventListener("submit",createParentStudentAccount);
+
     logoutButton.onclick=async()=>{closeDrawerFn();await auth.signOut()};
     studentForm.addEventListener("submit",createStudentAccount);
     closeStudentModal.onclick=()=>studentModal.classList.add("hidden");
@@ -683,7 +780,7 @@
     document.querySelectorAll("[data-scroll]").forEach(b=>b.onclick=()=>{closeDrawerFn();$(b.dataset.scroll.slice(1)).scrollIntoView({behavior:"smooth"})});
 
     facebookLink.href=FACEBOOK_URL;facebookHint.classList.add("hidden");
-    BATCHES.forEach(b=>{const o=document.createElement("option");o.value=o.textContent=b;newStudentBatch.appendChild(o)});
+    BATCHES.forEach(b=>{const o=document.createElement("option");o.value=o.textContent=b;newStudentBatch.appendChild(o);const s=document.createElement("option");s.value=s.textContent=b;signupBatch.appendChild(s)});
 
     auth.onAuthStateChanged(async user=>{
       profilePage.classList.remove("open");studentsPage.classList.remove("open");rewardsPage.classList.remove("open");

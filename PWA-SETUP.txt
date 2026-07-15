@@ -21,3 +21,16 @@ Notes:
 - Update service-worker.js CACHE_NAME (v1 to v2, etc.) when future releases need a forced cache refresh.
 
 Logo update: Uses the official Iqra Future Generation logo for app icon, favicon, and website branding.
+
+Student-ID login:
+- Teacher creates a Student-ID such as maryam-b1.
+- The app internally uses maryam-b1@iqra.local for Firebase Authentication.
+- Students type only maryam-b1 plus their password.
+- Teachers continue to log in with teacher.iqra2023@gmail.com.
+
+Parent self-registration:
+1. Teacher logs in once after uploading this update. This creates the invite-code documents in Firestore.
+2. Replace Firestore Rules with the included firestore.rules and Publish.
+3. Give each batch only its own invite code from BATCH-INVITE-CODES.txt.
+4. Parents tap "Neues Schülerkonto erstellen", enter the correct batch code, Student-ID and password.
+5. Firebase keeps the login saved on that device until the user taps Abmelden.
