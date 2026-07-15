@@ -1,0 +1,23 @@
+IQRA FUTURE GENERATION – PWA UPDATE
+
+Upload EVERY file in this folder to the root of the GitHub repository.
+Replace the existing index.html.
+
+After deployment:
+iPhone/iPad:
+1. Open the website in Safari.
+2. Tap Share.
+3. Tap Add to Home Screen.
+4. Tap Add.
+
+Android:
+1. Open the website in Chrome.
+2. Open the menu.
+3. Tap Install app or Add to Home screen.
+
+Notes:
+- The app interface and PDF trackers can reopen from cache.
+- Firebase login, syncing, and student data still need an internet connection.
+- Update service-worker.js CACHE_NAME (v1 to v2, etc.) when future releases need a forced cache refresh.
+
+Logo update: Uses the official Iqra Future Generation logo for app icon, favicon, and website branding.

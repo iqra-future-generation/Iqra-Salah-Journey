@@ -99,7 +99,26 @@
     .sync-pill.ok{color:#17602c}.sync-pill.bad{color:#a72c2c}
     .student-meta{color:#727672;font-size:13px;font-weight:800;margin-top:3px}
 
+  
+    .download-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .download-card{background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow);text-align:center}
+    .download-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:18px;border:1px solid #e1ead9}
+    .download-card h3{color:var(--green);margin:14px 0 6px}
+    .download-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .download-actions a{display:block;text-decoration:none;border-radius:14px;padding:12px 8px;font-weight:900}
+    .pdf-open{background:#edf7df;color:#17602c}
+    .pdf-download{background:#2f9c3e;color:#fff}
+    @media(max-width:700px){.download-grid{grid-template-columns:1fr}}
+
   </style>
+
+  <meta name="theme-color" content="#2f9c3e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Iqra Future">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
 </head>
 <body>
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
@@ -111,6 +130,7 @@
     <button class="drawer-item" id="drawerRewards">🎁 Belohnungen</button>
     <button class="drawer-item" id="drawerProfile">👤 Profil</button>
     <button class="drawer-item" id="drawerStudents">👩‍🏫 Batches & Schüler</button>
+    <button class="drawer-item" id="drawerDownloads">📄 Salah-Tracker PDF</button>
     <button class="drawer-item logout" id="logoutButton">🚪 Abmelden</button>
     <a class="drawer-item" href="https://www.google.com/maps/search/?api=1&query=MDI+Center+Otto-Hahn-Stra%C3%9Fe+2+85609+Aschheim" target="_blank">🕌 MDI Center besuchen</a>
     <div class="drawer-footer">Iqra Future Generation<br>under Munich Dawah Initiative (MDI)</div>
@@ -182,6 +202,35 @@
     </div>
   </section>
 
+
+  <section class="page" id="downloadsPage">
+    <div class="page-top"><button class="back" id="closeDownloads">←</button><div class="page-title">Salah-Tracker PDF</div><div style="width:48px"></div></div>
+    <div class="container">
+      <div class="profile-card" style="text-align:center">
+        <h3 class="profile-heading">📄 Druckbare Monats-Tracker</h3>
+        <p>Öffne oder lade den passenden Salah-Tracker als PDF herunter.</p>
+      </div>
+      <div class="download-grid">
+        <article class="download-card">
+          <img src="A2CDCF3C-20F4-4A11-BFFC-277BAC953323.jpeg" alt="Salah-Tracker für Jungen">
+          <h3>Tracker für Jungen</h3>
+          <div class="download-actions">
+            <a class="pdf-open" href="Salah-Tracker-Jungen.pdf" target="_blank" rel="noopener">Öffnen</a>
+            <a class="pdf-download" href="Salah-Tracker-Jungen.pdf" download>PDF laden</a>
+          </div>
+        </article>
+        <article class="download-card">
+          <img src="824B99E3-92AB-447A-A7DF-1E09AA39543B.jpeg" alt="Salah-Tracker für Mädchen">
+          <h3>Tracker für Mädchen</h3>
+          <div class="download-actions">
+            <a class="pdf-open" href="Salah-Tracker-Maedchen.pdf" target="_blank" rel="noopener">Öffnen</a>
+            <a class="pdf-download" href="Salah-Tracker-Maedchen.pdf" download>PDF laden</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="page" id="rewardsPage">
     <div class="page-top"><button class="back" id="closeRewards">←</button><div class="page-title">Belohnungen</div><div style="width:48px"></div></div>
     <div class="container">
@@ -246,7 +295,7 @@
 
     const $=id=>document.getElementById(id);
     const els={};
-    ["drawerBackdrop","menuDrawer","drawerName","closeDrawer","drawerRewards","drawerProfile","drawerStudents","logoutButton","menuBtn","profileBtn","studentName","todayDate","todayCount","starCount","monthPercent","gardenSection","plantEmoji","milestones","prayerSection","prayerList","rewardStars","ring","ringPct","monthSalah","monthGoal","remainingText","navHome","navGarden","navPrayers","navRewards","navProfile","profilePage","closeProfile","selectedAvatar","profileDisplayName","profileDisplayAge","nameField","ageField","batchField","parentField","avatarGrid","profileTotalSalah","profileTotalStars","profileGardenLevel","profileBadgesButton","profileBadgeCount","surahField","asmaField","wordField","duaField","facebookLink","facebookHint","saveProfile","readonlyNote","studentsPage","closeStudents","studentsPageTitle","showAllBatches","addStudentButton","batchGrid","studentList","emptyBatch","rewardsPage","closeRewards","rewardPageStars","badgeGrid","monthTable","toast","authScreen","loginForm","loginEmail","loginPassword","loginButton","loginError","studentModal","studentForm","closeStudentModal","newStudentName","newStudentAge","newStudentBatch","newStudentEmail","newStudentPassword","newStudentParent","createStudentButton","studentFormError","syncPill"].forEach(id=>els[id]=$(id));
+    ["drawerBackdrop","menuDrawer","drawerName","closeDrawer","drawerRewards","drawerProfile","drawerStudents","drawerDownloads","logoutButton","menuBtn","profileBtn","studentName","todayDate","todayCount","starCount","monthPercent","gardenSection","plantEmoji","milestones","prayerSection","prayerList","rewardStars","ring","ringPct","monthSalah","monthGoal","remainingText","navHome","navGarden","navPrayers","navRewards","navProfile","profilePage","closeProfile","selectedAvatar","profileDisplayName","profileDisplayAge","nameField","ageField","batchField","parentField","avatarGrid","profileTotalSalah","profileTotalStars","profileGardenLevel","profileBadgesButton","profileBadgeCount","surahField","asmaField","wordField","duaField","facebookLink","facebookHint","saveProfile","readonlyNote","studentsPage","closeStudents","downloadsPage","closeDownloads","studentsPageTitle","showAllBatches","addStudentButton","batchGrid","studentList","emptyBatch","rewardsPage","closeRewards","rewardPageStars","badgeGrid","monthTable","toast","authScreen","loginForm","loginEmail","loginPassword","loginButton","loginError","studentModal","studentForm","closeStudentModal","newStudentName","newStudentAge","newStudentBatch","newStudentEmail","newStudentPassword","newStudentParent","createStudentButton","studentFormError","syncPill"].forEach(id=>els[id]=$(id));
     Object.assign(window,els);
 
     firebase.initializeApp(firebaseConfig);
@@ -622,6 +671,8 @@
     profileBtn.onclick=openOwnProfile;drawerProfile.onclick=openOwnProfile;navProfile.onclick=openOwnProfile;
     saveProfile.onclick=saveProfileData;closeProfile.onclick=()=>{profilePage.classList.remove("open");displayState=ownState;render()};
     drawerStudents.onclick=openStudents;closeStudents.onclick=()=>{studentsPage.classList.remove("open");displayState=ownState;render()};
+    drawerDownloads.onclick=()=>{closeDrawerFn();profilePage.classList.remove("open");studentsPage.classList.remove("open");rewardsPage.classList.remove("open");downloadsPage.classList.add("open")};
+    closeDownloads.onclick=()=>downloadsPage.classList.remove("open");
     showAllBatches.onclick=renderBatchOverview;addStudentButton.onclick=showStudentModal;
     navRewards.onclick=openRewards;drawerRewards.onclick=openRewards;closeRewards.onclick=()=>{rewardsPage.classList.remove("open");displayState=ownState;render()};
     profileBadgesButton.onclick=()=>{profilePage.classList.remove("open");openRewards()};
@@ -647,5 +698,14 @@
       }
     });
   </script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js").catch(console.error);
+      });
+    }
+  </script>
+
 </body>
 </html>
