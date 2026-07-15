@@ -1,4 +1,4 @@
-const CACHE_NAME = "iqra-teacher-dashboard-v6";
+const CACHE_NAME = "iqra-signup-repair-v9";
 const APP_SHELL = [
   "./",
   "./index.html",
