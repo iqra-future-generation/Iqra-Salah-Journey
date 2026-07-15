@@ -7,5 +7,3 @@ Batch 4: IQRA-4-LJ6HSF
 Batch 5: IQRA-5-MCU7TK
 Batch 6: IQRA-6-B9YDE5
 Batch 7: IQRA-7-3U3JJC
-
-Share only the correct batch code privately with that batch's parents.

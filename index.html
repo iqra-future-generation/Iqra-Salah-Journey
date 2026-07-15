@@ -110,6 +110,31 @@
     .pdf-download{background:#2f9c3e;color:#fff}
     @media(max-width:700px){.download-grid{grid-template-columns:1fr}}
 
+  
+    .teacher-dashboard{display:none;min-height:100vh;padding:18px 18px 110px;background:linear-gradient(180deg,#eef7df,#f8fbf3)}
+    .teacher-dashboard.open{display:block}
+    .teacher-top{max-width:1050px;margin:auto;display:flex;align-items:center;gap:14px}
+    .teacher-top img{width:68px;height:68px;border-radius:18px;object-fit:cover;box-shadow:var(--shadow)}
+    .teacher-top h1{margin:0;color:#174d28;font-size:clamp(27px,5vw,44px)}
+    .teacher-top p{margin:5px 0 0;color:#667169;font-weight:800}
+    .teacher-wrap{max-width:1050px;margin:18px auto 0}
+    .teacher-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .teacher-stat{background:#fff;border-radius:22px;padding:18px 12px;text-align:center;box-shadow:var(--shadow)}
+    .teacher-stat .emoji{font-size:30px}.teacher-stat strong{display:block;font-size:31px;color:#17602c;margin-top:6px}
+    .teacher-stat span{font-weight:800;color:#697169}
+    .teacher-panel{background:#fff;border-radius:25px;padding:20px;margin-top:17px;box-shadow:var(--shadow)}
+    .teacher-panel h2{margin:0 0 14px;color:#174d28}
+    .teacher-description{width:100%;min-height:150px;padding:14px;border:2px solid #dfe9d7;border-radius:16px;font:inherit;resize:vertical;background:#fbfdf8}
+    .teacher-save{border:0;border-radius:14px;padding:12px 18px;background:#2f9c3e;color:#fff;font-weight:900;margin-top:10px}
+    .teacher-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .teacher-action{border:0;border-radius:19px;padding:18px 10px;background:#edf7df;color:#17602c;font-weight:900;font-size:16px}
+    .teacher-batches{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .teacher-batch{border:2px solid #e2ecd9;background:#f9fcf5;border-radius:19px;padding:16px;text-align:left}
+    .teacher-batch strong{font-size:20px;color:#174d28}.teacher-batch span{float:right;color:#6b716c;font-weight:900}
+    .teacher-refresh{margin-left:auto;border:0;border-radius:14px;padding:11px 14px;background:#fff;color:#17602c;font-weight:900;box-shadow:var(--shadow)}
+    @media(max-width:850px){.teacher-summary{grid-template-columns:repeat(2,1fr)}.teacher-actions{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.teacher-batches{grid-template-columns:1fr}.teacher-summary{grid-template-columns:1fr 1fr}.teacher-stat:last-child{grid-column:1/-1}}
+
   </style>
 
   <meta name="theme-color" content="#2f9c3e">
@@ -136,7 +161,53 @@
     <div class="drawer-footer">Iqra Future Generation<br>under Munich Dawah Initiative (MDI)</div>
   </aside>
 
-  <main class="app">
+
+  <section class="teacher-dashboard" id="teacherDashboard">
+    <div class="teacher-top">
+      <img src="iqra-logo.png" alt="Iqra Future Generation">
+      <div>
+        <h1>Assalamu alaikum, Teacher!</h1>
+        <p>Iqra Future Generation · Admin Dashboard</p>
+      </div>
+      <button class="teacher-refresh" id="teacherRefresh">↻ Aktualisieren</button>
+    </div>
+    <div class="teacher-wrap">
+      <section class="teacher-summary">
+        <article class="teacher-stat"><div class="emoji">👧</div><strong id="teacherTotalStudents">0</strong><span>Schüler</span></article>
+        <article class="teacher-stat"><div class="emoji">📚</div><strong id="teacherTotalBatches">7</strong><span>Batches</span></article>
+        <article class="teacher-stat"><div class="emoji">🕌</div><strong id="teacherTodayUpdates">0</strong><span>Heute aktiv</span></article>
+        <article class="teacher-stat"><div class="emoji">⭐</div><strong id="teacherMonthStars">0</strong><span>Sterne im Monat</span></article>
+        <article class="teacher-stat"><div class="emoji">🌱</div><strong id="teacherActiveStudents">0</strong><span>Aktive Schüler</span></article>
+      </section>
+
+      <section class="teacher-panel">
+        <h2>👩‍🏫 Unsere Lehrkräfte</h2>
+        <p style="color:#68706a">Admins können hier Namen, Zuständigkeiten oder kurze Informationen über die Lehrkräfte eintragen.</p>
+        <textarea class="teacher-description" id="teacherDescription" placeholder="Zum Beispiel:
+Umm Maryam – Batch 1 und Batch 2
+Umm Aisha – Batch 3
+Vertretung: ..."></textarea>
+        <button class="teacher-save" id="saveTeacherDescription">Beschreibung speichern</button>
+      </section>
+
+      <section class="teacher-panel">
+        <h2>⚡ Schnellzugriff</h2>
+        <div class="teacher-actions">
+          <button class="teacher-action" id="teacherOpenBatches">👥 Batches & Schüler</button>
+          <button class="teacher-action" id="teacherAddStudent">＋ Schüler hinzufügen</button>
+          <button class="teacher-action" id="teacherOpenTrackers">📄 Salah-Tracker PDF</button>
+          <button class="teacher-action" id="teacherLogout">🚪 Abmelden</button>
+        </div>
+      </section>
+
+      <section class="teacher-panel">
+        <h2>📚 Batches</h2>
+        <div class="teacher-batches" id="teacherBatchGrid"></div>
+      </section>
+    </div>
+  </section>
+
+  <main class="app" id="studentApp">
     <header class="topbar"><button class="round" id="menuBtn">☰</button><div class="brand">🌱 MEIN SALAH GARTEN</div><button class="round" id="profileBtn">👤</button></header>
     <section class="hero"><h1>Assalamu alaikum,<br><span id="studentName">Maryam</span>!</h1><div class="date" id="todayDate"></div></section>
     <section class="stats">
@@ -157,7 +228,7 @@
     <section class="section"><h2 class="title">🕌 MDI Center</h2><p><strong>Munich Dawah Initiative (MDI)</strong></p><p>Otto-Hahn-Straße 2<br>85609 Aschheim</p><a class="card-link" href="https://www.google.com/maps/search/?api=1&query=MDI+Center+Otto-Hahn-Stra%C3%9Fe+2+85609+Aschheim" target="_blank">📍 In Google Maps öffnen</a></section>
   </main>
 
-  <nav class="nav"><button class="active" id="navHome"><span class="ni">🏠</span>Home</button><button id="navGarden"><span class="ni">🌱</span>Garten</button><button id="navPrayers"><span class="ni">🕌</span>Gebete</button><button id="navRewards"><span class="ni">🎁</span>Belohnungen</button><button id="navProfile"><span class="ni">👤</span>Profil</button></nav>
+  <nav class="nav" id="studentNav"><button class="active" id="navHome"><span class="ni">🏠</span>Home</button><button id="navGarden"><span class="ni">🌱</span>Garten</button><button id="navPrayers"><span class="ni">🕌</span>Gebete</button><button id="navRewards"><span class="ni">🎁</span>Belohnungen</button><button id="navProfile"><span class="ni">👤</span>Profil</button></nav>
 
   <section class="profile-page" id="profilePage">
     <div class="page-top"><button class="back" id="closeProfile">←</button><div class="page-title">Mein Profil</div><div style="width:48px"></div></div>
@@ -317,7 +388,7 @@
 
     const $=id=>document.getElementById(id);
     const els={};
-    ["drawerBackdrop","menuDrawer","drawerName","closeDrawer","drawerRewards","drawerProfile","drawerStudents","drawerDownloads","logoutButton","menuBtn","profileBtn","studentName","todayDate","todayCount","starCount","monthPercent","gardenSection","plantEmoji","milestones","prayerSection","prayerList","rewardStars","ring","ringPct","monthSalah","monthGoal","remainingText","navHome","navGarden","navPrayers","navRewards","navProfile","profilePage","closeProfile","selectedAvatar","profileDisplayName","profileDisplayAge","nameField","ageField","batchField","parentField","avatarGrid","profileTotalSalah","profileTotalStars","profileGardenLevel","profileBadgesButton","profileBadgeCount","surahField","asmaField","wordField","duaField","facebookLink","facebookHint","saveProfile","readonlyNote","studentsPage","closeStudents","downloadsPage","closeDownloads","studentsPageTitle","showAllBatches","addStudentButton","batchGrid","studentList","emptyBatch","rewardsPage","closeRewards","rewardPageStars","badgeGrid","monthTable","toast","authScreen","loginForm","loginEmail","loginPassword","loginButton","openSignupButton","loginError","signupModal","signupForm","closeSignupModal","signupStudentName","signupStudentAge","signupBatch","signupInviteCode","signupStudentId","signupPassword","signupPassword2","signupParentName","signupSubmitButton","signupError","studentModal","studentForm","closeStudentModal","newStudentName","newStudentAge","newStudentBatch","newStudentEmail","newStudentPassword","newStudentParent","createStudentButton","studentFormError","syncPill"].forEach(id=>els[id]=$(id));
+    ["drawerBackdrop","menuDrawer","drawerName","closeDrawer","drawerRewards","drawerProfile","drawerStudents","drawerDownloads","logoutButton","menuBtn","profileBtn","studentName","todayDate","todayCount","starCount","monthPercent","gardenSection","plantEmoji","milestones","prayerSection","prayerList","rewardStars","ring","ringPct","monthSalah","monthGoal","remainingText","navHome","navGarden","navPrayers","navRewards","navProfile","profilePage","closeProfile","selectedAvatar","profileDisplayName","profileDisplayAge","nameField","ageField","batchField","parentField","avatarGrid","profileTotalSalah","profileTotalStars","profileGardenLevel","profileBadgesButton","profileBadgeCount","surahField","asmaField","wordField","duaField","facebookLink","facebookHint","saveProfile","readonlyNote","studentsPage","closeStudents","downloadsPage","closeDownloads","studentsPageTitle","showAllBatches","addStudentButton","batchGrid","studentList","emptyBatch","rewardsPage","closeRewards","rewardPageStars","badgeGrid","monthTable","toast","authScreen","loginForm","loginEmail","loginPassword","loginButton","openSignupButton","loginError","signupModal","signupForm","closeSignupModal","signupStudentName","signupStudentAge","signupBatch","signupInviteCode","signupStudentId","signupPassword","signupPassword2","signupParentName","signupSubmitButton","signupError","studentModal","studentForm","closeStudentModal","newStudentName","newStudentAge","newStudentBatch","newStudentEmail","newStudentPassword","newStudentParent","createStudentButton","studentFormError","syncPill","teacherDashboard","studentApp","studentNav","teacherRefresh","teacherTotalStudents","teacherTotalBatches","teacherTodayUpdates","teacherMonthStars","teacherActiveStudents","teacherDescription","saveTeacherDescription","teacherOpenBatches","teacherAddStudent","teacherOpenTrackers","teacherLogout","teacherBatchGrid"].forEach(id=>els[id]=$(id));
     Object.assign(window,els);
 
     firebase.initializeApp(firebaseConfig);
@@ -429,6 +500,97 @@
       }
     }
 
+
+    function currentMonthStars(records={}){
+      return Object.entries(records)
+        .filter(([key])=>key.startsWith(monthKey()))
+        .reduce((sum,[,record])=>{
+          const count=PRAYERS.filter(p=>record?.[p.key]).length;
+          return sum + count + (count===5 ? 5 : 0);
+        },0);
+    }
+
+    async function loadTeacherDashboard(){
+      if(!isAdmin)return;
+      setSync("Dashboard laden…");
+      try{
+        const [membersSnap,progressSnap,settingsSnap]=await Promise.all([
+          db.collection("members").where("role","==","student").get(),
+          db.collection("progress").get(),
+          db.collection("settings").doc("teacherDashboard").get()
+        ]);
+        const students=membersSnap.docs.map(memberFromDoc);
+        const progressMap=new Map(progressSnap.docs.map(d=>[d.id,d.data()]));
+        const today=dateKey();
+        let todayActive=0,activeStudents=0,monthStars=0;
+
+        students.forEach(student=>{
+          const progress=progressMap.get(student.id)||{};
+          const records=progress.records||{};
+          const todayRecordData=records[today]||{};
+          if(PRAYERS.some(p=>todayRecordData[p.key]))todayActive++;
+          if(Object.keys(records).some(key=>key.startsWith(monthKey()) && PRAYERS.some(p=>records[key]?.[p.key])))activeStudents++;
+          monthStars+=currentMonthStars(records);
+        });
+
+        teacherTotalStudents.textContent=students.length;
+        teacherTotalBatches.textContent=BATCHES.length;
+        teacherTodayUpdates.textContent=todayActive;
+        teacherMonthStars.textContent=monthStars;
+        teacherActiveStudents.textContent=activeStudents;
+        teacherDescription.value=settingsSnap.exists ? (settingsSnap.data().description||"") : "";
+
+        const counts={};BATCHES.forEach(b=>counts[b]=0);
+        students.forEach(s=>{if(counts[s.batch]!==undefined)counts[s.batch]++});
+        teacherBatchGrid.innerHTML="";
+        BATCHES.forEach(batch=>{
+          const button=document.createElement("button");
+          button.className="teacher-batch";
+          button.innerHTML=`<strong>📁 ${batch}</strong><span>${counts[batch]} Schüler ›</span>`;
+          button.onclick=async()=>{await openStudents();await openBatch(batch)};
+          teacherBatchGrid.appendChild(button);
+        });
+        setSync("Aktuell","ok");
+      }catch(error){
+        setSync("Fehler","bad");
+        showToast(friendlyError(error));
+      }
+    }
+
+    async function saveTeacherDescriptionData(){
+      if(!isAdmin)return;
+      setSync("Speichern…");
+      try{
+        await db.collection("settings").doc("teacherDashboard").set({
+          description:teacherDescription.value.trim(),
+          updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy:currentUser.email
+        },{merge:true});
+        setSync("Gespeichert","ok");
+        showToast("Lehrerbeschreibung gespeichert ✓");
+      }catch(error){
+        setSync("Fehler","bad");
+        showToast(friendlyError(error));
+      }
+    }
+
+    function showTeacherDashboard(){
+      teacherDashboard.classList.add("open");
+      studentApp.style.display="none";
+      studentNav.style.display="none";
+      profilePage.classList.remove("open");
+      studentsPage.classList.remove("open");
+      rewardsPage.classList.remove("open");
+      downloadsPage.classList.remove("open");
+      loadTeacherDashboard();
+    }
+
+    function showStudentExperience(){
+      teacherDashboard.classList.remove("open");
+      studentApp.style.display="";
+      studentNav.style.display="";
+    }
+
     async function initializeSession(user){
       currentUser=user;
       isAdmin=(user.email||"").toLowerCase()===ADMIN_EMAIL.toLowerCase();
@@ -441,7 +603,7 @@
       addStudentButton.classList.toggle("hidden",!isAdmin);
       render();
       setSync("Aktuell","ok");
-      if(isAdmin)setTimeout(openStudents,250);
+      if(isAdmin){showTeacherDashboard()}else{showStudentExperience()}
     }
 
     function todayRecord(){
@@ -759,6 +921,21 @@
     signupModal.addEventListener("click",e=>{if(e.target===signupModal)signupModal.classList.add("hidden")});
     signupForm.addEventListener("submit",createParentStudentAccount);
 
+
+    teacherRefresh.onclick=loadTeacherDashboard;
+    saveTeacherDescription.onclick=saveTeacherDescriptionData;
+    teacherOpenBatches.onclick=openStudents;
+    teacherAddStudent.onclick=()=>{
+      selectedBatch="Batch 1";
+      newStudentBatch.value="Batch 1";
+      showStudentModal();
+    };
+    teacherOpenTrackers.onclick=()=>{
+      teacherDashboard.classList.remove("open");
+      downloadsPage.classList.add("open");
+    };
+    teacherLogout.onclick=async()=>auth.signOut();
+
     logoutButton.onclick=async()=>{closeDrawerFn();await auth.signOut()};
     studentForm.addEventListener("submit",createStudentAccount);
     closeStudentModal.onclick=()=>studentModal.classList.add("hidden");
@@ -767,11 +944,11 @@
     menuBtn.onclick=openDrawer;closeDrawer.onclick=closeDrawerFn;drawerBackdrop.onclick=closeDrawerFn;
     profileBtn.onclick=openOwnProfile;drawerProfile.onclick=openOwnProfile;navProfile.onclick=openOwnProfile;
     saveProfile.onclick=saveProfileData;closeProfile.onclick=()=>{profilePage.classList.remove("open");displayState=ownState;render()};
-    drawerStudents.onclick=openStudents;closeStudents.onclick=()=>{studentsPage.classList.remove("open");displayState=ownState;render()};
+    drawerStudents.onclick=openStudents;closeStudents.onclick=()=>{studentsPage.classList.remove("open");displayState=ownState;render();if(isAdmin)showTeacherDashboard()};
     drawerDownloads.onclick=()=>{closeDrawerFn();profilePage.classList.remove("open");studentsPage.classList.remove("open");rewardsPage.classList.remove("open");downloadsPage.classList.add("open")};
-    closeDownloads.onclick=()=>downloadsPage.classList.remove("open");
+    closeDownloads.onclick=()=>{downloadsPage.classList.remove("open");if(isAdmin)showTeacherDashboard()};
     showAllBatches.onclick=renderBatchOverview;addStudentButton.onclick=showStudentModal;
-    navRewards.onclick=openRewards;drawerRewards.onclick=openRewards;closeRewards.onclick=()=>{rewardsPage.classList.remove("open");displayState=ownState;render()};
+    navRewards.onclick=openRewards;drawerRewards.onclick=openRewards;closeRewards.onclick=()=>{rewardsPage.classList.remove("open");displayState=ownState;render();if(isAdmin)showTeacherDashboard()};
     profileBadgesButton.onclick=()=>{profilePage.classList.remove("open");openRewards()};
     navHome.onclick=()=>{displayState=ownState;render();scrollTo({top:0,behavior:"smooth"})};
     navGarden.onclick=()=>gardenSection.scrollIntoView({behavior:"smooth"});
@@ -785,7 +962,7 @@
     auth.onAuthStateChanged(async user=>{
       profilePage.classList.remove("open");studentsPage.classList.remove("open");rewardsPage.classList.remove("open");
       if(!user){
-        currentUser=null;ownState=null;displayState=null;authScreen.classList.remove("hidden");syncPill.classList.add("hidden");
+        currentUser=null;ownState=null;displayState=null;teacherDashboard.classList.remove("open");studentApp.style.display="none";studentNav.style.display="none";authScreen.classList.remove("hidden");syncPill.classList.add("hidden");
         loginPassword.value="";return;
       }
       try{await initializeSession(user)}

@@ -1,4 +1,4 @@
-const CACHE_NAME = "iqra-parent-signup-v5";
+const CACHE_NAME = "iqra-teacher-dashboard-v6";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -30,10 +30,7 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
-
   const url = new URL(event.request.url);
-
-  // Keep Firebase and other third-party requests online.
   if (url.origin !== self.location.origin) return;
 
   if (event.request.mode === "navigate") {
