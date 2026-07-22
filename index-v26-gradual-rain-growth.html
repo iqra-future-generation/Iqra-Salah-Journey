@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#b7df72" />
+  <meta name="description" content="Iqra Future Generation Salah Journey" />
+  <title>Iqra Future Generation – Salah Journey</title>
+  <style>
+    :root{
+      --bg1:#c9ea90;--bg2:#eef8df;--card:#fff;--green:#165b2a;--green2:#2f9c3e;
+      --muted:#62656b;--line:#e2eadb;--shadow:0 12px 30px rgba(37,91,42,.13);--radius:26px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#18351f;
+      background:radial-gradient(circle at 10% 8%,rgba(255,255,255,.55),transparent 24%),
+      radial-gradient(circle at 92% 12%,rgba(255,255,255,.45),transparent 20%),
+      linear-gradient(180deg,var(--bg1),var(--bg2))}
+    button,input{font:inherit} button{cursor:pointer} a{color:inherit}.hidden{display:none!important}
+    .app{max-width:920px;margin:auto;padding:18px 14px 120px}
+    .topbar{display:grid;grid-template-columns:58px 1fr 58px;gap:12px;align-items:center}
+    .round,.brand{background:#fff;box-shadow:var(--shadow);border:0}
+    .round{width:56px;height:56px;border-radius:50%;font-size:26px;color:var(--green)}
+    .brand{border-radius:22px;padding:15px;text-align:center;font-weight:900;font-size:clamp(20px,4vw,34px);color:var(--green)}
+    .hero{text-align:center;padding:28px 8px 8px}.hero h1{font-size:clamp(38px,8vw,70px);line-height:1.02;margin:0;color:#0f5125}
+    .date{margin-top:12px;color:#6a657b;font-size:clamp(18px,3vw,28px);font-weight:800}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+    .stat,.section{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .stat{padding:20px 8px;text-align:center}.stat-icon{font-size:30px}
+    .stat-value{font-size:clamp(42px,7vw,62px);font-weight:900;color:#0f5125;line-height:1}
+    .stat-label{font-weight:800;color:#5e6265;font-size:20px;margin-top:8px}
+    .section{padding:18px;margin-top:18px}.title{display:flex;align-items:center;gap:10px;font-size:clamp(24px,4vw,34px);font-weight:900;color:#164f27;margin:0 0 14px}
+
+    .living-tree-wrap{
+      --growth-scale:1;
+      --growth-y:0px;
+      transform:translateY(var(--growth-y)) scale(var(--growth-scale));
+      transform-origin:50% 92%;
+      transition:transform 2.8s cubic-bezier(.22,.8,.2,1),filter 2s ease;
+    }
+    .living-tree-wrap.gradual-growing{
+      filter:brightness(1.08) saturate(1.12) drop-shadow(0 10px 16px rgba(57,126,65,.22));
+    }
+    .tree-main,.leaf-clusters,.tree-flowers,.tree-fruits{
+      transition:transform 2.8s cubic-bezier(.22,.8,.2,1),opacity 2.2s ease,filter 2s ease;
+      transform-origin:50% 92%;
+    }
+    .leaf-clusters{transform:scale(var(--leaf-scale,1))}
+    .tree-flowers{transform:scale(var(--flower-scale,1));opacity:var(--flower-opacity,1)}
+    .tree-fruits{transform:scale(var(--fruit-scale,1));opacity:var(--fruit-opacity,1)}
+    .garden.watering .living-tree-wrap{animation:none}
+    .garden.watering .tree-main{animation:none}
+    .garden{min-height:300px;border-radius:22px;position:relative;overflow:hidden;background:linear-gradient(#94d9ff 0 65%,#74c948 65%);border:1px solid #d9eddf}
+    .sun{position:absolute;right:10%;top:10%;width:64px;height:64px;border-radius:50%;background:#ffd53e;box-shadow:0 0 0 8px rgba(255,213,62,.25)}
+    .cloud{position:absolute;background:#fff;border-radius:40px;width:90px;height:30px;top:18%;left:8%}
+    .cloud:before,.cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}.cloud:before{width:40px;height:40px;left:10px;top:-18px}.cloud:after{width:48px;height:48px;right:10px;top:-24px}
+    .cloud.two{left:auto;right:18%;top:28%;transform:scale(.78)}
+    .plant-wrap{position:absolute;left:50%;bottom:13%;transform:translateX(-50%);text-align:center}.plant{font-size:108px;filter:drop-shadow(0 8px 4px rgba(0,0,0,.12))}
+    .soil{width:165px;height:50px;background:#71421f;border-radius:50%;margin:-22px auto 0;box-shadow:inset 0 -8px 0 rgba(0,0,0,.12)}
+    .living-tree-wrap{position:absolute;inset:18px 0 34px;display:grid;place-items:end center;pointer-events:none}
+    .living-tree{width:min(390px,88%);height:100%;overflow:visible}
+    .tree-sway{transform-origin:180px 248px;animation:treeSway 4.8s ease-in-out infinite}
+    .tree-shadow{fill:rgba(54,74,30,.24);animation:shadowBreathe 4.8s ease-in-out infinite}
+    .tree-seed,.tree-sprout,.tree-main,.branches,.leaf-clusters,.tree-flowers,.tree-fruits{opacity:0;transform-origin:center;transition:opacity .8s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+    .living-tree[data-stage="0"] .tree-seed{opacity:1}
+    .living-tree[data-stage="1"] .tree-sprout{opacity:1}
+    .living-tree[data-stage="2"] .tree-main,.living-tree[data-stage="3"] .tree-main,.living-tree[data-stage="4"] .tree-main,.living-tree[data-stage="5"] .tree-main,.living-tree[data-stage="6"] .tree-main{opacity:1}
+    .living-tree[data-stage="2"] .branches{opacity:.6;transform:scale(.76) translateY(30px)}
+    .living-tree[data-stage="2"] .leaf-clusters{opacity:.52;transform:scale(.62) translateY(45px)}
+    .living-tree[data-stage="3"] .branches{opacity:.85;transform:scale(.9) translateY(12px)}
+    .living-tree[data-stage="3"] .leaf-clusters{opacity:.76;transform:scale(.82) translateY(22px)}
+    .living-tree[data-stage="4"] .branches,.living-tree[data-stage="4"] .leaf-clusters,
+    .living-tree[data-stage="5"] .branches,.living-tree[data-stage="5"] .leaf-clusters,
+    .living-tree[data-stage="6"] .branches,.living-tree[data-stage="6"] .leaf-clusters{opacity:1;transform:scale(1)}
+    .leaf-clusters circle{fill:#4cae38;filter:drop-shadow(0 3px 2px rgba(35,92,32,.18))}
+    .c2 circle,.c4 circle{fill:#5cbd42}.c3 circle{fill:#3f9e31}
+    .tree-flowers{fill:#f59abb}.living-tree[data-stage="5"] .tree-flowers,.living-tree[data-stage="6"] .tree-flowers{opacity:1;animation:flowerBloom 1.4s ease both}
+    .tree-fruits{fill:#f5a623;stroke:#d77915;stroke-width:2}.living-tree[data-stage="6"] .tree-fruits{opacity:1;animation:fruitPop 1.1s ease both}
+    .tree-stage-chip{position:absolute;left:14px;bottom:12px;background:rgba(255,255,255,.9);border:1px solid rgba(24,91,42,.16);border-radius:999px;padding:7px 12px;font-weight:900;color:#185b2a;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+    .tree-care-message{position:absolute;right:14px;bottom:12px;max-width:58%;background:rgba(255,255,255,.9);border-radius:14px;padding:7px 11px;font-weight:800;color:#315536;text-align:right;font-size:13px;transition:.35s ease}.tree-care-message.celebrating{background:#fff9c8;color:#236235;box-shadow:0 0 0 4px rgba(255,236,117,.32),0 8px 22px rgba(55,113,62,.2);transform:translateY(-5px) scale(1.04)}
+    .water-shower{position:absolute;left:18%;top:-4%;width:64%;height:74%;pointer-events:none;z-index:7;opacity:0;overflow:visible}
+    .water-shower i{position:absolute;top:-20px;width:3px;height:18px;border-radius:999px;background:linear-gradient(180deg,rgba(235,252,255,.95),rgba(83,190,236,.9));box-shadow:0 0 7px rgba(109,210,247,.72);animation:gentleRainDrop var(--dur) linear var(--delay) infinite}
+    
+    .garden.watering .water-shower{animation:showerVisibility 3.6s .15s ease both}
+    
+    .garden.watering .tree-sway{animation:treeDrink 1.2s 1.2s ease,treeSway 4.8s 2.4s ease-in-out infinite}
+    .garden.growing .leaf-clusters{animation:leafGlow 1.3s ease}
+    .garden-sparkles{position:absolute;inset:0;pointer-events:none}
+    .garden-sparkles i{position:absolute;width:9px;height:9px;background:#ffe27a;clip-path:polygon(50% 0,62% 37%,100% 50%,62% 63%,50% 100%,38% 63%,0 50%,38% 37%);animation:sparkleFly 1.25s ease forwards}
+    .falling-leaf{animation:leafFall 4.5s ease-in-out infinite;transform-origin:center}
+    .garden.missed-day{filter:saturate(.88)}
+    .garden.missed-day:after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(116,137,151,.12),transparent 56%);pointer-events:none}
+    .garden.missed-day .sun{opacity:.72}
+    @keyframes treeSway{0%,100%{transform:rotate(-1.15deg)}50%{transform:rotate(1.15deg)}}
+    @keyframes shadowBreathe{0%,100%{transform:scaleX(.98)}50%{transform:scaleX(1.04)}}
+    20%,75%{opacity:1;transform:translate(0,0) rotate(-38deg)}100%{opacity:0;transform:translate(-8px,8px) rotate(-18deg)}}
+    18%{opacity:1;transform:translate(6px,0) rotate(-8deg)}
+      38%,76%{opacity:1;transform:translate(0,2px) rotate(-29deg)}
+      100%{opacity:0;transform:translate(38px,-12px) rotate(-10deg)}
+    }
+    @keyframes showerVisibility{
+      0%{opacity:0}
+      14%{opacity:1}
+      84%{opacity:1}
+      100%{opacity:0}
+    }
+      15%{opacity:1}
+      82%{opacity:1;transform:rotate(8deg) scale(1)}
+      100%{opacity:0}
+    }
+    @keyframes gentleRainDrop{
+      0%{opacity:0;transform:translate3d(0,-24px,0) scaleY(.7)}
+      12%{opacity:.95}
+      86%{opacity:.9}
+      100%{opacity:0;transform:translate3d(var(--drift),430px,0) scaleY(1.08)}
+    }
+      10%{opacity:1}
+      85%{opacity:1}
+      100%{opacity:0;transform:translate3d(var(--drift),190px,0) rotate(12deg) scale(1)}
+    }
+    .garden.watering .leaf-clusters{animation:leafRainDance 1.8s 1s ease-in-out}
+    .garden.watering .tree-flowers{animation:flowerBloom 1.4s 1.55s ease both}
+    @keyframes leafRainDance{
+      0%,100%{transform:rotate(0) scale(1);filter:brightness(1)}
+      20%{transform:rotate(-1.5deg) scale(1.015);filter:brightness(1.16)}
+      45%{transform:rotate(1.8deg) scale(1.035);filter:brightness(1.32) saturate(1.15)}
+      70%{transform:rotate(-1deg) scale(1.02);filter:brightness(1.18)}
+    }
+    .garden.watering .tree-shadow{animation:puddlePulse 2.1s 1s ease both}
+    @keyframes puddlePulse{
+      0%{fill:rgba(54,74,30,.24);transform:scaleX(.98)}
+      55%{fill:rgba(44,149,210,.30);transform:scaleX(1.2)}
+      100%{fill:rgba(54,74,30,.24);transform:scaleX(1)}
+    }
+    .garden.watering{box-shadow:inset 0 0 55px rgba(255,240,143,.36),0 18px 40px rgba(54,126,70,.18)}
+
+    @keyframes waterPour{0%{opacity:0;height:0}20%{opacity:1;height:100px}78%{opacity:1;height:100px}100%{opacity:0;height:0}}
+    @keyframes treeDrink{0%{transform:scale(1)}45%{transform:scale(.97,1.04)}75%{transform:scale(1.035,.98)}100%{transform:scale(1)}}
+    @keyframes leafGlow{0%{filter:brightness(1)}45%{filter:brightness(1.35) drop-shadow(0 0 10px rgba(255,233,116,.9))}100%{filter:brightness(1)}}
+    @keyframes flowerBloom{0%{transform:scale(.2);opacity:0}75%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+    @keyframes fruitPop{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.14);opacity:1}100%{transform:scale(1);opacity:1}}
+    @keyframes sparkleFly{0%{opacity:0;transform:translateY(20px) scale(.4) rotate(0)}30%{opacity:1}100%{opacity:0;transform:translateY(-65px) scale(1.15) rotate(160deg)}}
+    @keyframes leafFall{0%{opacity:0;transform:translate(0,-20px) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),95px) rotate(250deg)}}
+
+    .garden{
+      background:
+        radial-gradient(circle at 78% 18%,rgba(255,247,164,.78),transparent 24%),
+        linear-gradient(180deg,#b8ecff 0%,#e7f9ff 43%,#bce78d 44%,#71bd55 100%);
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .sky-glow{position:absolute;inset:-20%;background:radial-gradient(circle at 76% 25%,rgba(255,255,209,.78),transparent 20%);animation:skyBreath 6s ease-in-out infinite;pointer-events:none}
+    .floating-light{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,220,.85) 0 2px,transparent 3px);background-size:54px 58px;opacity:.38;animation:floatingDust 16s linear infinite;pointer-events:none}
+    .grass-layer{position:absolute;left:-3%;right:-3%;bottom:-1px;height:36%;pointer-events:none;transform-origin:bottom}
+    .grass-back{opacity:.62;background:
+      repeating-linear-gradient(78deg,transparent 0 13px,rgba(45,132,54,.45) 14px 16px,transparent 17px 27px);
+      animation:grassSway 5.5s ease-in-out infinite}
+    .grass-front{height:23%;opacity:.82;background:
+      repeating-linear-gradient(101deg,transparent 0 10px,rgba(28,115,44,.55) 11px 13px,transparent 14px 23px);
+      animation:grassSway 4.3s ease-in-out infinite reverse}
+    .butterfly{position:absolute;display:flex;align-items:center;z-index:9;opacity:.82;color:#ff77a8;font-size:26px;filter:drop-shadow(0 3px 3px rgba(77,40,92,.18));pointer-events:none}
+    .butterfly span{display:inline-block;transform-origin:center;animation:wingFlap .48s ease-in-out infinite alternate}
+    .butterfly b{display:block;width:4px;height:12px;border-radius:999px;background:#5d4a69;margin:0 -2px}
+    .butterfly-one{left:12%;top:22%;animation:butterflyPath1 11s ease-in-out infinite}
+    .butterfly-two{right:17%;top:44%;font-size:21px;color:#ffc54e;animation:butterflyPath2 14s ease-in-out infinite}
+    .water-ripples ellipse{fill:none;stroke:#62c8ed;stroke-width:3;opacity:0;transform-origin:180px 257px}
+    .garden.watering .water-ripples ellipse:first-child{animation:ripple 1.2s 1.1s ease-out 2}
+    .garden.watering .water-ripples ellipse:last-child{animation:ripple 1.35s 1.35s ease-out 2}
+    .garden.watering .living-tree{filter:drop-shadow(0 5px 6px rgba(40,110,42,.18))}
+    .garden.watering .tree-main{animation:treeFreshen 2.4s 1.1s ease both}
+    .garden.watering .tree-flowers{filter:drop-shadow(0 0 7px rgba(255,175,210,.72))}
+    .garden.watering .sun{animation:sunCelebrate 2.4s 1s ease both}
+    .garden.watering .sky-glow{animation:skyCelebrate 3.4s ease both}
+    .garden.watering .butterfly-one{animation:butterflyCelebrate1 3.4s ease both}
+    .garden.watering .butterfly-two{animation:butterflyCelebrate2 3.4s ease both}
+    .living-tree[data-stage="5"] .tree-flowers,
+    .living-tree[data-stage="6"] .tree-flowers{animation:gentleFlowerPulse 4.8s ease-in-out infinite}
+    .living-tree[data-stage="6"] .tree-fruits{animation:gentleFruitSwing 4.4s ease-in-out infinite}
+    @keyframes skyBreath{0%,100%{opacity:.72;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+    @keyframes floatingDust{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(54px,-58px,0)}}
+    @keyframes grassSway{0%,100%{transform:skewX(-1deg)}50%{transform:skewX(2deg)}}
+    @keyframes wingFlap{0%{transform:scaleX(.55) rotate(-8deg)}100%{transform:scaleX(1.15) rotate(8deg)}}
+    @keyframes butterflyPath1{0%,100%{transform:translate(0,0) rotate(-5deg)}30%{transform:translate(42px,-22px) rotate(8deg)}60%{transform:translate(88px,12px) rotate(-4deg)}82%{transform:translate(34px,34px) rotate(6deg)}}
+    @keyframes butterflyPath2{0%,100%{transform:translate(0,0) scale(.9)}32%{transform:translate(-58px,15px) scale(1)}62%{transform:translate(-98px,-28px) scale(.88)}84%{transform:translate(-36px,-10px) scale(1)}}
+    @keyframes butterflyCelebrate1{0%{transform:translate(0,0) scale(.8);opacity:.4}45%{transform:translate(115px,32px) scale(1.2);opacity:1}100%{transform:translate(170px,-24px) scale(.8);opacity:0}}
+    @keyframes butterflyCelebrate2{0%{transform:translate(0,0) scale(.7);opacity:.3}55%{transform:translate(-112px,-38px) scale(1.18);opacity:1}100%{transform:translate(-170px,5px) scale(.75);opacity:0}}
+    @keyframes ripple{0%{opacity:.8;transform:scale(.45)}100%{opacity:0;transform:scale(1.55)}}
+    @keyframes treeFreshen{0%{filter:saturate(.88) brightness(.95)}45%{filter:saturate(1.35) brightness(1.18)}100%{filter:saturate(1.08) brightness(1.04)}}
+    @keyframes sunCelebrate{0%{transform:scale(1);filter:brightness(1)}45%{transform:scale(1.18);filter:brightness(1.25) drop-shadow(0 0 16px rgba(255,231,117,.9))}100%{transform:scale(1);filter:brightness(1)}}
+    @keyframes skyCelebrate{0%{opacity:.55}45%{opacity:1;transform:scale(1.2)}100%{opacity:.72;transform:scale(1)}}
+    @keyframes gentleFlowerPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.035);filter:brightness(1.08)}}
+    @keyframes gentleFruitSwing{0%,100%{transform:rotate(-.7deg)}50%{transform:rotate(.8deg)}}
+    @media(max-width:600px){.water-shower{left:8%;top:-3%;width:84%;height:78%}.garden{min-height:330px}.living-tree-wrap{inset:26px 0 42px}.tree-care-message{font-size:11px;max-width:62%}.tree-stage-chip{font-size:12px}}
+
+    .milestones{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px}.mile{text-align:center;color:#4b4d52;font-weight:800;font-size:13px}
+    .mile-dot{width:50px;height:50px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;background:#f2f2f2;border:2px solid #ddd;color:#777;font-size:22px}.mile.active .mile-dot{background:#fff;border-color:#2aa31e;color:#1a7c22}
+    .message{text-align:center;color:#155325;font-weight:900;font-size:clamp(20px,3vw,28px);margin:16px 0 0}
+    .prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.prayer{border:2px solid #e8eddf;background:#fff;border-radius:20px;padding:12px 4px;text-align:center;transition:.18s}
+    .prayer.checked{background:#effadf;border-color:#64bd45}.picon{font-size:38px}.pname{font-weight:900;color:#174d28;margin:6px 0}
+    .check{width:30px;height:30px;border:3px solid #c9c6b8;border-radius:50%;margin:auto;display:grid;place-items:center}.checked .check{background:#53b839;border-color:#53b839;color:#fff}
+    .bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px}.rewardbox{background:#fff7d7;border-radius:20px;padding:16px;text-align:center}.bigstar{font-size:90px}
+    .progress{display:flex;gap:18px;align-items:center}.ring{--p:0;width:145px;height:145px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#72c44d calc(var(--p)*1%),#e5f0d8 0)}
+    .ring>div{width:112px;height:112px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center}
+    .month-table{width:100%;border-collapse:collapse;font-size:14px}.month-table th,.month-table td{padding:9px 6px;border-bottom:1px solid #edf0e9;text-align:center}.month-table th:first-child,.month-table td:first-child{text-align:left}
+    .badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.badge{background:#f7fbf3;border-radius:18px;padding:16px;text-align:center;border:2px solid #e3ebdc}.badge.locked{filter:grayscale(1);opacity:.55}.badge .emoji{font-size:42px}
+    .card-link{display:block;text-decoration:none;text-align:center;padding:13px;border-radius:15px;font-weight:900;background:#eef8df;color:#165b2a}.card-link.facebook{background:#eaf2ff;color:#2456a4}
+    .drawer-backdrop{position:fixed;inset:0;background:rgba(13,34,17,.42);opacity:0;visibility:hidden;transition:.25s;z-index:49}
+    .drawer{position:fixed;top:0;left:0;width:min(340px,86vw);height:100%;padding:24px 18px;background:#fff;box-shadow:12px 0 35px rgba(0,0,0,.18);transform:translateX(-105%);transition:.28s;z-index:50;display:flex;flex-direction:column;gap:10px}
+    .drawer.open{transform:translateX(0)}.drawer-backdrop.open{opacity:1;visibility:visible}.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px}
+    .drawer-head strong{font-size:22px;color:var(--green)}.drawer-head small{display:block;color:#777;margin-top:4px}.drawer-close{width:42px;height:42px;border:0;border-radius:50%;background:#edf7df;color:var(--green);font-size:28px}
+    .drawer-item{border:0;border-radius:16px;background:transparent;padding:15px;text-align:left;font-weight:900;font-size:18px;color:#29432f;text-decoration:none}.drawer-item:active{background:#eaf6d8}
+    .drawer-footer{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);text-align:center;color:#777;font-weight:800}
+    .profile-page,.page{position:fixed;inset:0;z-index:70;overflow-y:auto;padding:18px 14px 80px;background:linear-gradient(180deg,#b7df72,#eef8df);transform:translateX(105%);transition:.28s}
+    .profile-page.open,.page.open{transform:translateX(0)}.page-top{max-width:780px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+    .back{width:48px;height:48px;border:0;border-radius:50%;background:#fff;color:var(--green);font-size:25px;box-shadow:var(--shadow)}.page-title{font-size:28px;font-weight:900;color:var(--green)}
+    .container{max-width:780px;margin:18px auto}.profile-card{background:#fff;border-radius:25px;padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}.profile-heading{margin:0 0 14px;color:var(--green);font-size:22px}
+    .avatar-current{width:110px;height:110px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;background:#eef8df;font-size:60px}.profile-name{text-align:center;font-size:27px;font-weight:900;color:#174d28}.profile-age{text-align:center;color:#6a6c72;font-weight:800}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.fields label{font-weight:900;color:#36523d}.fields input{width:100%;margin-top:5px;padding:11px;border:2px solid #dfe9d7;border-radius:13px}
+    .avatar-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.avatar-choice{border:2px solid transparent;border-radius:17px;background:#f3fae8;padding:9px 3px;font-size:34px}.avatar-choice.selected{border-color:#48a83d;background:#e0f5c8}
+    .row{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:14px;background:#f7fbf3;font-weight:900;margin:8px 0}
+    .number-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.number-box{background:#f7fbf3;border-radius:16px;padding:12px}.number-box label{display:block;font-weight:900;margin-bottom:6px}.number-box input{width:100%;padding:10px;border:2px solid #dfe9d7;border-radius:12px}
+    .save{width:100%;border:0;border-radius:15px;padding:14px;background:#2f9c3e;color:#fff;font-weight:900;font-size:17px}
+    .fields select{width:100%;margin-top:5px;padding:11px;border:2px solid #dfe9d7;border-radius:13px;background:#fff}
+    .clickable-row{border:0;width:100%;color:inherit;text-align:left}.clickable-row:active{background:#e6f4d8}
+    .batch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .batch-card{border:2px solid #e2ecd9;background:#fff;border-radius:20px;padding:18px;text-align:left;box-shadow:var(--shadow)}
+    .batch-card strong{display:block;color:var(--green);font-size:21px}.batch-card span{display:block;color:#6b716c;margin-top:7px;font-weight:800}
+    .student-list{display:grid;gap:10px}.student-row{display:flex;align-items:center;gap:12px;background:#f7fbf3;border:2px solid #e3ecd9;border-radius:18px;padding:12px}
+    .student-open{flex:1;border:0;background:transparent;text-align:left;padding:0}.student-open strong{display:block;color:#174d28;font-size:18px}.student-open small{color:#727672}
+    .student-avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#eaf6d8;font-size:28px}
+    .mini-delete{border:0;background:#fff0f0;color:#a72c2c;border-radius:12px;padding:9px 11px;font-weight:900}
+    .batch-toolbar{display:flex;gap:10px;margin-bottom:14px}.batch-toolbar button{flex:1;border:0;border-radius:15px;padding:13px;font-weight:900}
+    .add-student{background:#2f9c3e;color:#fff}.all-batches{background:#edf7df;color:#17602c}
+    .nav{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);width:min(880px,calc(100% - 20px));display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.15);padding:8px;z-index:20}
+    .nav button{border:0;background:transparent;padding:8px;border-radius:16px;font-weight:800;color:#555}.nav button.active{background:#eaf6d8;color:#2b7b31}.ni{display:block;font-size:23px}
+    .toast{position:fixed;left:50%;bottom:105px;transform:translateX(-50%) translateY(20px);background:#173f24;color:#fff;padding:12px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s;z-index:100}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media(max-width:650px){.app{padding-left:10px;padding-right:10px}.stats{gap:8px}.prayers{gap:5px}.picon{font-size:28px}.pname{font-size:13px}.bottom{grid-template-columns:1fr}.avatar-grid{grid-template-columns:repeat(4,1fr)}.fields,.number-grid{grid-template-columns:1fr}.milestones{grid-template-columns:repeat(3,1fr);row-gap:12px}.badge-grid{grid-template-columns:1fr 1fr}.batch-grid{grid-template-columns:1fr}}
+  
+    .auth-screen{position:fixed;inset:0;z-index:200;background:linear-gradient(180deg,#b7df72,#eef8df);display:grid;place-items:center;padding:18px}
+    .auth-card{width:min(470px,100%);background:#fff;border-radius:28px;padding:26px;box-shadow:var(--shadow)}
+    .auth-logo{text-align:center;font-size:58px}.auth-card h1{text-align:center;color:var(--green);margin:8px 0}
+    .auth-card p{text-align:center;color:#68706a}.auth-card label,.modal-card label{display:block;font-weight:900;color:#36523d;margin-top:12px}
+    .auth-card input,.modal-card input,.modal-card select{width:100%;margin-top:6px;padding:13px;border:2px solid #dfe9d7;border-radius:14px;background:#fff}
+    .auth-submit{width:100%;margin-top:18px;border:0;border-radius:15px;padding:14px;background:#2f9c3e;color:#fff;font-weight:900}
+    .auth-error{min-height:22px;color:#a72c2c;text-align:center;font-weight:800;margin-top:10px}
+    .auth-note{font-size:13px!important}.logout{color:#a72c2c!important}
+    .modal-backdrop{position:fixed;inset:0;z-index:160;background:rgba(13,34,17,.55);display:grid;place-items:center;padding:18px}
+    .modal-card{width:min(520px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:26px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+    .modal-title{display:flex;justify-content:space-between;align-items:center}.modal-title h2{margin:0;color:var(--green)}
+    .modal-close{border:0;width:42px;height:42px;border-radius:50%;background:#edf7df;color:var(--green);font-size:25px}
+    .readonly-note{background:#fff4cd;border:1px solid #ecd57b;border-radius:14px;padding:11px;margin-bottom:12px;text-align:center;font-weight:800;color:#755c00}
+    .sync-pill{position:fixed;right:14px;top:14px;z-index:110;background:#fff;border-radius:999px;padding:8px 12px;box-shadow:var(--shadow);font-weight:800;color:#657068}
+    .sync-pill.ok{color:#17602c}.sync-pill.bad{color:#a72c2c}
+    .student-meta{color:#727672;font-size:13px;font-weight:800;margin-top:3px}
+
+  
+    .download-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .download-card{background:#fff;border-radius:24px;padding:18px;box-shadow:var(--shadow);text-align:center}
+    .download-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:18px;border:1px solid #e1ead9}
+    .download-card h3{color:var(--green);margin:14px 0 6px}
+    .download-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .download-actions a{display:block;text-decoration:none;border-radius:14px;padding:12px 8px;font-weight:900}
+    .pdf-open{background:#edf7df;color:#17602c}
+    .pdf-download{background:#2f9c3e;color:#fff}
+    @media(max-width:700px){.download-grid{grid-template-columns:1fr}}
+
+  
+    .teacher-dashboard{display:none;min-height:100vh;padding:18px 18px 110px;background:linear-gradient(180deg,#eef7df,#f8fbf3)}
+    .teacher-dashboard.open{display:block}
+    .teacher-top{max-width:1050px;margin:auto;display:flex;align-items:center;gap:14px}
+    .teacher-top img{width:68px;height:68px;border-radius:18px;object-fit:cover;box-shadow:var(--shadow)}
+    .teacher-top h1{margin:0;color:#174d28;font-size:clamp(27px,5vw,44px)}
+    .teacher-top p{margin:5px 0 0;color:#667169;font-weight:800}
+    .teacher-wrap{max-width:1050px;margin:18px auto 0}
+    .teacher-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .teacher-stat{background:#fff;border-radius:22px;padding:18px 12px;text-align:center;box-shadow:var(--shadow)}
+    .teacher-stat .emoji{font-size:30px}.teacher-stat strong{display:block;font-size:31px;color:#17602c;margin-top:6px}
+    .teacher-stat span{font-weight:800;color:#697169}
+    .teacher-panel{background:#fff;border-radius:25px;padding:20px;margin-top:17px;box-shadow:var(--shadow)}
+    .teacher-panel h2{margin:0 0 14px;color:#174d28}
+    .teacher-description{width:100%;min-height:150px;padding:14px;border:2px solid #dfe9d7;border-radius:16px;font:inherit;resize:vertical;background:#fbfdf8}
+    .teacher-save{border:0;border-radius:14px;padding:12px 18px;background:#2f9c3e;color:#fff;font-weight:900;margin-top:10px}
+    .teacher-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .teacher-action{border:0;border-radius:19px;padding:18px 10px;background:#edf7df;color:#17602c;font-weight:900;font-size:16px}
+    .teacher-batches{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .teacher-batch{border:2px solid #e2ecd9;background:#f9fcf5;border-radius:19px;padding:16px;text-align:left}
+    .teacher-batch strong{font-size:20px;color:#174d28}.teacher-batch span{float:right;color:#6b716c;font-weight:900}
+    .teacher-refresh{margin-left:auto;border:0;border-radius:14px;padding:11px 14px;background:#fff;color:#17602c;font-weight:900;box-shadow:var(--shadow)}
+    @media(max-width:850px){.teacher-summary{grid-template-columns:repeat(2,1fr)}.teacher-actions{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.teacher-batches{grid-template-columns:1fr}.teacher-summary{grid-template-columns:1fr 1fr}.teacher-stat:last-child{grid-column:1/-1}}
+
+  
+    .signup-page{position:fixed;inset:0;z-index:500;background:linear-gradient(180deg,#b7df72,#eef8df);overflow:auto;-webkit-overflow-scrolling:touch;padding:14px}
+    .signup-shell{width:min(620px,100%);margin:0 auto;background:#fff;border-radius:26px;padding:22px;box-shadow:var(--shadow)}
+    .signup-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .signup-head h2{margin:0;color:#17602c}
+    .signup-back{border:0;width:46px;height:46px;border-radius:50%;background:#edf7df;color:#17602c;font-size:25px;font-weight:900;touch-action:manipulation}
+    .signup-page label{display:block;font-weight:900;color:#36523d;margin-top:13px}
+    .signup-page input,.signup-page select{width:100%;margin-top:6px;padding:14px;border:2px solid #dfe9d7;border-radius:14px;background:#fff;font-size:16px}
+    .signup-page .auth-submit{min-height:54px;font-size:17px;touch-action:manipulation}
+    @media(max-width:600px){
+      .signup-page{padding:0;background:#fff}
+      .signup-shell{min-height:100dvh;border-radius:0;box-shadow:none;padding:18px 16px 34px}
+    }
+
+  
+    #profileBtn{font-size:30px;display:grid;place-items:center;line-height:1}
+    .lang-select{border:2px solid #dfe9d7;border-radius:12px;padding:9px 12px;background:#fff;color:#174d28;font-weight:900}
+    .profile-language-row{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#f7fbf3;border-radius:16px;padding:13px 14px;margin-top:14px}
+    .profile-language-row label{font-weight:900;color:#36523d}
+    
+    /* Little Ummah Post Office */
+    .post-office-page{position:fixed;inset:0;z-index:85;overflow-y:auto;padding:18px 14px 90px;background:linear-gradient(180deg,#ffe8b8,#f9f4df);transform:translateX(105%);transition:.28s}
+    .post-office-page.open{transform:translateX(0)}
+    .po-shell{max-width:900px;margin:18px auto}.po-hero{background:#fff9ea;border:3px solid #efc978;border-radius:28px;padding:22px;text-align:center;box-shadow:var(--shadow)}
+    .po-hero h2{margin:0;color:#7b4f12;font-size:clamp(28px,5vw,46px)}.po-hero p{color:#786b58;font-weight:800}
+    .po-home-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}.po-home-card{border:0;border-radius:22px;background:#fff;padding:22px 12px;box-shadow:var(--shadow);font-weight:900;color:#714b18;font-size:18px}.po-home-card .emoji{display:block;font-size:42px;margin-bottom:8px}
+    .po-panel{background:#fff;border-radius:24px;padding:18px;margin-top:16px;box-shadow:var(--shadow)}.po-panel h3{margin:0 0 12px;color:#704b18}.po-toolbar{display:flex;gap:10px;flex-wrap:wrap}.po-btn{border:0;border-radius:14px;padding:12px 15px;font-weight:900;background:#f1d28d;color:#57390c}.po-btn.primary{background:#2f9c3e;color:#fff}.po-btn.secondary{background:#eef6df;color:#205c2c}.po-btn.danger{background:#fff0f0;color:#9a2d2d}.po-btn:disabled{opacity:.55}
+    .po-pad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.po-pad{border:3px solid transparent;background:#fff;border-radius:18px;padding:7px;box-shadow:0 5px 16px rgba(0,0,0,.08)}.po-pad.selected{border-color:#2f9c3e}.po-pad img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px}.po-pad span{display:block;padding:7px 3px;font-weight:900;color:#5d4c35}
+    .po-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.po-fields label,.po-full-label{display:block;font-weight:900;color:#634a2a}.po-fields input,.po-fields select,.po-full-label input,.po-full-label textarea{width:100%;margin-top:5px;padding:11px;border:2px solid #ead8b2;border-radius:13px;background:#fff}.po-full-label textarea{min-height:120px;resize:vertical}
+    .po-letter-canvas{position:relative;width:min(100%,700px);aspect-ratio:3/4;margin:16px auto;background-size:cover;background-position:center;border-radius:18px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15)}.po-letter-canvas textarea{position:absolute;left:14%;right:14%;top:16%;bottom:14%;width:72%;height:70%;border:0;outline:0;resize:none;background:rgba(255,255,255,.35);border-radius:16px;padding:16px;font:600 18px/1.75 Georgia,serif;color:#253027;backdrop-filter:blur(1px)}
+    .po-upload{border:2px dashed #d9bd80;border-radius:18px;padding:14px;text-align:center;background:#fffaf0}.po-preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}.po-preview{position:relative}.po-preview img{width:100%;height:120px;object-fit:cover;border-radius:13px}.po-preview button{position:absolute;right:5px;top:5px;border:0;border-radius:50%;width:30px;height:30px;background:#fff;color:#a22;font-weight:900}
+    .po-list{display:grid;gap:12px}.po-letter-card{border:2px solid #eee0c3;border-radius:19px;padding:14px;background:#fffdf8;display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center}.po-letter-card img{width:70px;height:90px;object-fit:cover;border-radius:10px}.po-letter-card h4{margin:0 0 5px;color:#654515}.po-letter-card p{margin:3px 0;color:#6f6a61}.po-badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eaf6d8;color:#24612d;font-size:12px;font-weight:900}.po-empty{text-align:center;padding:30px;color:#786f61;font-weight:800}.po-view-letter{background-size:cover;background-position:center;border-radius:18px;min-height:620px;padding:16% 14% 14%;box-shadow:0 8px 24px rgba(0,0,0,.12)}.po-paper-text{background:rgba(255,255,255,.68);padding:18px;border-radius:16px;white-space:pre-wrap;font:600 18px/1.7 Georgia,serif;min-height:300px}.po-attachments{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.po-attachments img{width:100%;height:150px;object-fit:cover;border-radius:13px}.po-reply-box{border-top:2px dashed #e1ca99;margin-top:18px;padding-top:16px}
+    @media(max-width:650px){.po-pad-grid{grid-template-columns:repeat(2,1fr)}.po-fields{grid-template-columns:1fr}.po-letter-card{grid-template-columns:55px 1fr}.po-letter-card img{width:55px;height:72px}.po-letter-card .po-btn{grid-column:1/-1}.po-preview-grid,.po-attachments{grid-template-columns:repeat(2,1fr)}.po-letter-canvas textarea{font-size:16px;line-height:1.55}}
+
+  
+    /* Version 26: picture upload hidden until Firebase Storage is enabled */
+    .top-actions{display:flex;align-items:center;gap:8px}.letter-notify{position:relative;border:0;background:#fff;border-radius:50%;width:48px;height:48px;font-size:24px;box-shadow:0 4px 14px rgba(0,0,0,.10);cursor:pointer}.letter-notify .count{position:absolute;right:-3px;top:-4px;min-width:21px;height:21px;padding:0 5px;border-radius:999px;background:#d83b3b;color:#fff;font:800 12px/21px Arial}.letter-notify .count:empty{display:none}
+    .tracker-days{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.tracker-day{border:2px solid #dce8d5;background:#fff;border-radius:999px;padding:8px 12px;font-weight:800;color:#24522d;cursor:pointer}.tracker-day.active{background:#2f9c3e;color:#fff;border-color:#2f9c3e}.late-note{display:inline-block;margin-top:8px;padding:5px 10px;border-radius:999px;background:#fff3cc;color:#725400;font-size:13px;font-weight:900}.po-type-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}.po-type-row label{display:flex;align-items:center;gap:7px;border:2px solid #eadfc5;border-radius:14px;padding:10px 12px;background:#fff}.po-unread{outline:3px solid #f0b83e}.po-actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.po-danger{background:#fff0f0!important;color:#9d2424!important;border-color:#f1bcbc!important}.po-note{font-size:13px;color:#746b5c;margin-top:6px}.teacher-letter-notify{margin-left:auto}
+
+  </style>
+    
+
+  <meta name="theme-color" content="#2f9c3e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Iqra Future">
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+</head>
+<body>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="menuDrawer">
+    <div class="drawer-head"><div><strong>🌱 Salah Journey</strong><small id="drawerName">Maryam</small></div><button class="drawer-close" id="closeDrawer">×</button></div>
+    <button class="drawer-item" data-home>🏠 Home</button>
+    <button class="drawer-item" data-scroll="#gardenSection">🌱 Mein Garten</button>
+    <button class="drawer-item" data-scroll="#prayerSection">🕌 Gebete heute</button>
+    <button class="drawer-item" id="drawerRewards">🎁 Belohnungen</button>
+    <button class="drawer-item" id="drawerProfile">👤 Profil</button>
+    <button class="drawer-item" id="drawerStudents">👩‍🏫 Batches & Schüler</button>
+    <button class="drawer-item" id="drawerDownloads">📄 Salah-Tracker PDF</button>
+    <button class="drawer-item" id="drawerPostOffice">📮 Little Ummah Post Office</button>
+    <button class="drawer-item logout" id="logoutButton">🚪 Abmelden</button>
+    <a class="drawer-item" href="https://www.google.com/maps/search/?api=1&query=MDI+Center+Otto-Hahn-Stra%C3%9Fe+2+85609+Aschheim" target="_blank">🕌 MDI Center besuchen</a>
+    <div class="drawer-footer">Iqra Future Generation<br>under Munich Dawah Initiative (MDI)</div>
+  </aside>
+
+
+  <section class="teacher-dashboard" id="teacherDashboard">
+    <div class="teacher-top">
+      <img src="iqra-logo.png" alt="Iqra Future Generation">
+      <div>
+        <h1>Assalamu alaikum, Teacher!</h1>
+        <p>Iqra Future Generation · Admin Dashboard</p>
+      </div>
+      <button class="letter-notify teacher-letter-notify" id="teacherLetterNotify" aria-label="Letter notifications">✉️<span class="count" id="teacherLetterCount"></span></button><button class="teacher-refresh" id="teacherRefresh">↻ Aktualisieren</button>
+    </div>
+    <div class="teacher-wrap">
+      <section class="teacher-summary">
+        <article class="teacher-stat"><div class="emoji">👧</div><strong id="teacherTotalStudents">0</strong><span>Schüler</span></article>
+        <article class="teacher-stat"><div class="emoji">📚</div><strong id="teacherTotalBatches">7</strong><span>Batches</span></article>
+        <article class="teacher-stat"><div class="emoji">🕌</div><strong id="teacherTodayUpdates">0</strong><span>Heute aktiv</span></article>
+        <article class="teacher-stat"><div class="emoji">⭐</div><strong id="teacherMonthStars">0</strong><span>Sterne im Monat</span></article>
+        <article class="teacher-stat"><div class="emoji">🌱</div><strong id="teacherActiveStudents">0</strong><span>Aktive Schüler</span></article>
+      </section>
+
+      <section class="teacher-panel">
+        <h2>👩‍🏫 Unsere Lehrkräfte</h2>
+        <p style="color:#68706a">Admins können hier Namen, Zuständigkeiten oder kurze Informationen über die Lehrkräfte eintragen.</p>
+        <textarea class="teacher-description" id="teacherDescription" placeholder="Zum Beispiel:
+Umm Maryam – Batch 1 und Batch 2
+Umm Aisha – Batch 3
+Vertretung: ..."></textarea>
+        <button class="teacher-save" id="saveTeacherDescription">Beschreibung speichern</button>
+      </section>
+
+      <section class="teacher-panel">
+        <h2>⚡ Schnellzugriff</h2>
+        <div class="teacher-actions">
+          <button class="teacher-action" id="teacherOpenBatches">👥 Batches & Schüler</button>
+          <button class="teacher-action" id="teacherAddStudent">＋ Schüler hinzufügen</button>
+          <button class="teacher-action" id="teacherOpenTrackers">📄 Salah-Tracker PDF</button>
+          <button class="teacher-action" id="teacherOpenPostOffice">📮 Little Ummah Post Office</button>
+          <button class="teacher-action" id="teacherLogout">🚪 Abmelden</button>
+        </div>
+      </section>
+
+      <section class="teacher-panel">
+        <h2>📚 Batches</h2>
+        <div class="teacher-batches" id="teacherBatchGrid"></div>
+      </section>
+    </div>
+  </section>
+
+  <main class="app" id="studentApp">
+    <header class="topbar"><button class="round" id="menuBtn">☰</button><div class="brand">🌱 MEIN SALAH GARTEN</div><div class="top-actions"><button class="letter-notify" id="studentLetterNotify" aria-label="Letter notifications">✉️<span class="count" id="studentLetterCount"></span></button><button class="round" id="profileBtn">👤</button></div></header>
+    <section class="hero"><h1>Assalamu alaikum,<br><span id="studentName">Maryam</span>!</h1><div class="date" id="todayDate"></div><div class="tracker-days" id="trackerDays"></div><div class="late-note hidden" id="lateUpdateNote">Updated later</div></section>
+    <section class="stats">
+      <article class="stat"><div class="stat-icon">📅</div><div class="stat-value" id="todayCount">0/5</div><div class="stat-label">Heute</div></article>
+      <article class="stat"><div class="stat-icon">⭐</div><div class="stat-value" id="starCount">0</div><div class="stat-label">Sterne</div></article>
+      <article class="stat"><div class="stat-icon">🌱</div><div class="stat-value" id="monthPercent">0%</div><div class="stat-label">Monat</div></article>
+    </section>
+    <section class="section" id="gardenSection">
+      <h2 class="title">🌱 Mein wachsender Garten</h2>
+      <div class="garden" id="livingGarden">
+        <div class="cloud"></div><div class="cloud two"></div><div class="sun"></div>
+        <div class="sky-glow" aria-hidden="true"></div>
+        <div class="floating-light" aria-hidden="true"></div>
+        <div class="garden-sparkles" id="gardenSparkles" aria-hidden="true"></div>
+        <div class="butterfly butterfly-one" aria-hidden="true"><span>ʚ</span><b></b><span>ɞ</span></div>
+        <div class="butterfly butterfly-two" aria-hidden="true"><span>ʚ</span><b></b><span>ɞ</span></div>
+        <div class="grass-layer grass-back" aria-hidden="true"></div>
+        <div class="grass-layer grass-front" aria-hidden="true"></div>
+        <div class="water-shower top-rain" id="waterShower" aria-hidden="true"></div>
+        <div class="living-tree-wrap" id="livingTreeWrap">
+          <svg class="living-tree" id="livingTree" viewBox="0 0 360 300" role="img" aria-label="Animated Salah growth tree">
+            <g class="tree-sway">
+              <g class="tree-seed">
+                <ellipse cx="180" cy="245" rx="15" ry="21" fill="#7a4a22"/>
+                <path d="M180 229 C180 214 170 207 160 204" fill="none" stroke="#4f8f2f" stroke-width="7" stroke-linecap="round"/>
+                <ellipse cx="154" cy="201" rx="16" ry="9" fill="#69b63b" transform="rotate(-20 154 201)"/>
+              </g>
+              <g class="tree-sprout">
+                <path d="M180 245 C180 220 178 199 180 172" fill="none" stroke="#4d8d31" stroke-width="10" stroke-linecap="round"/>
+                <ellipse cx="158" cy="188" rx="24" ry="13" fill="#70c343" transform="rotate(25 158 188)"/>
+                <ellipse cx="203" cy="174" rx="24" ry="13" fill="#61b53b" transform="rotate(-25 203 174)"/>
+              </g>
+              <g class="tree-main">
+                <path class="trunk" d="M180 248 C169 224 171 192 179 161 C183 145 184 123 178 98" fill="none" stroke="#77502e" stroke-width="25" stroke-linecap="round"/>
+                <path class="trunk-light" d="M174 240 C169 210 177 177 181 155 C184 139 183 119 179 104" fill="none" stroke="#a67745" stroke-width="8" stroke-linecap="round" opacity=".7"/>
+                <g class="branches">
+                  <path d="M178 170 C150 151 129 132 110 105" fill="none" stroke="#77502e" stroke-width="13" stroke-linecap="round"/>
+                  <path d="M180 159 C205 143 226 123 242 95" fill="none" stroke="#77502e" stroke-width="13" stroke-linecap="round"/>
+                  <path d="M179 134 C153 119 142 101 137 82" fill="none" stroke="#77502e" stroke-width="11" stroke-linecap="round"/>
+                  <path d="M180 126 C198 110 204 91 206 72" fill="none" stroke="#77502e" stroke-width="11" stroke-linecap="round"/>
+                </g>
+                <g class="leaf-clusters">
+                  <g class="cluster c1"><circle cx="105" cy="100" r="35"/><circle cx="132" cy="91" r="39"/><circle cx="120" cy="122" r="37"/></g>
+                  <g class="cluster c2"><circle cx="235" cy="91" r="38"/><circle cx="260" cy="111" r="35"/><circle cx="222" cy="121" r="40"/></g>
+                  <g class="cluster c3"><circle cx="145" cy="68" r="39"/><circle cx="179" cy="59" r="45"/><circle cx="208" cy="72" r="39"/></g>
+                  <g class="cluster c4"><circle cx="157" cy="110" r="39"/><circle cx="193" cy="105" r="43"/></g>
+                </g>
+                <g class="tree-flowers">
+                  <g transform="translate(118 78)"><circle r="8"/><circle cx="10" r="8"/><circle cx="5" cy="-9" r="8"/><circle cx="5" cy="9" r="8"/><circle cx="5" fill="#ffd34e" r="4"/></g>
+                  <g transform="translate(210 66)"><circle r="8"/><circle cx="10" r="8"/><circle cx="5" cy="-9" r="8"/><circle cx="5" cy="9" r="8"/><circle cx="5" fill="#ffd34e" r="4"/></g>
+                  <g transform="translate(252 112)"><circle r="8"/><circle cx="10" r="8"/><circle cx="5" cy="-9" r="8"/><circle cx="5" cy="9" r="8"/><circle cx="5" fill="#ffd34e" r="4"/></g>
+                  <g transform="translate(165 112)"><circle r="8"/><circle cx="10" r="8"/><circle cx="5" cy="-9" r="8"/><circle cx="5" cy="9" r="8"/><circle cx="5" fill="#ffd34e" r="4"/></g>
+                </g>
+                <g class="tree-fruits">
+                  <circle cx="132" cy="112" r="11"/><circle cx="188" cy="78" r="11"/><circle cx="230" cy="118" r="11"/><circle cx="166" cy="126" r="11"/>
+                </g>
+              </g>
+            </g>
+            <ellipse class="tree-shadow" cx="180" cy="258" rx="92" ry="18"/>
+            <g class="water-ripples" aria-hidden="true">
+              <ellipse cx="180" cy="257" rx="36" ry="7"/>
+              <ellipse cx="180" cy="257" rx="57" ry="11"/>
+            </g>
+            <g class="fallen-leaves" id="fallenLeaves"></g>
+          </svg>
+        </div>
+        <div class="tree-stage-chip" id="treeStageChip">Seed</div>
+        <div class="tree-care-message" id="treeCareMessage">Every Salah gives water to your tree.</div>
+      </div>
+      <div class="milestones" id="milestones"></div><p class="message">Dein Garten wächst mit jedem Salah! 🌱</p>
+    </section>
+    <section class="section" id="prayerSection"><h2 class="title">🪴 Heutige Gebete</h2><div class="prayers" id="prayerList"></div><p class="message" style="font-size:18px;color:#6a6c72">🌸 Erledige alle 5 Salah und lass deinen Garten wachsen!</p></section>
+    <section class="bottom">
+      <article class="section"><h2 class="title">🎁 Belohnung</h2><div class="rewardbox"><div class="bigstar">⭐</div><div class="stat-value" id="rewardStars">0</div><div class="stat-label">Sterne</div></div></article>
+      <article class="section"><h2 class="title">📅 Monatlicher Fortschritt</h2><div class="progress"><div class="ring" id="ring"><div><strong id="ringPct" style="font-size:38px">0%</strong><small>Diesen Monat</small></div></div><div><strong id="monthSalah">0</strong> / <span id="monthGoal">150</span> Salah<br><small id="remainingText">Noch 150</small></div></div></article>
+    </section>
+    <section class="section"><h2 class="title">🕌 MDI Center</h2><p><strong>Munich Dawah Initiative (MDI)</strong></p><p>Otto-Hahn-Straße 2<br>85609 Aschheim</p><a class="card-link" href="https://www.google.com/maps/search/?api=1&query=MDI+Center+Otto-Hahn-Stra%C3%9Fe+2+85609+Aschheim" target="_blank">📍 In Google Maps öffnen</a></section>
+  </main>
+
+  <nav class="nav" id="studentNav"><button class="active" id="navHome"><span class="ni">🏠</span>Home</button><button id="navGarden"><span class="ni">🌱</span>Garten</button><button id="navPrayers"><span class="ni">🕌</span>Gebete</button><button id="navRewards"><span class="ni">🎁</span>Belohnungen</button><button id="navProfile"><span class="ni">👤</span>Profil</button></nav>
+
+  <section class="profile-page" id="profilePage">
+    <div class="page-top"><button class="back" id="closeProfile">←</button><div class="page-title">Mein Profil</div><div style="width:48px"></div></div>
+    <div class="container">
+      <div class="readonly-note hidden" id="readonlyNote">Nur ansehen – dieses Profil kann nicht bearbeitet werden.</div>
+      <div class="profile-card"><div class="avatar-current" id="selectedAvatar">🌷</div><div class="profile-name" id="profileDisplayName">Maryam</div><div class="profile-age" id="profileDisplayAge">7 Jahre</div>
+        <div class="fields">
+          <label>Name<input id="nameField"></label>
+          <label>Alter<input id="ageField" type="number" min="3" max="18"></label>
+          <label>Batch / Klasse
+            <select id="batchField">
+              <option>Batch 1</option><option>Batch 2</option><option>Batch 3</option><option>Batch 4</option>
+              <option>Batch 5</option><option>Batch 6</option><option>Batch 7</option>
+            </select>
+          </label>
+          <label>Name der Eltern<input id="parentField"></label>
+        </div>
+      </div>
+      <div class="profile-card"><h3 class="profile-heading">Mein Avatar</h3><div class="avatar-grid" id="avatarGrid"></div></div>
+      <div class="profile-card"><h3 class="profile-heading">📊 Mein Fortschritt</h3><div class="row"><span>🕌 Gesamte Salah</span><strong id="profileTotalSalah">0</strong></div><div class="row"><span>⭐ Sterne</span><strong id="profileTotalStars">0</strong></div><div class="row"><span>🌱 Garten-Level</span><strong id="profileGardenLevel">1</strong></div><button class="row clickable-row" id="profileBadgesButton"><span>🏆 Badges ansehen</span><strong id="profileBadgeCount">0 ›</strong></button></div>
+      <div class="profile-card"><h3 class="profile-heading">📚 Lernfortschritt</h3><div class="number-grid"><div class="number-box"><label>📖 Gelernte Suren</label><input id="surahField" type="number" min="0" max="50"></div><div class="number-box"><label>🌸 Asmaul Husna</label><input id="asmaField" type="number" min="0" max="99"></div><div class="number-box"><label>📝 Qur'anische Wörter</label><input id="wordField" type="number" min="0" max="200"></div><div class="number-box"><label>🤲 Gelernte Duas</label><input id="duaField" type="number" min="0" max="100"></div></div></div>
+      <div class="profile-card"><h3 class="profile-heading">💚 Contact Us</h3><a class="card-link facebook" id="facebookLink" href="https://www.facebook.com/profile.php?id=100078858246868" target="_blank">📘 Iqra Future Generation Facebook Page</a><p id="facebookHint" style="text-align:center;color:#777;margin-bottom:0">Öffnet unsere Facebook-Seite.</p></div>
+      <div class="profile-language-row">
+          <label for="profileLanguage" id="profileLanguageLabel">🌐 Sprache</label>
+          <select id="profileLanguage" class="lang-select">
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="en">🇬🇧 English</option>
+          </select>
+        </div>
+        <button class="save" id="saveProfile">Profil speichern</button>
+    </div>
+  </section>
+
+
+  <section class="page" id="studentsPage">
+    <div class="page-top"><button class="back" id="closeStudents">←</button><div class="page-title" id="studentsPageTitle">Batches & Schüler</div><div style="width:48px"></div></div>
+    <div class="container">
+      <div class="batch-toolbar">
+        <button class="all-batches hidden" id="showAllBatches">← Alle Batches</button>
+        <button class="add-student hidden" id="addStudentButton">＋ Schüler hinzufügen</button>
+      </div>
+      <div class="batch-grid" id="batchGrid"></div>
+      <div class="student-list hidden" id="studentList"></div>
+      <div class="profile-card hidden" id="emptyBatch" style="text-align:center">
+        <div style="font-size:52px">👧</div>
+        <h3>Noch keine Schüler</h3>
+        <p>Füge den ersten Schüler zu diesem Batch hinzu.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="page" id="downloadsPage">
+    <div class="page-top"><button class="back" id="closeDownloads">←</button><div class="page-title">Salah-Tracker PDF</div><div style="width:48px"></div></div>
+    <div class="container">
+      <div class="profile-card" style="text-align:center">
+        <h3 class="profile-heading">📄 Druckbare Monats-Tracker</h3>
+        <p>Öffne oder lade den passenden Salah-Tracker als PDF herunter.</p>
+      </div>
+      <div class="download-grid">
+        <article class="download-card">
+          <img src="A2CDCF3C-20F4-4A11-BFFC-277BAC953323.jpeg" alt="Salah-Tracker für Jungen">
+          <h3>Tracker für Jungen</h3>
+          <div class="download-actions">
+            <a class="pdf-open" href="Salah-Tracker-Jungen.pdf" target="_blank" rel="noopener">Öffnen</a>
+            <a class="pdf-download" href="Salah-Tracker-Jungen.pdf" download>PDF laden</a>
+          </div>
+        </article>
+        <article class="download-card">
+          <img src="824B99E3-92AB-447A-A7DF-1E09AA39543B.jpeg" alt="Salah-Tracker für Mädchen">
+          <h3>Tracker für Mädchen</h3>
+          <div class="download-actions">
+            <a class="pdf-open" href="Salah-Tracker-Maedchen.pdf" target="_blank" rel="noopener">Öffnen</a>
+            <a class="pdf-download" href="Salah-Tracker-Maedchen.pdf" download>PDF laden</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="rewardsPage">
+    <div class="page-top"><button class="back" id="closeRewards">←</button><div class="page-title">Belohnungen</div><div style="width:48px"></div></div>
+    <div class="container">
+      <div class="profile-card"><h3 class="profile-heading">⭐ Deine Sterne</h3><div class="stat-value" id="rewardPageStars" style="text-align:center">0</div></div>
+      <div class="profile-card"><h3 class="profile-heading">🏆 Badges</h3><div class="badge-grid" id="badgeGrid"></div></div>
+      <div class="profile-card"><h3 class="profile-heading">📅 Monatsübersicht</h3><div style="overflow:auto"><table class="month-table" id="monthTable"></table></div></div>
+    </div>
+  </section>
+
+
+
+  <section class="post-office-page" id="postOfficePage">
+    <div class="page-top"><button class="back" id="closePostOffice">←</button><div class="page-title">📮 Little Ummah Post Office</div><div style="width:48px"></div></div>
+    <div class="po-shell">
+      <section id="poHome">
+        <div class="po-hero"><h2>Little Ummah Post Office</h2><p>Write, send and save beautiful letters with your Ustaza.</p></div>
+        <div class="po-home-grid">
+          <button class="po-home-card" id="poWrite"><span class="emoji">✍️</span>Write a Letter</button>
+          <button class="po-home-card" id="poDrafts"><span class="emoji">📝</span>My Drafts</button>
+          <button class="po-home-card" id="poSmileGifts"><span class="emoji">💝</span>Smile Gift from Ustaza <b id="poGiftBadge"></b></button>
+          <button class="po-home-card" id="poOldLetters"><span class="emoji">✉️</span>Old Letters Envelope</button>
+        </div>
+      </section>
+
+      <section class="hidden" id="poComposer">
+        <div class="po-panel"><div class="po-toolbar"><button class="po-btn secondary" id="poComposerBack">← Back</button></div><h3>1. Choose Letter Pad</h3><div class="po-pad-grid" id="poPadGrid"><button class="po-pad" type="button" data-pad="letterpads/pad-school-kawaii.jpeg"><img src="letterpads/pad-school-kawaii.jpeg" alt="School Kawaii"><span>School Kawaii</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-happy-garden.jpeg"><img src="letterpads/pad-happy-garden.jpeg" alt="Happy Garden"><span>Happy Garden</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-summer-beach.jpeg"><img src="letterpads/pad-summer-beach.jpeg" alt="Summer Beach"><span>Summer Beach</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-islamic-pastel.jpeg"><img src="letterpads/pad-islamic-pastel.jpeg" alt="Islamic Pastel"><span>Islamic Pastel</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-moon-garden.jpeg"><img src="letterpads/pad-moon-garden.jpeg" alt="Moon Garden"><span>Moon Garden</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-school-adventure.jpeg"><img src="letterpads/pad-school-adventure.jpeg" alt="School Adventure"><span>School Adventure</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-soft-moon.jpeg"><img src="letterpads/pad-soft-moon.jpeg" alt="Soft Moon"><span>Soft Moon</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-blue-sky.jpeg"><img src="letterpads/pad-blue-sky.jpeg" alt="Blue Sky"><span>Blue Sky</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-peach-floral.jpeg"><img src="letterpads/pad-peach-floral.jpeg" alt="Peach Floral"><span>Peach Floral</span></button>
+<button class="po-pad" type="button" data-pad="letterpads/pad-flower-border.jpeg"><img src="letterpads/pad-flower-border.jpeg" alt="Flower Border"><span>Flower Border</span></button></div></div>
+        <div class="po-panel"><h3>2. Write Letter</h3><div class="po-type-row" id="poRecipientTypeWrap"><label><input type="radio" name="poRecipientType" value="teacher" checked> My Ustaza</label><label><input type="radio" name="poRecipientType" value="friend"> A Friend in My Batch</label></div><div class="po-fields"><label>To<select id="poRecipient"></select></label><label>Title<input id="poTitle" maxlength="80" placeholder="Optional title"></label></div><div class="po-letter-canvas" id="poCanvas"><textarea id="poBody" maxlength="5000" placeholder="Write your letter here..."></textarea></div></div>
+        <div class="po-panel" style="display:none" aria-hidden="true"><h3>3. Add Picture</h3><div class="po-upload"><input id="poPictures" type="file" accept="image/jpeg,image/png,image/webp" multiple disabled><p>Picture upload is temporarily unavailable.</p></div><div class="po-preview-grid" id="poPicturePreview"></div></div>
+        <div class="po-panel"><div class="po-toolbar"><button class="po-btn secondary" id="poSaveDraft">📝 Save Draft</button><button class="po-btn primary" id="poSendLetter">📮 Send Letter</button></div><div id="poFormError" class="auth-error"></div></div>
+      </section>
+
+      <section class="hidden" id="poListSection"><div class="po-panel"><div class="po-toolbar"><button class="po-btn secondary" id="poListBack">← Back</button></div><h3 id="poListTitle">Letters</h3><label id="poTeacherFilterWrap" class="po-full-label hidden" style="margin-bottom:14px">Show letters for<select id="poTeacherFilter"><option value="all">All Ustazas</option><option value="tasnim">Ustaza Tasnim Susan Azad</option><option value="fouzia">Ustaza Fouzia Tanzee</option></select></label><div class="po-list" id="poLetterList"></div></div></section>
+
+      <section class="hidden" id="poViewSection"><div class="po-panel"><div class="po-toolbar"><button class="po-btn secondary" id="poViewBack">← Back</button></div><h3 id="poViewTitle">Letter</h3><div id="poViewMeta" style="margin:-4px 0 14px;font-weight:900;color:#6b5a3d"></div><div id="poViewPaper" class="po-view-letter"><div class="po-paper-text" id="poViewBody"></div><div class="po-attachments" id="poViewAttachments"></div></div><div class="po-reply-box hidden" id="poReplyBox"><h3>💝 Smile Gift from Ustaza</h3><label class="po-full-label">Reply<textarea id="poReplyBody" maxlength="5000" placeholder="Write your Smile Gift..."></textarea></label><div class="po-upload" style="display:none" aria-hidden="true"><input id="poReplyPictures" type="file" accept="image/jpeg,image/png,image/webp" multiple disabled><p>Picture upload is temporarily unavailable.</p></div><div class="po-preview-grid" id="poReplyPreview" style="display:none"></div><button class="po-btn primary" id="poSendReply">💝 Send Smile Gift</button></div><div class="po-reply-box hidden" id="poExistingReply"><h3>💝 Smile Gift from Ustaza</h3><div class="po-paper-text" id="poExistingReplyBody"></div><div class="po-attachments" id="poExistingReplyAttachments"></div></div><div class="po-actions-row hidden" id="poFriendActions"><button class="po-btn primary" id="poReplyFriend">✍️ Reply with a Letter</button><button class="po-btn secondary po-danger" id="poReportLetter">⚑ Report Letter</button><button class="po-btn secondary po-danger" id="poBlockFriend">⛔ Block Friend</button></div></div></section>
+    </div>
+  </section>
+
+  <div class="sync-pill hidden" id="syncPill">Synchronisieren…</div>
+
+  <section class="auth-screen" id="authScreen">
+    <form class="auth-card" id="loginForm">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+        <select id="loginLanguage" class="lang-select" aria-label="Language">
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="en">🇬🇧 English</option>
+        </select>
+      </div>
+      <div class="auth-logo">🌱</div>
+      <h1>Iqra Salah Journey</h1>
+      <p>Schüler melden sich mit ihrer Student-ID an. Lehrkräfte nutzen ihre E-Mail-Adresse.</p>
+      <label>Student-ID oder Lehrer-E-Mail<input id="loginEmail" type="text" autocomplete="username" placeholder="z. B. maryam-b1" required></label>
+      <label>Passwort<input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required></label>
+      <button class="auth-submit" id="loginButton" type="submit">Anmelden</button>
+      <a class="auth-submit" id="openSignupButton" href="?signup=1" style="display:block;text-decoration:none;text-align:center;background:#edf7df;color:#17602c;margin-top:10px">Neues Schülerkonto erstellen</a>
+      <div class="auth-error" id="loginError"></div>
+      <p class="auth-note">Deine Student-ID und dein Passwort erhältst du von deiner Lehrerin.</p><p class="auth-note" style="opacity:.55">Version 26 · Gentle Rain & Gradual Growth</p>
+    </form>
+  </section>
+
+
+
+  <section class="signup-page hidden" id="signupModal">
+    <form class="signup-shell" id="signupForm">
+      <div class="signup-head">
+        <div>
+          <h2>Neues Schülerkonto</h2>
+          <p style="margin:5px 0 0;color:#68706a">Einmal erstellen und danach mit derselben Student-ID auf jedem Gerät anmelden.</p>
+        </div>
+        <button class="signup-back" id="closeSignupModal" type="button">×</button>
+      </div>
+
+      <label>Name des Kindes<input id="signupStudentName" autocomplete="name" required></label>
+      <label>Alter<input id="signupStudentAge" type="number" min="3" max="18" value="7" required></label>
+      <label>Batch<select id="signupBatch"></select></label>
+      <label>Batch-Einladungscode<input id="signupInviteCode" type="text" autocomplete="off" autocapitalize="characters" required></label>
+      <label>Student-ID<input id="signupStudentId" type="text" placeholder="z. B. maryam-b1" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+      <div class="auth-note" style="text-align:left;margin-top:6px">Nur Buchstaben, Zahlen, Punkt, Unterstrich oder Bindestrich. Keine Leerzeichen.</div>
+      <label>Passwort<input id="signupPassword" type="password" minlength="6" autocomplete="new-password" required></label>
+      <label>Passwort wiederholen<input id="signupPassword2" type="password" minlength="6" autocomplete="new-password" required></label>
+      <label>Name der Eltern<input id="signupParentName" autocomplete="name" required></label>
+      <button class="auth-submit" id="signupSubmitButton" type="submit">Konto erstellen</button>
+      <div class="auth-error" id="signupError"></div>
+    </form>
+  </section>
+
+  <section class="modal-backdrop hidden" id="studentModal">
+    <form class="modal-card" id="studentForm">
+      <div class="modal-title"><h2>Schülerkonto erstellen</h2><button class="modal-close" id="closeStudentModal" type="button">×</button></div>
+      <label>Name<input id="newStudentName" required></label>
+      <label>Alter<input id="newStudentAge" type="number" min="3" max="18" value="7" required></label>
+      <label>Batch<select id="newStudentBatch"></select></label>
+      <label>Student-ID<input id="newStudentEmail" type="text" placeholder="z. B. maryam-b1" pattern="[A-Za-z0-9._-]{3,30}" required></label>
+      <div class="auth-note" style="text-align:left;margin-top:6px">Nur Buchstaben, Zahlen, Punkt, Unterstrich oder Bindestrich. Keine Leerzeichen.</div>
+      <label>Start-Passwort<input id="newStudentPassword" type="password" minlength="6" required></label>
+      <label>Name der Eltern<input id="newStudentParent"></label>
+      <button class="auth-submit" id="createStudentButton" type="submit">Konto erstellen</button>
+      <div class="auth-error" id="studentFormError"></div>
+    </form>
+  </section>
+
+  <div class="toast" id="toast"></div>
+
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script>
+  <script>
+
+    const TRANSLATIONS={
+      de:{
+        loginText:"Schüler melden sich mit ihrer Student-ID an. Lehrkräfte nutzen ihre E-Mail-Adresse.",
+        loginId:"Student-ID oder Lehrer-E-Mail", password:"Passwort", login:"Anmelden",
+        createAccount:"Neues Schülerkonto erstellen",
+        loginNote:"Deine Student-ID und dein Passwort erhältst du von deiner Lehrerin.",
+        language:"🌐 Sprache", saveProfile:"Profil speichern",
+        home:"Home", garden:"Garten", prayers:"Gebete", rewards:"Belohnungen", profile:"Profil",
+        topBrand:"🌱 MEIN SALAH GARTEN", today:"Heute", stars:"Sterne", month:"Monat",
+        growingGarden:"🌱 Mein wachsender Garten",
+        gardenMessage:"Dein Garten wächst mit jedem Salah! 🌱",
+        todaysPrayers:"🪴 Heutige Gebete",
+        prayerMessage:"🌸 Erledige alle 5 Salah und lass deinen Garten wachsen!",
+        reward:"🎁 Belohnung", monthlyProgress:"📅 Monatlicher Fortschritt",
+        thisMonth:"Diesen Monat", remaining:"Noch", maps:"📍 In Google Maps öffnen",
+        myProfile:"Mein Profil", readOnly:"Nur ansehen – dieses Profil kann nicht bearbeitet werden.",
+        age:"Alter", batchClass:"Batch / Klasse", parentName:"Name der Eltern",
+        myAvatar:"Mein Avatar", myProgress:"📊 Mein Fortschritt",
+        totalSalah:"🕌 Gesamte Salah", gardenLevel:"🌱 Garten-Level",
+        viewBadges:"🏆 Badges ansehen", learningProgress:"📚 Lernfortschritt",
+        learnedSurahs:"📖 Gelernte Suren", quranWords:"📝 Qur'anische Wörter",
+        learnedDuas:"🤲 Gelernte Duas", facebookHint:"Öffnet unsere Facebook-Seite.",
+        batchesStudents:"Batches & Schüler", allBatches:"← Alle Batches",
+        addStudent:"＋ Schüler hinzufügen", noStudents:"Noch keine Schüler",
+        addFirstStudent:"Füge den ersten Schüler zu diesem Batch hinzu.",
+        trackerTitle:"Salah-Tracker PDF", printableTrackers:"📄 Druckbare Monats-Tracker",
+        trackerIntro:"Öffne oder lade den passenden Salah-Tracker als PDF herunter.",
+        boysTracker:"Tracker für Jungen", girlsTracker:"Tracker für Mädchen",
+        open:"Öffnen", download:"PDF laden", yourStars:"⭐ Deine Sterne",
+        badges:"🏆 Badges", monthlyOverview:"📅 Monatsübersicht",
+        teacherGreeting:"Assalamu alaikum, Teacher!",
+        adminDashboard:"Iqra Future Generation · Admin Dashboard",
+        refresh:"↻ Aktualisieren", students:"Schüler", activeToday:"Heute aktiv",
+        starsMonth:"Sterne im Monat", activeStudents:"Aktive Schüler",
+        ourTeachers:"👩‍🏫 Unsere Lehrkräfte",
+        teacherInfo:"Admins können hier Namen, Zuständigkeiten oder kurze Informationen über die Lehrkräfte eintragen.",
+        teacherPlaceholder:"Zum Beispiel:\nUmm Maryam – Batch 1 und Batch 2\nUmm Aisha – Batch 3\nVertretung: ...",
+        saveDescription:"Beschreibung speichern", quickAccess:"⚡ Schnellzugriff",
+        batchesTitle:"📚 Batches", logout:"🚪 Abmelden",
+        pdfTracker:"📄 Salah-Tracker PDF", studentSuffix:"Schüler",
+        version:"Version 26 · Gentle Rain & Gradual Growth"
+      },
+      en:{
+        loginText:"Students sign in with their Student ID. Teachers use their email address.",
+        loginId:"Student ID or teacher email", password:"Password", login:"Sign in",
+        createAccount:"Create new student account",
+        loginNote:"Your teacher will give you your Student ID and password.",
+        language:"🌐 Language", saveProfile:"Save profile",
+        home:"Home", garden:"Garden", prayers:"Prayers", rewards:"Rewards", profile:"Profile",
+        topBrand:"🌱 MY SALAH GARDEN", today:"Today", stars:"Stars", month:"Month",
+        growingGarden:"🌱 My Growing Garden",
+        gardenMessage:"Your garden grows with every Salah! 🌱",
+        todaysPrayers:"🪴 Today's Prayers",
+        prayerMessage:"🌸 Complete all 5 Salah and help your garden grow!",
+        reward:"🎁 Reward", monthlyProgress:"📅 Monthly Progress",
+        thisMonth:"This Month", remaining:"Remaining", maps:"📍 Open in Google Maps",
+        myProfile:"My Profile", readOnly:"View only – this profile cannot be edited.",
+        age:"Age", batchClass:"Batch / Class", parentName:"Parent's Name",
+        myAvatar:"My Avatar", myProgress:"📊 My Progress",
+        totalSalah:"🕌 Total Salah", gardenLevel:"🌱 Garden Level",
+        viewBadges:"🏆 View Badges", learningProgress:"📚 Learning Progress",
+        learnedSurahs:"📖 Surahs Learned", quranWords:"📝 Quranic Words",
+        learnedDuas:"🤲 Duas Learned", facebookHint:"Opens our Facebook page.",
+        batchesStudents:"Batches & Students", allBatches:"← All Batches",
+        addStudent:"＋ Add Student", noStudents:"No Students Yet",
+        addFirstStudent:"Add the first student to this batch.",
+        trackerTitle:"Salah Tracker PDF", printableTrackers:"📄 Printable Monthly Trackers",
+        trackerIntro:"Open or download the appropriate Salah tracker as a PDF.",
+        boysTracker:"Tracker for Boys", girlsTracker:"Tracker for Girls",
+        open:"Open", download:"Download PDF", yourStars:"⭐ Your Stars",
+        badges:"🏆 Badges", monthlyOverview:"📅 Monthly Overview",
+        teacherGreeting:"Assalamu alaikum, Teacher!",
+        adminDashboard:"Iqra Future Generation · Admin Dashboard",
+        refresh:"↻ Refresh", students:"Students", activeToday:"Active Today",
+        starsMonth:"Stars This Month", activeStudents:"Active Students",
+        ourTeachers:"👩‍🏫 Our Teachers",
+        teacherInfo:"Admins can enter teachers' names, responsibilities and short information here.",
+        teacherPlaceholder:"For example:\nUmm Maryam – Batch 1 and Batch 2\nUmm Aisha – Batch 3\nSubstitute: ...",
+        saveDescription:"Save Description", quickAccess:"⚡ Quick Access",
+        batchesTitle:"📚 Batches", logout:"🚪 Log Out",
+        pdfTracker:"📄 Salah Tracker PDF", studentSuffix:"Students",
+        version:"Version 26 · Gentle Rain & Gradual Growth"
+      }
+    };
+
+    let currentLanguage=localStorage.getItem("iqraLanguage")||"de";
+
+    function setText(selector,text){
+      const el=document.querySelector(selector);
+      if(el)el.textContent=text;
+    }
+
+    function setLabelText(label,text){
+      if(label && label.firstChild)label.firstChild.nodeValue=text;
+    }
+
+    function applyLanguage(lang){
+      currentLanguage=lang;
+      localStorage.setItem("iqraLanguage",lang);
+      document.documentElement.lang=lang;
+      const t=TRANSLATIONS[lang];
+
+      loginLanguage.value=lang;
+      profileLanguage.value=lang;
+
+      const loginDescription=document.querySelector(".auth-card > p");
+      if(loginDescription)loginDescription.textContent=t.loginText;
+      const loginLabels=document.querySelectorAll(".auth-card label");
+      setLabelText(loginLabels[0],t.loginId);
+      setLabelText(loginLabels[1],t.password);
+      loginButton.textContent=t.login;
+      openSignupButton.textContent=t.createAccount;
+      const loginNote=document.querySelector(".auth-card .auth-note");
+      if(loginNote)loginNote.textContent=t.loginNote;
+
+      profileLanguageLabel.textContent=t.language;
+      saveProfile.textContent=t.saveProfile;
+
+      if(navHome)navHome.lastChild.textContent=t.home;
+      if(navGarden)navGarden.lastChild.textContent=t.garden;
+      if(navPrayers)navPrayers.lastChild.textContent=t.prayers;
+      if(navRewards)navRewards.lastChild.textContent=t.rewards;
+      if(navProfile)navProfile.lastChild.textContent=t.profile;
+
+      setText(".topbar .brand",t.topBrand);
+      const statLabels=document.querySelectorAll(".stats .stat-label");
+      if(statLabels[0])statLabels[0].textContent=t.today;
+      if(statLabels[1])statLabels[1].textContent=t.stars;
+      if(statLabels[2])statLabels[2].textContent=t.month;
+      setText("#gardenSection .title",t.growingGarden);
+      setText("#gardenSection .message",t.gardenMessage);
+      setText("#prayerSection .title",t.todaysPrayers);
+      setText("#prayerSection .message",t.prayerMessage);
+
+      const bottomTitles=document.querySelectorAll(".bottom .title");
+      if(bottomTitles[0])bottomTitles[0].textContent=t.reward;
+      if(bottomTitles[1])bottomTitles[1].textContent=t.monthlyProgress;
+      const rewardLabel=document.querySelector(".rewardbox .stat-label");
+      if(rewardLabel)rewardLabel.textContent=t.stars;
+      const ringSmall=document.querySelector("#ring small");
+      if(ringSmall)ringSmall.textContent=t.thisMonth;
+      const mapLink=document.querySelector('a[href*="google.com/maps"]');
+      if(mapLink)mapLink.textContent=t.maps;
+
+      const profileTitle=document.querySelector("#profilePage .page-title");
+      if(profileTitle)profileTitle.textContent=t.myProfile;
+      if(readonlyNote)readonlyNote.textContent=t.readOnly;
+      const profileLabels=document.querySelectorAll("#profilePage .fields > label");
+      setLabelText(profileLabels[1],t.age);
+      setLabelText(profileLabels[2],t.batchClass);
+      setLabelText(profileLabels[3],t.parentName);
+
+      const profileHeadings=document.querySelectorAll("#profilePage .profile-heading");
+      if(profileHeadings[0])profileHeadings[0].textContent=t.myAvatar;
+      if(profileHeadings[1])profileHeadings[1].textContent=t.myProgress;
+      if(profileHeadings[2])profileHeadings[2].textContent=t.learningProgress;
+      const progressRows=document.querySelectorAll("#profilePage .row span");
+      if(progressRows[0])progressRows[0].textContent=t.totalSalah;
+      if(progressRows[1])progressRows[1].textContent="⭐ "+t.stars;
+      if(progressRows[2])progressRows[2].textContent=t.gardenLevel;
+      if(progressRows[3])progressRows[3].textContent=t.viewBadges;
+      const learningLabels=document.querySelectorAll("#profilePage .number-box label");
+      if(learningLabels[0])learningLabels[0].textContent=t.learnedSurahs;
+      if(learningLabels[2])learningLabels[2].textContent=t.quranWords;
+      if(learningLabels[3])learningLabels[3].textContent=t.learnedDuas;
+      if(facebookHint)facebookHint.textContent=t.facebookHint;
+
+      if(studentsPageTitle)studentsPageTitle.textContent=t.batchesStudents;
+      if(showAllBatches)showAllBatches.textContent=t.allBatches;
+      if(addStudentButton)addStudentButton.textContent=t.addStudent;
+      const emptyTitle=document.querySelector("#emptyBatch h3");
+      const emptyText=document.querySelector("#emptyBatch p");
+      if(emptyTitle)emptyTitle.textContent=t.noStudents;
+      if(emptyText)emptyText.textContent=t.addFirstStudent;
+
+      const downloadsTitle=document.querySelector("#downloadsPage .page-title");
+      if(downloadsTitle)downloadsTitle.textContent=t.trackerTitle;
+      const downloadsHeading=document.querySelector("#downloadsPage .profile-heading");
+      if(downloadsHeading)downloadsHeading.textContent=t.printableTrackers;
+      const downloadsIntro=document.querySelector("#downloadsPage .profile-card p");
+      if(downloadsIntro)downloadsIntro.textContent=t.trackerIntro;
+      const downloadCards=document.querySelectorAll(".download-card");
+      if(downloadCards[0]){
+        downloadCards[0].querySelector("h3").textContent=t.boysTracker;
+        const links=downloadCards[0].querySelectorAll("a");
+        links[0].textContent=t.open; links[1].textContent=t.download;
+      }
+      if(downloadCards[1]){
+        downloadCards[1].querySelector("h3").textContent=t.girlsTracker;
+        const links=downloadCards[1].querySelectorAll("a");
+        links[0].textContent=t.open; links[1].textContent=t.download;
+      }
+
+      const rewardsTitle=document.querySelector("#rewardsPage .page-title");
+      if(rewardsTitle)rewardsTitle.textContent=t.rewards;
+      const rewardHeadings=document.querySelectorAll("#rewardsPage .profile-heading");
+      if(rewardHeadings[0])rewardHeadings[0].textContent=t.yourStars;
+      if(rewardHeadings[1])rewardHeadings[1].textContent=t.badges;
+      if(rewardHeadings[2])rewardHeadings[2].textContent=t.monthlyOverview;
+
+      setText(".teacher-top h1",t.teacherGreeting);
+      setText(".teacher-top p",t.adminDashboard);
+      if(teacherRefresh)teacherRefresh.textContent=t.refresh;
+      const teacherStats=document.querySelectorAll(".teacher-stat span");
+      if(teacherStats[0])teacherStats[0].textContent=t.students;
+      if(teacherStats[1])teacherStats[1].textContent="Batches";
+      if(teacherStats[2])teacherStats[2].textContent=t.activeToday;
+      if(teacherStats[3])teacherStats[3].textContent=t.starsMonth;
+      if(teacherStats[4])teacherStats[4].textContent=t.activeStudents;
+      const teacherPanels=document.querySelectorAll(".teacher-panel");
+      if(teacherPanels[0]){
+        teacherPanels[0].querySelector("h2").textContent=t.ourTeachers;
+        teacherPanels[0].querySelector("p").textContent=t.teacherInfo;
+      }
+      if(teacherDescription)teacherDescription.placeholder=t.teacherPlaceholder;
+      if(saveTeacherDescription)saveTeacherDescription.textContent=t.saveDescription;
+      if(teacherPanels[1])teacherPanels[1].querySelector("h2").textContent=t.quickAccess;
+      if(teacherOpenBatches)teacherOpenBatches.textContent="👥 "+t.batchesStudents;
+      if(teacherAddStudent)teacherAddStudent.textContent=t.addStudent;
+      if(teacherOpenTrackers)teacherOpenTrackers.textContent=t.pdfTracker;
+      if(teacherLogout)teacherLogout.textContent=t.logout;
+      if(teacherPanels[2])teacherPanels[2].querySelector("h2").textContent=t.batchesTitle;
+
+      if(drawerStudents)drawerStudents.textContent="👩‍🏫 "+t.batchesStudents;
+      if(drawerDownloads)drawerDownloads.textContent=t.pdfTracker;
+      if(logoutButton)logoutButton.textContent=t.logout;
+
+      const versionNote=document.querySelector(".auth-card .auth-note:last-child");
+      if(versionNote)versionNote.textContent=t.version;
+
+      // Re-render dynamic text in the chosen language.
+      if(typeof render==="function" && displayState)render();
+      if(typeof loadTeacherDashboard==="function" && isAdmin)loadTeacherDashboard();
+    }
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC__eu40QqbyP38WHjAfhdBlp7Eep7P4lI",
+      authDomain: "iqra-salah-journey-5deb8.firebaseapp.com",
+      projectId: "iqra-salah-journey-5deb8",
+      storageBucket: "iqra-salah-journey-5deb8.firebasestorage.app",
+      messagingSenderId: "627621711954",
+      appId: "1:627621711954:web:e213674d91b5635b124f8b"
+    };
+    const ADMIN_EMAIL = "teacher.iqra2023@gmail.com";
+    const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=100078858246868";
+    const BATCHES=["Batch 1","Batch 2","Batch 3","Batch 4","Batch 5","Batch 6","Batch 7"];
+    const DEFAULT_INVITE_CODES={"Batch 1": "IQRA-1-DCSSGY", "Batch 2": "IQRA-2-BAU3B2", "Batch 3": "IQRA-3-9PWWU4", "Batch 4": "IQRA-4-LJ6HSF", "Batch 5": "IQRA-5-MCU7TK", "Batch 6": "IQRA-6-B9YDE5", "Batch 7": "IQRA-7-3U3JJC"};
+    const PRAYERS=[{key:"fajr",name:"Fajr",icon:"🌙"},{key:"dhuhr",name:"Dhuhr",icon:"☀️"},{key:"asr",name:"Asr",icon:"🌤️"},{key:"maghrib",name:"Maghrib",icon:"🌅"},{key:"isha",name:"Isha",icon:"🌌"}];
+    const MILESTONES=[{at:0,label:"Tag 1",icon:"🌱"},{at:10,label:"10 Salah",icon:"🌿"},{at:50,label:"50 Salah",icon:"🪴"},{at:100,label:"100 Salah",icon:"🌳"},{at:200,label:"200 Salah",icon:"🌸"},{at:500,label:"500 Salah",icon:"✨"}];
+    const BADGES=[{at:1,icon:"🌱",name:"Erster Schritt"},{at:10,icon:"🌿",name:"10 Salah"},{at:50,icon:"🪴",name:"50 Salah"},{at:100,icon:"🌳",name:"100 Salah"},{at:200,icon:"🌸",name:"200 Salah"},{at:500,icon:"✨",name:"500 Salah"}];
+    const AVATARS=["🌹","🌷","🌻","🌼","🌺","🪻","🌱","🌳","🌴","🌲","🍃","🌿","🍎","🍓","🍉","🍊","🍌","🍇","🚗","🚂","🚲","✈️","🚜","🚢","☀️","🌙","⭐","🏔️","☁️","🌊","🕌","🏮"];
+
+    const $=id=>document.getElementById(id);
+    const els={};
+    ["drawerBackdrop","menuDrawer","drawerName","closeDrawer","drawerRewards","drawerProfile","drawerStudents","drawerDownloads","logoutButton","menuBtn","profileBtn","studentName","todayDate","todayCount","starCount","monthPercent","gardenSection","plantEmoji","milestones","prayerSection","prayerList","rewardStars","ring","ringPct","monthSalah","monthGoal","remainingText","navHome","navGarden","navPrayers","navRewards","navProfile","profilePage","closeProfile","selectedAvatar","profileDisplayName","profileDisplayAge","nameField","ageField","batchField","parentField","avatarGrid","profileTotalSalah","profileTotalStars","profileGardenLevel","profileBadgesButton","profileBadgeCount","surahField","asmaField","wordField","duaField","facebookLink","facebookHint","saveProfile","readonlyNote","studentsPage","closeStudents","downloadsPage","closeDownloads","studentsPageTitle","showAllBatches","addStudentButton","batchGrid","studentList","emptyBatch","rewardsPage","closeRewards","rewardPageStars","badgeGrid","monthTable","toast","authScreen","loginForm","loginEmail","loginPassword","loginButton","openSignupButton","loginError","signupModal","signupForm","closeSignupModal","signupStudentName","signupStudentAge","signupBatch","signupInviteCode","signupStudentId","signupPassword","signupPassword2","signupParentName","signupSubmitButton","signupError","studentModal","studentForm","closeStudentModal","newStudentName","newStudentAge","newStudentBatch","newStudentEmail","newStudentPassword","newStudentParent","createStudentButton","studentFormError","syncPill","teacherDashboard","studentApp","studentNav","teacherRefresh","teacherTotalStudents","teacherTotalBatches","teacherTodayUpdates","teacherMonthStars","teacherActiveStudents","teacherDescription","saveTeacherDescription","teacherOpenBatches","teacherAddStudent","teacherOpenTrackers","teacherLogout","teacherBatchGrid","loginLanguage","profileLanguage","profileLanguageLabel","drawerPostOffice","teacherOpenPostOffice","postOfficePage","closePostOffice","poHome","poWrite","poDrafts","poSmileGifts","poOldLetters","poGiftBadge","poComposer","poComposerBack","poPadGrid","poRecipient","poTitle","poCanvas","poBody","poPictures","poPicturePreview","poSaveDraft","poSendLetter","poFormError","poListSection","poListBack","poListTitle","poTeacherFilterWrap","poTeacherFilter","poLetterList","poViewSection","poViewBack","poViewTitle","poViewMeta","poViewPaper","poViewBody","poViewAttachments","poReplyBox","poReplyBody","poReplyPictures","poReplyPreview","poSendReply","poExistingReply","poExistingReplyBody","poExistingReplyAttachments","livingGarden","livingTree","livingTreeWrap","gardenSparkles","waterShower","fallenLeaves","treeStageChip","treeCareMessage","studentLetterNotify","studentLetterCount","teacherLetterNotify","teacherLetterCount","trackerDays","lateUpdateNote","poRecipientTypeWrap","poFriendActions","poReplyFriend","poReportLetter","poBlockFriend"].forEach(id=>els[id]=$(id));
+    Object.assign(window,els);
+
+    firebase.initializeApp(firebaseConfig);
+    const auth=firebase.auth();
+    const authPersistenceReady=auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.error);
+    const db=firebase.firestore();
+    const storage=firebase.storage();
+    let secondaryApp=null, secondaryAuth=null;
+
+    let currentUser=null;
+    let registrationInProgress=false;
+    let incompleteAuthUser=null;
+    let isAdmin=false;
+    let ownState=null;
+    let displayState=null;
+    let viewingOwn=true;
+    let selectedBatch=null;
+    let batchMembers=[];
+    let batchProgress=new Map();
+
+    const emptyState=(uid,name="Schüler",batch="Batch 1")=>({
+      id:uid,name,batch,role:"student",studentId:"",
+      profile:{age:7,parent:"",avatar:"🌷",surahs:0,asma:0,words:0,duas:0},
+      records:{},stars:0
+    });
+
+    const dateKey=(d=new Date())=>d.toLocaleDateString("en-CA");
+    const monthKey=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+    const daysInMonth=(d=new Date())=>new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+    const totalCompleted=s=>Object.values(s?.records||{}).reduce((sum,r)=>sum+PRAYERS.filter(p=>r?.[p.key]).length,0);
+    const monthCompleted=s=>Object.entries(s?.records||{}).filter(([k])=>k.startsWith(monthKey())).reduce((sum,[,r])=>sum+PRAYERS.filter(p=>r?.[p.key]).length,0);
+    const levelFor=t=>t>=500?6:t>=200?5:t>=100?4:t>=50?3:t>=10?2:1;
+    const plantFor=t=>t>=500?"🌟":t>=200?"🌸":t>=100?"🌳":t>=50?"🪴":t>=10?"🌿":"🌱";
+    const badgeCount=s=>BADGES.filter(b=>totalCompleted(s)>=b.at).length;
+    const escapeHtml=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+    const STUDENT_LOGIN_DOMAIN="iqra.local";
+    function normalizeStudentId(value){
+      return String(value||"").trim().toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9._-]/g,"");
+    }
+    function loginIdentifierToEmail(value){
+      const v=String(value||"").trim().toLowerCase();
+      return v.includes("@") ? v : `${normalizeStudentId(v)}@${STUDENT_LOGIN_DOMAIN}`;
+    }
+
+
+    function showToast(message){
+      toast.textContent=message;toast.classList.add("show");
+      setTimeout(()=>toast.classList.remove("show"),2200);
+    }
+    function setSync(text,status=""){
+      syncPill.textContent=text;syncPill.className="sync-pill "+status;
+      syncPill.classList.remove("hidden");
+      if(status==="ok")setTimeout(()=>syncPill.classList.add("hidden"),1300);
+    }
+    function friendlyError(error){
+      const code=error?.code||"";
+      if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found"))return "E-Mail oder Passwort ist falsch.";
+      if(code.includes("email-already-in-use"))return "Diese Student-ID wird bereits verwendet.";
+      if(code.includes("invalid-email"))return "Bitte eine gültige Student-ID eingeben."
+      if(code.includes("weak-password"))return "Das Passwort muss mindestens 6 Zeichen haben.";
+      if(code.includes("unauthorized-domain"))return "Diese Website-Domain muss in Firebase Authentication freigegeben werden.";
+      if(code.includes("permission-denied"))return "Keine Berechtigung für diese Aktion.";
+      return error?.message||"Etwas ist schiefgelaufen.";
+    }
+
+    function memberFromDoc(doc){
+      const d=doc.data()||{};
+      return {id:doc.id,name:d.name||"Schüler",batch:d.batch||"Batch 1",role:d.role||"student",studentId:d.studentId||"",
+        profile:{age:Number(d.age)||7,parent:"",avatar:d.avatar||"🌷",surahs:0,asma:0,words:0,duas:0},records:{},stars:0};
+    }
+    function mergeProgress(state,data={}){
+      state.records=data.records||{};
+      state.stars=totalCompleted(state);
+      state.profile.surahs=Number(data.surahs)||0;
+      state.profile.asma=Number(data.asma)||0;
+      state.profile.words=Number(data.words)||0;
+      state.profile.duas=Number(data.duas)||0;
+      return state;
+    }
+
+    async function loadStudent(uid,{includePrivate=false}={}){
+      const [memberSnap,progressSnap]=await Promise.all([
+        db.collection("members").doc(uid).get(),
+        db.collection("progress").doc(uid).get()
+      ]);
+      if(!memberSnap.exists)throw new Error("Profil wurde noch nicht eingerichtet.");
+      const s=memberFromDoc(memberSnap);
+      if(progressSnap.exists)mergeProgress(s,progressSnap.data());
+      if(includePrivate){
+        try{
+          const privateSnap=await db.collection("privateProfiles").doc(uid).get();
+          if(privateSnap.exists)s.profile.parent=privateSnap.data().parent||"";
+        }catch(_){}
+      }
+      return s;
+    }
+
+    async function bootstrapAdmin(user){
+      const ref=db.collection("members").doc(user.uid);
+      const snap=await ref.get();
+      if(!snap.exists){
+        await ref.set({name:"Iqra Teacher",age:18,avatar:"🌿",batch:"Admin",role:"admin",email:user.email});
+        await db.collection("progress").doc(user.uid).set({userId:user.uid,batch:"Admin",records:{},stars:0,surahs:0,asma:0,words:0,duas:0});
+        await db.collection("privateProfiles").doc(user.uid).set({parent:""});
+      }
+      for(const batch of BATCHES){
+        const ref=db.collection("inviteCodes").doc(batch.replace(" ","-").toLowerCase());
+        const snap=await ref.get();
+        if(!snap.exists){
+          await ref.set({batch,code:DEFAULT_INVITE_CODES[batch],active:true});
+        }
+      }
+    }
+
+
+    function currentMonthStars(records={}){
+      return Object.entries(records)
+        .filter(([key])=>key.startsWith(monthKey()))
+        .reduce((sum,[,record])=>{
+          const count=PRAYERS.filter(p=>record?.[p.key]).length;
+          return sum + count;
+        },0);
+    }
+
+    async function loadTeacherDashboard(){
+      if(!isAdmin)return;
+      setSync("Dashboard laden…");
+      try{
+        const [membersSnap,progressSnap,settingsSnap]=await Promise.all([
+          db.collection("members").where("role","==","student").get(),
+          db.collection("progress").get(),
+          db.collection("settings").doc("teacherDashboard").get()
+        ]);
+        const students=membersSnap.docs.map(memberFromDoc);
+        const progressMap=new Map(progressSnap.docs.map(d=>[d.id,d.data()]));
+        const today=dateKey();
+        let todayActive=0,activeStudents=0,monthStars=0;
+
+        students.forEach(student=>{
+          const progress=progressMap.get(student.id)||{};
+          const records=progress.records||{};
+          const todayRecordData=records[today]||{};
+          if(PRAYERS.some(p=>todayRecordData[p.key]))todayActive++;
+          if(Object.keys(records).some(key=>key.startsWith(monthKey()) && PRAYERS.some(p=>records[key]?.[p.key])))activeStudents++;
+          monthStars+=currentMonthStars(records);
+        });
+
+        teacherTotalStudents.textContent=students.length;
+        teacherTotalBatches.textContent=BATCHES.length;
+        teacherTodayUpdates.textContent=todayActive;
+        teacherMonthStars.textContent=monthStars;
+        teacherActiveStudents.textContent=activeStudents;
+        teacherDescription.value=settingsSnap.exists ? (settingsSnap.data().description||"") : "";
+
+        const counts={};BATCHES.forEach(b=>counts[b]=0);
+        students.forEach(s=>{if(counts[s.batch]!==undefined)counts[s.batch]++});
+        teacherBatchGrid.innerHTML="";
+        BATCHES.forEach(batch=>{
+          const button=document.createElement("button");
+          button.className="teacher-batch";
+          button.innerHTML=`<strong>📁 ${batch}</strong><span>${counts[batch]} ${TRANSLATIONS[currentLanguage].studentSuffix} ›</span>`;
+          button.onclick=async()=>{await openStudents();await openBatch(batch)};
+          teacherBatchGrid.appendChild(button);
+        });
+        setSync("Aktuell","ok");
+      }catch(error){
+        setSync("Fehler","bad");
+        showToast(friendlyError(error));
+      }
+    }
+
+    async function saveTeacherDescriptionData(){
+      if(!isAdmin)return;
+      setSync("Speichern…");
+      try{
+        await db.collection("settings").doc("teacherDashboard").set({
+          description:teacherDescription.value.trim(),
+          updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy:currentUser.email
+        },{merge:true});
+        setSync("Gespeichert","ok");
+        showToast("Lehrerbeschreibung gespeichert ✓");
+      }catch(error){
+        setSync("Fehler","bad");
+        showToast(friendlyError(error));
+      }
+    }
+
+    function showTeacherDashboard(){
+      teacherDashboard.classList.add("open");
+      studentApp.style.display="none";
+      studentNav.style.display="none";
+      profilePage.classList.remove("open");
+      studentsPage.classList.remove("open");
+      rewardsPage.classList.remove("open");
+      downloadsPage.classList.remove("open");
+      postOfficePage.classList.remove("open");
+      loadTeacherDashboard();
+    }
+
+    function showStudentExperience(){
+      teacherDashboard.classList.remove("open");
+      studentApp.style.display="";
+      studentNav.style.display="";
+    }
+
+    async function initializeSession(user){
+      currentUser=user;
+      isAdmin=(user.email||"").toLowerCase()===ADMIN_EMAIL.toLowerCase();
+      setSync("Daten laden…");
+      if(isAdmin)await bootstrapAdmin(user);
+      ownState=await loadStudent(user.uid,{includePrivate:true});
+      displayState=ownState;viewingOwn=true;
+      authScreen.classList.add("hidden");
+      drawerStudents.textContent=isAdmin?"👩‍🏫 Batches & Schüler":"👥 Meine Gruppe";
+      addStudentButton.classList.toggle("hidden",!isAdmin);
+      render();
+      setSync("Aktuell","ok");
+      if(isAdmin){
+        showTeacherDashboard();
+      }else{
+        showStudentExperience();
+        saveProgress(ownState).catch(()=>{});
+      }
+    }
+
+    function todayRecord(){
+      const k=dateKey();
+      if(!displayState.records[k])displayState.records[k]={};
+      return displayState.records[k];
+    }
+
+    function canEditDisplayed(){
+      return isAdmin || (currentUser && displayState?.id===currentUser.uid);
+    }
+
+
+    const TREE_STAGES=[
+      {min:0,name:{de:"Samen",en:"Seed"}},
+      {min:1,name:{de:"Keimling",en:"Sprout"}},
+      {min:10,name:{de:"Junger Baum",en:"Young Tree"}},
+      {min:50,name:{de:"Wachsender Baum",en:"Growing Tree"}},
+      {min:100,name:{de:"Starker Baum",en:"Strong Tree"}},
+      {min:200,name:{de:"Blühender Baum",en:"Blooming Tree"}},
+      {min:500,name:{de:"Fruchtbarer Baum",en:"Fruitful Tree"}}
+    ];
+    function treeStageFor(total){
+      let stage=0;
+      TREE_STAGES.forEach((s,i)=>{if(total>=s.min)stage=i});
+      return stage;
+    }
+    function yesterdayMissedCount(){
+      if(!displayState?.records)return 0;
+      const d=new Date();d.setDate(d.getDate()-1);
+      const rec=displayState.records[dateKey(d)]||{};
+      const completed=PRAYERS.filter(p=>rec[p.key]).length;
+      return Math.max(0,5-completed);
+    }
+    function renderFallenLeaves(missed){
+      if(!fallenLeaves)return;
+      const amount=Math.min(3,missed);
+      let out="";
+      const pos=[[132,122,-28],[225,105,34],[177,82,-5]];
+      for(let i=0;i<amount;i++){
+        const [x,y,dx]=pos[i];
+        out+=`<ellipse class="falling-leaf" cx="${x}" cy="${y}" rx="9" ry="5" fill="${i%2?"#d7a43b":"#b77a31"}" style="--dx:${dx}px;animation-delay:${i*.85}s" transform="rotate(${25+i*35} ${x} ${y})"/>`;
+      }
+      fallenLeaves.innerHTML=out;
+    }
+
+    function continuousGrowth(total){
+      const capped=Math.max(0,Math.min(200,total));
+      const p=capped/200;
+      const scale=.58 + p*.42;
+      const y=(1-p)*34;
+      const leafScale=.62 + p*.38;
+      const flowerOpacity=Math.max(0,Math.min(1,(p-.42)/.25));
+      const flowerScale=.55 + Math.max(0,Math.min(1,(p-.42)/.25))*.45;
+      const fruitOpacity=Math.max(0,Math.min(1,(p-.72)/.23));
+      const fruitScale=.6 + Math.max(0,Math.min(1,(p-.72)/.23))*.4;
+      return {scale,y,leafScale,flowerOpacity,flowerScale,fruitOpacity,fruitScale};
+    }
+
+    function renderLivingTree(total){
+      if(!livingTree)return;
+      const growth=continuousGrowth(total);
+      if(livingTreeWrap){
+        livingTreeWrap.style.setProperty("--growth-scale",growth.scale.toFixed(3));
+        livingTreeWrap.style.setProperty("--growth-y",`${growth.y.toFixed(1)}px`);
+      }
+      livingTree.style.setProperty("--leaf-scale",growth.leafScale.toFixed(3));
+      livingTree.style.setProperty("--flower-opacity",growth.flowerOpacity.toFixed(3));
+      livingTree.style.setProperty("--flower-scale",growth.flowerScale.toFixed(3));
+      livingTree.style.setProperty("--fruit-opacity",growth.fruitOpacity.toFixed(3));
+      livingTree.style.setProperty("--fruit-scale",growth.fruitScale.toFixed(3));
+      const stage=treeStageFor(total);
+      livingTree.dataset.stage=String(stage);
+      const lang=currentLanguage==="en"?"en":"de";
+      treeStageChip.textContent=TREE_STAGES[stage].name[lang];
+      const missed=yesterdayMissedCount();
+      livingGarden.classList.toggle("missed-day",missed>0);
+      renderFallenLeaves(missed);
+      if(missed>0){
+        treeCareMessage.textContent=lang==="en"
+          ?"Your tree is waiting for water. Begin again with the next Salah."
+          :"Dein Baum wartet auf Wasser. Beginne wieder mit dem nächsten Salah.";
+      }else if(stage>=5){
+        treeCareMessage.textContent=lang==="en"?"MashaAllah — beautiful flowers are blooming!":"MashaAllah – wunderschöne Blumen blühen!";
+      }else{
+        treeCareMessage.textContent=lang==="en"?"Every Salah gives water to your tree.":"Jede Salah gibt deinem Baum Wasser.";
+      }
+    }
+    function sparkleTree(){
+      if(!gardenSparkles)return;
+      gardenSparkles.innerHTML="";
+      for(let i=0;i<10;i++){
+        const s=document.createElement("i");
+        s.style.left=`${37+Math.random()*28}%`;
+        s.style.top=`${35+Math.random()*35}%`;
+        s.style.animationDelay=`${Math.random()*.35}s`;
+        gardenSparkles.appendChild(s);
+      }
+      setTimeout(()=>{if(gardenSparkles)gardenSparkles.innerHTML=""},1600);
+    }
+
+    function prepareWaterShower(){
+      if(!waterShower)return;
+      waterShower.innerHTML="";
+      for(let i=0;i<118;i++){
+        const d=document.createElement("i");
+        d.style.left=`${Math.random()*100}%`;
+        d.style.setProperty("--delay",`${(Math.random()*.8).toFixed(2)}s`);
+        d.style.setProperty("--dur",`${(1.15+Math.random()*1.15).toFixed(2)}s`);
+        d.style.setProperty("--drift",`${(-24+Math.random()*48).toFixed(0)}px`);
+        d.style.opacity=(.55+Math.random()*.45).toFixed(2);
+        waterShower.appendChild(d);
+      }
+    }
+
+
+    function completedTodayCount(){
+      const rec=todayRecord();
+      return PRAYERS.filter(p=>rec[p.key]).length;
+    }
+    function showGardenCelebration(){
+      if(!treeCareMessage)return;
+      const lang=currentLanguage==="en"?"en":"de";
+      const original=treeCareMessage.textContent;
+      treeCareMessage.textContent=lang==="en"
+        ?"MashaAllah! All five Salah watered your beautiful tree!"
+        :"MashaAllah! Alle fünf Salah haben deinen schönen Baum gegossen!";
+      treeCareMessage.classList.add("celebrating");
+      setTimeout(()=>{
+        treeCareMessage.classList.remove("celebrating");
+        renderLivingTree(totalCompleted(displayState));
+      },4200);
+    }
+
+    function animateTreeWater(){
+      if(!livingGarden)return;
+      prepareWaterShower();
+      livingGarden.classList.remove("watering","growing");
+      void livingGarden.offsetWidth;
+      livingGarden.classList.add("watering");
+      setTimeout(()=>{
+        if(livingTreeWrap){
+          livingTreeWrap.classList.add("gradual-growing");
+          renderLivingTree(totalCompleted(displayState));
+        }
+      },1200);
+      setTimeout(()=>{livingGarden.classList.remove("watering","growing");if(livingTreeWrap)livingTreeWrap.classList.remove("gradual-growing");sparkleTree();if(waterShower)waterShower.innerHTML="";if(completedTodayCount()===5)showGardenCelebration()},4200);
+    }
+
+    function render(){
+      if(!displayState)return;
+      studentName.textContent=displayState.name;
+      profileBtn.textContent=displayState.profile?.avatar||"👤";
+      profileBtn.setAttribute("aria-label",`${displayState.name} Profil`);
+      drawerName.textContent=`${displayState.name} · ${displayState.batch}`;
+      todayDate.textContent=new Date().toLocaleDateString("de-DE",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
+      const rec=todayRecord();
+      const today=PRAYERS.filter(p=>rec[p.key]).length;
+      const month=monthCompleted(displayState),goal=daysInMonth()*5;
+      const pct=Math.min(100,Math.round(month/goal*100)),total=totalCompleted(displayState);
+      todayCount.textContent=`${today}/5`;starCount.textContent=displayState.stars;
+      rewardStars.textContent=displayState.stars;rewardPageStars.textContent=displayState.stars;
+      monthPercent.textContent=`${pct}%`;ringPct.textContent=`${pct}%`;ring.style.setProperty("--p",pct);
+      monthSalah.textContent=month;monthGoal.textContent=goal;remainingText.textContent=`${TRANSLATIONS[currentLanguage].remaining} ${Math.max(0,goal-month)}`;
+      if(plantEmoji)plantEmoji.textContent=plantFor(total);
+      renderLivingTree(total);
+      prayerList.innerHTML="";
+      PRAYERS.forEach(p=>{
+        const b=document.createElement("button");
+        b.className="prayer"+(rec[p.key]?" checked":"");
+        b.disabled=!canEditDisplayed();
+        b.innerHTML=`<div class="picon">${p.icon}</div><div class="pname">${p.name}</div><div class="check">${rec[p.key]?"✓":""}</div>`;
+        b.onclick=()=>togglePrayer(p.key);prayerList.appendChild(b);
+      });
+      milestones.innerHTML="";
+      MILESTONES.forEach(m=>{
+        const e=document.createElement("div");e.className="mile"+(total>=m.at?" active":"");
+        e.innerHTML=`<div class="mile-dot">${total>=m.at?m.icon:"🔒"}</div><div>${m.label}</div>`;milestones.appendChild(e);
+      });
+    }
+
+    async function saveProgress(s){
+      setSync("Speichern…");
+      s.stars=totalCompleted(s);
+      await db.collection("progress").doc(s.id).set({
+        userId:s.id,batch:s.batch,records:s.records||{},stars:s.stars,
+        surahs:Number(s.profile.surahs)||0,asma:Number(s.profile.asma)||0,
+        words:Number(s.profile.words)||0,duas:Number(s.profile.duas)||0,
+        updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+      },{merge:true});
+      if(ownState?.id===s.id)ownState=s;
+      setSync("Gespeichert","ok");
+    }
+
+    async function togglePrayer(key){
+      if(!canEditDisplayed())return;
+      const r=todayRecord();
+      r[key]=!r[key];
+      displayState.stars=totalCompleted(displayState);
+      render();
+      try{await saveProgress(displayState)}catch(e){showToast(friendlyError(e))}
+    }
+
+    const openDrawer=()=>{menuDrawer.classList.add("open");drawerBackdrop.classList.add("open")};
+    const closeDrawerFn=()=>{menuDrawer.classList.remove("open");drawerBackdrop.classList.remove("open")};
+
+    function buildAvatarGrid(editable){
+      avatarGrid.innerHTML="";
+      AVATARS.forEach(a=>{
+        const b=document.createElement("button");b.type="button";
+        b.className="avatar-choice"+(displayState.profile.avatar===a?" selected":"");
+        b.textContent=a;b.disabled=!editable;
+        b.onclick=()=>{displayState.profile.avatar=a;selectedAvatar.textContent=a;profileBtn.textContent=a;buildAvatarGrid(editable)};
+        avatarGrid.appendChild(b);
+      });
+    }
+
+    async function openProfileFor(student,editable,includePrivate=false){
+      closeDrawerFn();studentsPage.classList.remove("open");
+      displayState=student;
+      viewingOwn=student.id===currentUser.uid;
+      if(includePrivate && !student.profile.parent){
+        try{
+          const ps=await db.collection("privateProfiles").doc(student.id).get();
+          if(ps.exists)student.profile.parent=ps.data().parent||"";
+        }catch(_){}
+      }
+      profileLanguage.value=currentLanguage;
+      nameField.value=student.name;ageField.value=student.profile.age;batchField.value=student.batch;
+      parentField.value=student.profile.parent||"";surahField.value=student.profile.surahs;asmaField.value=student.profile.asma;
+      wordField.value=student.profile.words;duaField.value=student.profile.duas;
+      profileDisplayName.textContent=student.name;profileDisplayAge.textContent=`${student.profile.age} Jahre · ${student.batch}`;
+      selectedAvatar.textContent=student.profile.avatar;profileTotalSalah.textContent=totalCompleted(student);
+      profileTotalStars.textContent=student.stars;profileGardenLevel.textContent=levelFor(totalCompleted(student));
+      profileBadgeCount.textContent=`${badgeCount(student)} ›`;
+      readonlyNote.classList.toggle("hidden",editable);
+      [nameField,ageField,parentField,surahField,asmaField,wordField,duaField].forEach(x=>x.disabled=!editable);
+      batchField.disabled=!isAdmin;
+      saveProfile.classList.toggle("hidden",!editable);
+      buildAvatarGrid(editable);
+      profilePage.classList.add("open");
+    }
+
+    function openOwnProfile(){
+      displayState=ownState;render();
+      openProfileFor(ownState,true,true);
+    }
+
+    async function saveProfileData(){
+      if(!canEditDisplayed())return;
+      const newBatch=isAdmin?batchField.value:displayState.batch;
+      displayState.name=nameField.value.trim()||"Schüler";
+      displayState.batch=newBatch;
+      displayState.profile.age=Math.max(3,Number(ageField.value)||7);
+      displayState.profile.parent=parentField.value.trim();
+      displayState.profile.surahs=Math.max(0,Number(surahField.value)||0);
+      displayState.profile.asma=Math.max(0,Number(asmaField.value)||0);
+      displayState.profile.words=Math.max(0,Number(wordField.value)||0);
+      displayState.profile.duas=Math.max(0,Number(duaField.value)||0);
+      setSync("Speichern…");
+      try{
+        await db.collection("members").doc(displayState.id).set({
+          name:displayState.name,age:displayState.profile.age,avatar:displayState.profile.avatar,
+          batch:displayState.batch,role:displayState.role||"student"
+        },{merge:true});
+        await db.collection("privateProfiles").doc(displayState.id).set({parent:displayState.profile.parent},{merge:true});
+        await saveProgress(displayState);
+        if(displayState.id===currentUser.uid)ownState=displayState;
+        render();showToast("Profil gespeichert ✓");
+        await openProfileFor(displayState,true,true);
+      }catch(e){setSync("Fehler","bad");showToast(friendlyError(e))}
+    }
+
+    async function queryBatch(batch){
+      const membersQuery=isAdmin && batch==="__all__"
+        ? db.collection("members").where("role","==","student")
+        : db.collection("members").where("batch","==",batch);
+      const progressQuery=isAdmin && batch==="__all__"
+        ? db.collection("progress")
+        : db.collection("progress").where("batch","==",batch);
+      const [ms,ps]=await Promise.all([membersQuery.get(),progressQuery.get()]);
+      batchMembers=ms.docs.filter(d=>(d.data().role||"student")==="student").map(memberFromDoc);
+      batchProgress=new Map(ps.docs.map(d=>[d.id,d.data()]));
+      batchMembers.forEach(s=>{if(batchProgress.has(s.id))mergeProgress(s,batchProgress.get(s.id))});
+      return batchMembers;
+    }
+
+    async function renderBatchOverview(){
+      selectedBatch=null;studentsPageTitle.textContent=isAdmin?"Batches & Schüler":"Meine Gruppe";
+      batchGrid.classList.remove("hidden");studentList.classList.add("hidden");emptyBatch.classList.add("hidden");
+      showAllBatches.classList.add("hidden");addStudentButton.classList.add("hidden");
+      batchGrid.innerHTML="";
+      if(!isAdmin){await openBatch(ownState.batch);return}
+      setSync("Batches laden…");
+      const all=await db.collection("members").where("role","==","student").get();
+      const counts={};BATCHES.forEach(b=>counts[b]=0);
+      all.docs.forEach(d=>{const b=d.data().batch;if(counts[b]!==undefined)counts[b]++});
+      BATCHES.forEach(batch=>{
+        const b=document.createElement("button");b.className="batch-card";
+        b.innerHTML=`<strong>📁 ${batch}</strong><span>${counts[batch]} Schüler ›</span>`;
+        b.onclick=()=>openBatch(batch);batchGrid.appendChild(b);
+      });
+      setSync("Aktuell","ok");
+    }
+
+    async function openStudents(){
+      closeDrawerFn();profilePage.classList.remove("open");rewardsPage.classList.remove("open");
+      displayState=ownState;render();studentsPage.classList.add("open");
+      try{await renderBatchOverview()}catch(e){showToast(friendlyError(e))}
+    }
+
+    async function openBatch(batch){
+      selectedBatch=batch;studentsPageTitle.textContent=batch;
+      batchGrid.classList.add("hidden");studentList.classList.remove("hidden");
+      showAllBatches.classList.toggle("hidden",!isAdmin);
+      addStudentButton.classList.toggle("hidden",!isAdmin);
+      studentList.innerHTML="";emptyBatch.classList.add("hidden");
+      setSync("Schüler laden…");
+      try{
+        const students=await queryBatch(batch);
+        emptyBatch.classList.toggle("hidden",students.length>0);
+        students.sort((a,b)=>a.name.localeCompare(b.name,"de")).forEach(s=>{
+          const row=document.createElement("div");row.className="student-row";
+          const total=totalCompleted(s);
+          row.innerHTML=`<div class="student-avatar">${s.profile.avatar||"🌷"}</div>
+            <button class="student-open"><strong>${escapeHtml(s.name)}</strong>
+            <div class="student-meta">${s.studentId?`🪪 ${escapeHtml(s.studentId)} · `:""}⭐ ${s.stars} · 🕌 ${total} Salah · 🌱 Level ${levelFor(total)}</div></button>
+            ${isAdmin?'<button class="mini-delete" title="Profil-Daten löschen">🗑️</button>':''}`;
+          row.querySelector(".student-open").onclick=async()=>{
+            const full=await loadStudent(s.id,{includePrivate:isAdmin});
+            await openProfileFor(full,isAdmin||s.id===currentUser.uid,isAdmin||s.id===currentUser.uid);
+          };
+          if(isAdmin)row.querySelector(".mini-delete").onclick=()=>deleteStudentData(s);
+          studentList.appendChild(row);
+        });
+        setSync("Aktuell","ok");
+      }catch(e){setSync("Fehler","bad");showToast(friendlyError(e))}
+    }
+
+    async function deleteStudentData(s){
+      if(!isAdmin||!confirm(`${s.name}s Profildaten wirklich löschen? Das Login-Konto bleibt in Authentication bestehen.`))return;
+      try{
+        await Promise.all([
+          db.collection("members").doc(s.id).delete(),
+          db.collection("progress").doc(s.id).delete(),
+          db.collection("privateProfiles").doc(s.id).delete()
+        ]);
+        showToast("Profildaten gelöscht");await openBatch(selectedBatch);
+      }catch(e){showToast(friendlyError(e))}
+    }
+
+    function showStudentModal(){
+      if(!isAdmin)return;
+      studentForm.reset();newStudentAge.value=7;newStudentBatch.value=selectedBatch||"Batch 1";
+      studentFormError.textContent="";studentModal.classList.remove("hidden");
+    }
+
+    async function createStudentAccount(event){
+      event.preventDefault();if(!isAdmin)return;
+      studentFormError.textContent="";createStudentButton.disabled=true;createStudentButton.textContent="Erstellen…";
+      const name=newStudentName.value.trim(),age=Number(newStudentAge.value)||7,batch=newStudentBatch.value;
+      const studentId=normalizeStudentId(newStudentEmail.value),email=`${studentId}@${STUDENT_LOGIN_DOMAIN}`,password=newStudentPassword.value,parent=newStudentParent.value.trim();
+      let createdUser=null;
+      try{
+        if(!secondaryApp){
+          secondaryApp=firebase.initializeApp(firebaseConfig,"StudentCreator");
+          secondaryAuth=secondaryApp.auth();
+        }
+        const cred=await secondaryAuth.createUserWithEmailAndPassword(email,password);
+        createdUser=cred.user;
+        const uid=createdUser.uid;
+        await db.collection("members").doc(uid).set({name,age,avatar:"🌷",batch,role:"student",studentId,email});
+        await db.collection("progress").doc(uid).set({userId:uid,batch,records:{},stars:0,surahs:0,asma:0,words:0,duas:0});
+        await db.collection("privateProfiles").doc(uid).set({parent});
+        await secondaryAuth.signOut();
+        studentModal.classList.add("hidden");alert(`Schülerkonto erstellt!\n\nStudent-ID: ${studentId}\nPasswort: ${password}\n\nBitte diese Zugangsdaten sicher an die Eltern weitergeben.`);showToast("Schülerkonto erstellt ✓");await openBatch(batch);
+      }catch(e){
+        if(createdUser){try{await createdUser.delete()}catch(_){}}
+        studentFormError.textContent=friendlyError(e);
+      }finally{
+        createStudentButton.disabled=false;createStudentButton.textContent="Konto erstellen";
+      }
+    }
+
+    function buildRewards(){
+      const s=displayState||ownState,total=totalCompleted(s);
+      badgeGrid.innerHTML="";
+      BADGES.forEach(b=>{const e=document.createElement("div");e.className="badge"+(total<b.at?" locked":"");e.innerHTML=`<div class="emoji">${total>=b.at?b.icon:"🔒"}</div><strong>${b.name}</strong>`;badgeGrid.appendChild(e)});
+      const d=new Date(),days=daysInMonth(d);let h="<tr><th>Tag</th>"+PRAYERS.map(p=>`<th>${p.name}</th>`).join("")+"</tr>";
+      for(let day=1;day<=days;day++){const k=`${monthKey(d)}-${String(day).padStart(2,"0")}`,r=s.records[k]||{};h+=`<tr><td>${day}</td>${PRAYERS.map(p=>`<td>${r[p.key]?"✓":"·"}</td>`).join("")}</tr>`}
+      monthTable.innerHTML=h;rewardPageStars.textContent=s.stars;
+    }
+    function openRewards(){closeDrawerFn();buildRewards();rewardsPage.classList.add("open")}
+
+
+    async function createParentStudentAccount(event){
+      event.preventDefault();
+      signupError.textContent="";
+
+      const name=signupStudentName.value.trim();
+      const age=Number(signupStudentAge.value)||7;
+      const batch=signupBatch.value;
+      const inviteCode=signupInviteCode.value.trim().toUpperCase();
+      const studentId=normalizeStudentId(signupStudentId.value);
+      const email=`${studentId}@${STUDENT_LOGIN_DOMAIN}`;
+      const password=signupPassword.value;
+      const password2=signupPassword2.value;
+      const parent=signupParentName.value.trim();
+
+      if(!name || !parent || !inviteCode || !studentId){
+        signupError.textContent="Bitte alle Felder ausfüllen.";
+        return;
+      }
+      if(studentId.length<3){
+        signupError.textContent="Die Student-ID muss mindestens 3 Zeichen haben.";
+        return;
+      }
+      if(password!==password2){
+        signupError.textContent="Die Passwörter stimmen nicht überein.";
+        return;
+      }
+
+      signupSubmitButton.disabled=true;
+      signupSubmitButton.textContent="Konto wird erstellt…";
+      registrationInProgress=true;
+
+      let user=incompleteAuthUser;
+      let createdAuthNow=false;
+
+      try{
+        await authPersistenceReady;
+
+        if(user){
+          if((user.email||"").toLowerCase()!==email.toLowerCase()){
+            throw new Error("Diese Student-ID stimmt nicht mit dem bereits angemeldeten Konto überein.");
+          }
+        }else{
+          const credential=await auth.createUserWithEmailAndPassword(email,password);
+          user=credential.user;
+          createdAuthNow=true;
+        }
+
+        const uid=user.uid;
+
+        // Temporary request validates the private batch invite code.
+        await db.collection("registrationRequests").doc(uid).set({
+          userId:uid,
+          batch,
+          code:inviteCode,
+          studentId,
+          createdAt:firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // The permanent public profile does not store the invite code.
+        await db.collection("members").doc(uid).set({
+          name,
+          age,
+          avatar:"🌷",
+          batch,
+          role:"student",
+          studentId,
+          email
+        });
+
+        await db.collection("progress").doc(uid).set({
+          userId:uid,
+          batch,
+          records:{},
+          stars:0,
+          surahs:0,
+          asma:0,
+          words:0,
+          duas:0,
+          createdAt:firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        await db.collection("privateProfiles").doc(uid).set({
+          parent,
+          createdAt:firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        await db.collection("registrationRequests").doc(uid).delete();
+
+        registrationInProgress=false;
+        incompleteAuthUser=null;
+        closeSignupPage();
+        loginError.textContent="";
+        showToast("Konto erfolgreich erstellt ✓");
+        await initializeSession(user);
+      }catch(error){
+        registrationInProgress=false;
+        signupError.textContent=friendlyError(error);
+
+        // Clean up only a brand-new auth account. Existing incomplete accounts stay repairable.
+        if(createdAuthNow && user){
+          try{await db.collection("registrationRequests").doc(user.uid).delete()}catch(_){}
+          try{await db.collection("members").doc(user.uid).delete()}catch(_){}
+          try{await db.collection("progress").doc(user.uid).delete()}catch(_){}
+          try{await db.collection("privateProfiles").doc(user.uid).delete()}catch(_){}
+          try{await user.delete()}catch(_){}
+          try{await auth.signOut()}catch(_){}
+        }
+      }finally{
+        signupSubmitButton.disabled=false;
+        signupSubmitButton.textContent="Konto erstellen";
+      }
+    }
+
+    loginForm.addEventListener("submit",async e=>{
+      e.preventDefault();loginError.textContent="";loginButton.disabled=true;loginButton.textContent="Anmelden…";
+      try{await authPersistenceReady;await auth.signInWithEmailAndPassword(loginIdentifierToEmail(loginEmail.value),loginPassword.value)}
+      catch(err){loginError.textContent=friendlyError(err)}
+      finally{loginButton.disabled=false;loginButton.textContent="Anmelden"}
+    });
+
+    function openSignupPage(){
+      signupError.textContent="";
+      if(!incompleteAuthUser){
+        signupForm.reset();
+        signupStudentAge.value=7;
+        signupBatch.value="Batch 1";
+      }
+      signupModal.classList.remove("hidden");
+      authScreen.classList.add("hidden");
+      document.body.style.overflow="hidden";
+      signupModal.scrollTop=0;
+    }
+
+    function closeSignupPage(){
+      signupModal.classList.add("hidden");
+      document.body.style.overflow="";
+      if(!currentUser && !incompleteAuthUser)authScreen.classList.remove("hidden");
+      if(incompleteAuthUser)authScreen.classList.remove("hidden");
+    }
+
+    openSignupButton.addEventListener("click",event=>{
+      event.preventDefault();
+      history.pushState({signup:true},"","?signup=1");
+      openSignupPage();
+    });
+
+    closeSignupModal.onclick=()=>{
+      history.replaceState({},"",location.pathname);
+      closeSignupPage();
+    };
+
+    window.addEventListener("popstate",()=>{
+      if(new URLSearchParams(location.search).get("signup")==="1"){
+        openSignupPage();
+      }else{
+        closeSignupPage();
+      }
+    });
+
+    signupForm.addEventListener("submit",createParentStudentAccount);
+
+
+    teacherRefresh.onclick=loadTeacherDashboard;
+    saveTeacherDescription.onclick=saveTeacherDescriptionData;
+    teacherOpenBatches.onclick=openStudents;
+    teacherAddStudent.onclick=()=>{
+      selectedBatch="Batch 1";
+      newStudentBatch.value="Batch 1";
+      showStudentModal();
+    };
+    teacherOpenTrackers.onclick=()=>{
+      teacherDashboard.classList.remove("open");
+      downloadsPage.classList.add("open");
+    };
+    teacherLogout.onclick=async()=>auth.signOut();
+
+    logoutButton.onclick=async()=>{closeDrawerFn();await auth.signOut()};
+    studentForm.addEventListener("submit",createStudentAccount);
+    closeStudentModal.onclick=()=>studentModal.classList.add("hidden");
+    studentModal.addEventListener("click",e=>{if(e.target===studentModal)studentModal.classList.add("hidden")});
+
+    menuBtn.onclick=openDrawer;closeDrawer.onclick=closeDrawerFn;drawerBackdrop.onclick=closeDrawerFn;
+    profileBtn.onclick=openOwnProfile;drawerProfile.onclick=openOwnProfile;navProfile.onclick=openOwnProfile;
+    saveProfile.onclick=saveProfileData;closeProfile.onclick=()=>{profilePage.classList.remove("open");displayState=ownState;render()};
+    drawerStudents.onclick=openStudents;closeStudents.onclick=()=>{studentsPage.classList.remove("open");displayState=ownState;render();if(isAdmin)showTeacherDashboard()};
+    drawerDownloads.onclick=()=>{closeDrawerFn();profilePage.classList.remove("open");studentsPage.classList.remove("open");rewardsPage.classList.remove("open");downloadsPage.classList.add("open")};
+    closeDownloads.onclick=()=>{downloadsPage.classList.remove("open");if(isAdmin)showTeacherDashboard()};
+    showAllBatches.onclick=renderBatchOverview;addStudentButton.onclick=showStudentModal;
+    navRewards.onclick=openRewards;drawerRewards.onclick=openRewards;closeRewards.onclick=()=>{rewardsPage.classList.remove("open");displayState=ownState;render();if(isAdmin)showTeacherDashboard()};
+    profileBadgesButton.onclick=()=>{profilePage.classList.remove("open");openRewards()};
+    navHome.onclick=()=>{displayState=ownState;render();scrollTo({top:0,behavior:"smooth"})};
+    navGarden.onclick=()=>gardenSection.scrollIntoView({behavior:"smooth"});
+    navPrayers.onclick=()=>prayerSection.scrollIntoView({behavior:"smooth"});
+    document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{closeDrawerFn();displayState=ownState;render();scrollTo({top:0,behavior:"smooth"})});
+    document.querySelectorAll("[data-scroll]").forEach(b=>b.onclick=()=>{closeDrawerFn();$(b.dataset.scroll.slice(1)).scrollIntoView({behavior:"smooth"})});
+
+    facebookLink.href=FACEBOOK_URL;facebookHint.classList.add("hidden");
+    BATCHES.forEach(b=>{const o=document.createElement("option");o.value=o.textContent=b;newStudentBatch.appendChild(o);const s=document.createElement("option");s.value=s.textContent=b;signupBatch.appendChild(s)});
+
+    if(new URLSearchParams(location.search).get("signup")==="1"){
+      setTimeout(openSignupPage,0);
+    }
+
+    loginLanguage.addEventListener("change",event=>applyLanguage(event.target.value));
+    profileLanguage.addEventListener("change",event=>applyLanguage(event.target.value));
+    applyLanguage(currentLanguage);
+
+    auth.onAuthStateChanged(async user=>{
+      if(registrationInProgress)return;
+
+      profilePage.classList.remove("open");
+      studentsPage.classList.remove("open");
+      rewardsPage.classList.remove("open");
+
+      if(!user){
+        currentUser=null;
+        ownState=null;
+        displayState=null;
+        incompleteAuthUser=null;
+        teacherDashboard.classList.remove("open");
+        studentApp.style.display="none";
+        studentNav.style.display="none";
+        signupModal.classList.add("hidden");
+        authScreen.classList.remove("hidden");
+        syncPill.classList.add("hidden");
+        loginPassword.value="";
+        return;
+      }
+
+      try{
+        const memberSnap=await db.collection("members").doc(user.uid).get();
+
+        if(!memberSnap.exists && (user.email||"").toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
+          incompleteAuthUser=user;
+          authScreen.classList.remove("hidden");
+          loginError.textContent="Das Login existiert, aber das Schülerprofil ist noch nicht vollständig. Tippe auf „Neues Schülerkonto erstellen“, um es fertigzustellen.";
+          openSignupButton.textContent="Schülerprofil fertigstellen";
+          return;
+        }
+
+        incompleteAuthUser=null;
+        openSignupButton.textContent="Neues Schülerkonto erstellen";
+        await initializeSession(user);
+      }catch(error){
+        authScreen.classList.remove("hidden");
+        loginError.textContent=friendlyError(error);
+      }
+    });
+  </script>
+
+  <script>
+
+
+    // ---------------- Little Ummah Post Office ----------------
+    const PO_DEFAULT_PAD="letterpads/pad-school-kawaii.jpeg";
+    const PO_TEACHERS={
+      tasnim:{key:"tasnim",name:"Ustaza Tasnim Susan Azad",batches:[1,3,6]},
+      fouzia:{key:"fouzia",name:"Ustaza Fouzia Tanzee",batches:[4,5,7]}
+    };
+    let poSelectedPad=PO_DEFAULT_PAD, poFiles=[], poReplyFiles=[], poEditingId=null, poCurrentLetter=null, poLastListMode="all", poLoadedList=[];
+    const poMaxFiles=3, poMaxSize=5*1024*1024;
+
+    function poBatchNumber(batch){const m=String(batch||"").match(/\d+/);return m?Number(m[0]):0}
+    function poTeacherForBatch(batch){
+      const n=poBatchNumber(batch);
+      if(PO_TEACHERS.tasnim.batches.includes(n))return PO_TEACHERS.tasnim;
+      if(PO_TEACHERS.fouzia.batches.includes(n))return PO_TEACHERS.fouzia;
+      return null;
+    }
+    function poTeacherFromLetter(letter){return {key:letter.recipientTeacherKey||poTeacherForBatch(letter.batch)?.key||"",name:letter.recipientTeacherName||poTeacherForBatch(letter.batch)?.name||"Ustaza"}}
+    function poShow(section){
+      [poHome,poComposer,poListSection,poViewSection].forEach(s=>s.classList.add("hidden"));
+      section.classList.remove("hidden"); postOfficePage.scrollTop=0;
+    }
+    async function openPostOffice(){
+      closeDrawerFn();
+      if(!isAdmin&&poBatchNumber(ownState?.batch)===2){showToast("Little Ummah Post Office is currently unavailable for Batch 2.");return}
+      [profilePage,studentsPage,rewardsPage,downloadsPage].forEach(p=>p.classList.remove("open"));
+      if(isAdmin)teacherDashboard.classList.remove("open");
+      postOfficePage.classList.add("open"); poShow(poHome); await poRefreshBadge();
+    }
+    function closePostOfficeFn(){postOfficePage.classList.remove("open"); if(isAdmin)showTeacherDashboard();}
+    function poPadName(path){const b=poPadGrid.querySelector(`[data-pad="${path}"] span`);return b?b.textContent:"Letter Pad"}
+    function poSelectPad(path){poSelectedPad=path||PO_DEFAULT_PAD;poCanvas.style.backgroundImage=`url('${poSelectedPad}')`;poPadGrid.querySelectorAll('.po-pad').forEach(b=>b.classList.toggle('selected',b.dataset.pad===poSelectedPad));}
+    function poResetComposer(){poEditingId=null;poSelectedPad=PO_DEFAULT_PAD;poFiles=[];poTitle.value="";poBody.value="";poPictures.value="";poFormError.textContent="";poRenderFilePreview();poSelectPad(poSelectedPad)}
+    async function poLoadRecipients(){
+      poRecipient.innerHTML=""; poRecipient.disabled=false;
+      if(isAdmin){
+        const snap=await db.collection("members").where("role","==","student").get();
+        snap.docs.map(memberFromDoc).filter(s=>poBatchNumber(s.batch)!==2).sort((a,b)=>a.batch.localeCompare(b.batch)||a.name.localeCompare(b.name)).forEach(s=>{const t=poTeacherForBatch(s.batch);const o=document.createElement('option');o.value=s.id;o.textContent=`${s.name} · ${s.batch} · ${t?.name||"No Ustaza"}`;o.dataset.name=s.name;o.dataset.batch=s.batch;poRecipient.appendChild(o)});
+      }else{
+        const teacher=poTeacherForBatch(ownState?.batch);const o=document.createElement('option');o.value=teacher?.key||"";o.textContent=teacher?.name||"No Ustaza assigned";poRecipient.appendChild(o);poRecipient.disabled=true;
+      }
+    }
+    async function poStartComposer(letter=null){
+      if(!isAdmin&&poBatchNumber(ownState?.batch)===2){showToast("Little Ummah Post Office is currently unavailable for Batch 2.");return}
+      poResetComposer(); await poLoadRecipients();
+      if(letter){poEditingId=letter.id;poTitle.value=letter.title||"";poBody.value=letter.body||"";poSelectPad(letter.padId||PO_DEFAULT_PAD);if(isAdmin&&letter.studentId)poRecipient.value=letter.studentId;}
+      poShow(poComposer);
+    }
+    function poValidateFiles(files){
+      const arr=Array.from(files||[]).slice(0,poMaxFiles);
+      for(const f of arr){if(!["image/jpeg","image/png","image/webp"].includes(f.type))throw new Error("Only JPG, PNG or WEBP pictures are allowed.");if(f.size>poMaxSize)throw new Error("Each picture must be 5 MB or smaller.")}
+      return arr;
+    }
+    function poRenderFilePreview(reply=false){const files=reply?poReplyFiles:poFiles,wrap=reply?poReplyPreview:poPicturePreview;wrap.innerHTML="";files.forEach((f,i)=>{const d=document.createElement('div');d.className='po-preview';const img=document.createElement('img');img.src=URL.createObjectURL(f);const x=document.createElement('button');x.type='button';x.textContent='×';x.onclick=()=>{files.splice(i,1);poRenderFilePreview(reply)};d.append(img,x);wrap.appendChild(d)})}
+    async function poUploadFiles(files,letterId,kind="student"){
+      const urls=[];
+      for(const file of files){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const path=`letters/${currentUser.uid}/${letterId}/${kind}-${Date.now()}-${safe}`;const snap=await storage.ref(path).put(file,{contentType:file.type});urls.push({url:await snap.ref.getDownloadURL(),path,name:file.name,type:file.type})}
+      return urls;
+    }
+    async function poSave(status){
+      poFormError.textContent=""; const body=poBody.value.trim();
+      if(status!=="draft"&&!body){poFormError.textContent="Please write your letter first.";return}
+      if(isAdmin&&!poRecipient.value){poFormError.textContent="Please choose a student.";return}
+      const ref=poEditingId?db.collection("letters").doc(poEditingId):db.collection("letters").doc();
+      try{poSaveDraft.disabled=poSendLetter.disabled=true;setSync(status==="draft"?"Saving draft…":"Sending letter…");
+        const studentId=isAdmin?poRecipient.value:currentUser.uid;
+        let studentName=ownState?.name||"Student",batch=ownState?.batch||"";
+        if(isAdmin){const opt=poRecipient.selectedOptions[0];studentName=opt?.dataset.name||"Student";batch=opt?.dataset.batch||""}
+        const teacher=poTeacherForBatch(batch);
+        if(!teacher){poFormError.textContent=poBatchNumber(batch)===2?"Batch 2 is currently closed.":"No Ustaza is assigned to this batch.";return}
+        const existing=poEditingId?(await ref.get()).data()||{}:{};
+        const uploaded=poFiles.length?await poUploadFiles(poFiles,ref.id,isAdmin?"teacher":"student"):[];
+        const data={studentId,studentName,batch,recipientTeacherKey:teacher.key,recipientTeacherName:teacher.name,title:poTitle.value.trim(),body,padId:poSelectedPad,attachments:[...(existing.attachments||[]),...uploaded],senderRole:isAdmin?"teacher":"student",status,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),readByTeacher:isAdmin};
+        if(!poEditingId)data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+        await ref.set(data,{merge:true});showToast(status==="draft"?"Draft saved ✓":`Letter sent to ${teacher.name} ✓`);setSync("Saved","ok");poResetComposer();poShow(poHome);await poRefreshBadge();
+      }catch(e){poFormError.textContent=friendlyError(e);setSync("Error","bad")}finally{poSaveDraft.disabled=poSendLetter.disabled=false}
+    }
+    async function poGetLetters(){const snap=await db.collection("letters").get();return snap.docs.map(d=>({id:d.id,...d.data()})).filter(l=>isAdmin||l.studentId===currentUser.uid).sort((a,b)=>((b.updatedAt?.seconds||b.createdAt?.seconds||0)-(a.updatedAt?.seconds||a.createdAt?.seconds||0)))}
+    async function poOpenList(mode){
+      poLastListMode=mode;poListTitle.textContent=mode==="drafts"?"📝 My Drafts":mode==="gifts"?"💝 Smile Gift from Ustaza":"✉️ Old Letters Envelope";poLetterList.innerHTML='<div class="po-empty">Loading…</div>';poTeacherFilterWrap.classList.toggle('hidden',!isAdmin);poShow(poListSection);
+      try{let list=await poGetLetters();if(mode==="drafts")list=list.filter(l=>l.status==="draft"&&l.senderRole===(isAdmin?"teacher":"student"));else if(mode==="gifts")list=list.filter(l=>!isAdmin&&(l.senderRole==="teacher"||l.teacherReply));else list=list.filter(l=>l.status!=="draft");poLoadedList=list;poRenderFilteredList()}catch(e){poLetterList.innerHTML=`<div class="po-empty">${escapeHtml(friendlyError(e))}</div>`}
+    }
+    function poRenderFilteredList(){let list=poLoadedList;if(isAdmin&&poTeacherFilter.value!=="all")list=list.filter(l=>poTeacherFromLetter(l).key===poTeacherFilter.value);poRenderList(list)}
+    function poRenderList(list){
+      poLetterList.innerHTML="";if(!list.length){poLetterList.innerHTML='<div class="po-empty">No letters here yet. ✉️</div>';return}
+      list.forEach(l=>{const card=document.createElement('article');card.className='po-letter-card';const date=l.updatedAt?.toDate?.().toLocaleDateString()||"";const teacher=poTeacherFromLetter(l);const direction=isAdmin?`From: ${escapeHtml(l.studentName||"Student")}<br>To: ${escapeHtml(teacher.name)}`:l.senderRole==="teacher"?`From: ${escapeHtml(teacher.name)}`:`To: ${escapeHtml(teacher.name)}`;card.innerHTML=`<img src="${escapeHtml(l.padId||PO_DEFAULT_PAD)}" alt="pad"><div><h4>${escapeHtml(l.title||"A little letter")}</h4><p>${direction}</p><p>${escapeHtml(l.batch||"")} · ${escapeHtml(date)}</p><span class="po-badge">${escapeHtml(l.status||"sent")}</span></div>`;const b=document.createElement('button');b.className='po-btn secondary';b.textContent=l.status==="draft"?"Continue":"Open";b.onclick=()=>l.status==="draft"?poStartComposer(l):poOpenLetter(l);card.appendChild(b);poLetterList.appendChild(card)})
+    }
+    async function poOpenLetter(l){
+      poCurrentLetter=l;const teacher=poTeacherFromLetter(l);poViewTitle.textContent=l.title||"A little letter";poViewMeta.textContent=isAdmin?`From: ${l.studentName||"Student"} · To: ${teacher.name} · ${l.batch||""}`:l.senderRole==="teacher"?`From: ${teacher.name}`:`To: ${teacher.name}`;poViewPaper.style.backgroundImage=`url('${l.padId||PO_DEFAULT_PAD}')`;poViewBody.textContent=l.body||"";poRenderStoredAttachments(poViewAttachments,l.attachments||[]);poExistingReply.classList.toggle('hidden',!l.teacherReply);if(l.teacherReply){poExistingReply.querySelector('h3').textContent=`💝 Smile Gift from ${l.teacherReply.teacherName||teacher.name}`;poExistingReplyBody.textContent=l.teacherReply.body||"";poRenderStoredAttachments(poExistingReplyAttachments,l.teacherReply.attachments||[])}poReplyBox.classList.toggle('hidden',!isAdmin||l.senderRole==="teacher");if(isAdmin)poReplyBox.querySelector('h3').textContent=`💝 Smile Gift from ${teacher.name}`;poReplyBody.value="";poReplyFiles=[];poReplyPictures.value="";poRenderFilePreview(true);poShow(poViewSection);if(isAdmin&&!l.readByTeacher){await db.collection('letters').doc(l.id).set({readByTeacher:true},{merge:true});l.readByTeacher=true}
+    }
+    function poRenderStoredAttachments(wrap,items){wrap.innerHTML="";items.forEach(a=>{const link=document.createElement('a');link.href=a.url;link.target='_blank';const img=document.createElement('img');img.src=a.url;img.alt=a.name||'picture';link.appendChild(img);wrap.appendChild(link)})}
+    async function poSendSmileGift(){if(!poCurrentLetter)return;const body=poReplyBody.value.trim();if(!body){showToast("Please write a reply first.");return}try{poSendReply.disabled=true;setSync("Sending Smile Gift…");const teacher=poTeacherFromLetter(poCurrentLetter);const uploaded=await poUploadFiles(poReplyFiles,poCurrentLetter.id,"reply");await db.collection('letters').doc(poCurrentLetter.id).set({status:'replied',recipientTeacherKey:teacher.key,recipientTeacherName:teacher.name,teacherReply:{body,attachments:uploaded,padId:poCurrentLetter.padId||PO_DEFAULT_PAD,teacherKey:teacher.key,teacherName:teacher.name,sentAt:firebase.firestore.FieldValue.serverTimestamp()},updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});showToast(`Smile Gift sent from ${teacher.name} 💝`);setSync("Sent","ok");await poOpenList('all')}catch(e){showToast(friendlyError(e));setSync("Error","bad")}finally{poSendReply.disabled=false}}
+    async function poRefreshBadge(){if(isAdmin){poGiftBadge.textContent="";return}try{const list=await poGetLetters();const n=list.filter(l=>(l.senderRole==="teacher"||l.teacherReply)&&!l.readByStudent).length;poGiftBadge.textContent=n?`(${n})`:""}catch(_){}}
+
+    poPadGrid.addEventListener('click',e=>{const b=e.target.closest('.po-pad');if(b)poSelectPad(b.dataset.pad)});
+    poPictures.onchange=()=>{try{poFiles=poValidateFiles(poPictures.files);poRenderFilePreview()}catch(e){showToast(e.message);poPictures.value=""}};
+    poReplyPictures.onchange=()=>{try{poReplyFiles=poValidateFiles(poReplyPictures.files);poRenderFilePreview(true)}catch(e){showToast(e.message);poReplyPictures.value=""}};
+    poTeacherFilter.onchange=poRenderFilteredList;
+    poWrite.onclick=()=>poStartComposer();poDrafts.onclick=()=>poOpenList('drafts');poSmileGifts.onclick=()=>poOpenList('gifts'); poOldLetters.onclick=()=>poOpenList('all');
+    poComposerBack.onclick=()=>poShow(poHome);poListBack.onclick=()=>poShow(poHome);poViewBack.onclick=()=>poOpenList(poLastListMode);poSaveDraft.onclick=()=>poSave('draft');poSendLetter.onclick=()=>poSave('sent');poSendReply.onclick=poSendSmileGift;
+    closePostOffice.onclick=closePostOfficeFn;drawerPostOffice.onclick=openPostOffice;teacherOpenPostOffice.onclick=openPostOffice;
+
+
+    // ---------------- Version 21 enhancements ----------------
+    let trackerSelectedDate=new Date();
+    let poReplyingTo=null;
+
+    function trackerDateKey(){return dateKey(trackerSelectedDate)}
+    todayRecord=function(){const k=trackerDateKey();if(!displayState.records[k])displayState.records[k]={};return displayState.records[k]};
+
+    const baseRenderV21=render;
+    render=function(){
+      baseRenderV21();
+      const lang=currentLanguage==="en"?"en-GB":"de-DE";
+      todayDate.textContent=trackerSelectedDate.toLocaleDateString(lang,{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
+      const isLate=trackerDateKey()!==dateKey();
+      lateUpdateNote.classList.toggle("hidden",!isLate);
+      lateUpdateNote.textContent=currentLanguage==="en"?"Updated later":"Später nachgetragen";
+      document.querySelector("#prayerSection .title").textContent=isLate?(currentLanguage==="en"?"🪴 Prayers for this day":"🪴 Gebete für diesen Tag"):TRANSLATIONS[currentLanguage].todaysPrayers;
+      renderTrackerDays();
+    };
+
+    function renderTrackerDays(){
+      if(!trackerDays)return;trackerDays.innerHTML="";
+      for(let i=0;i<4;i++){
+        const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-i);
+        const b=document.createElement("button");b.type="button";b.className="tracker-day"+(dateKey(d)===trackerDateKey()?" active":"");
+        b.textContent=i===0?(currentLanguage==="en"?"Today":"Heute"):i===1?(currentLanguage==="en"?"Yesterday":"Gestern"):d.toLocaleDateString(currentLanguage==="en"?"en-GB":"de-DE",{weekday:"short",day:"2-digit"});
+        b.addEventListener("click",()=>{trackerSelectedDate=d;render()});trackerDays.appendChild(b);
+      }
+    }
+
+    const baseTogglePrayerV21=togglePrayer;
+    togglePrayer=async function(key){
+      if(!canEditDisplayed())return;
+      const oldest=new Date();oldest.setHours(0,0,0,0);oldest.setDate(oldest.getDate()-3);
+      const chosen=new Date(trackerSelectedDate);chosen.setHours(0,0,0,0);
+      if(chosen<oldest){showToast(currentLanguage==="en"?"This day is locked.":"Dieser Tag ist gesperrt.");return}
+      const r=todayRecord();
+      const completing=!r[key];
+      r[key]=!r[key];
+      if(trackerDateKey()!==dateKey()){r._updatedLater=true;r._updatedAt=new Date().toISOString()}
+      displayState.stars=totalCompleted(displayState);render();
+      if(completing)animateTreeWater();
+      try{await saveProgress(displayState)}catch(e){showToast(friendlyError(e))}
+    };
+
+    function poRecipientType(){return document.querySelector('input[name="poRecipientType"]:checked')?.value||"teacher"}
+    function poContainsBlockedContact(text){
+      const patterns=[/https?:\/\//i,/www\./i,/\b[\w.+-]+@[\w.-]+\.[a-z]{2,}\b/i,/\+?\d[\d\s().-]{7,}\d/,/\b(instagram|snapchat|tiktok|facebook|whatsapp|telegram|discord)\b/i,/@[a-z0-9_.]{3,}/i];
+      return patterns.some(r=>r.test(text));
+    }
+    async function poBlockedByEither(a,b){
+      const [x,y]=await Promise.all([db.collection('letterBlocks').doc(`${a}_${b}`).get(),db.collection('letterBlocks').doc(`${b}_${a}`).get()]);return x.exists||y.exists;
+    }
+    async function poFriendHasOpenLetter(sender,receiver){
+      const snap=await db.collection('letters').where('senderId','==',sender).where('receiverId','==',receiver).where('recipientType','==','friend').get();
+      return snap.docs.some(d=>{const x=d.data();return x.status==='sent'&&!x.friendReplySent});
+    }
+    async function poFriendSentToday(sender,receiver){
+      const snap=await db.collection('letters').where('senderId','==',sender).where('receiverId','==',receiver).where('recipientType','==','friend').get();
+      const today=dateKey();return snap.docs.some(d=>{const x=d.data();const dt=x.createdAt?.toDate?.();return dt&&dateKey(dt)===today});
+    }
+
+    poLoadRecipients=async function(){
+      poRecipient.innerHTML="";poRecipient.disabled=false;
+      const type=isAdmin?"teacher":poRecipientType();
+      poRecipientTypeWrap.classList.toggle('hidden',isAdmin);
+      if(isAdmin){
+        const snap=await db.collection("members").where("role","==","student").get();
+        snap.docs.map(memberFromDoc).filter(s=>poBatchNumber(s.batch)!==2).sort((a,b)=>a.batch.localeCompare(b.batch)||a.name.localeCompare(b.name)).forEach(s=>{const t=poTeacherForBatch(s.batch);const o=document.createElement('option');o.value=s.id;o.textContent=`${s.name} · ${s.batch} · ${t?.name||"No Ustaza"}`;o.dataset.name=s.name;o.dataset.batch=s.batch;poRecipient.appendChild(o)});
+      }else if(type==="teacher"){
+        const teacher=poTeacherForBatch(ownState?.batch);const o=document.createElement('option');o.value=teacher?.key||"";o.textContent=teacher?.name||"No Ustaza assigned";poRecipient.appendChild(o);poRecipient.disabled=true;
+      }else{
+        const snap=await db.collection("members").where("batch","==",ownState.batch).get();
+        const blockedSnap=await db.collection('letterBlocks').where('ownerId','==',currentUser.uid).get();const blocked=new Set(blockedSnap.docs.map(d=>d.data().blockedId));
+        snap.docs.map(memberFromDoc).filter(x=>x.id!==currentUser.uid&&!blocked.has(x.id)).sort((a,b)=>a.name.localeCompare(b.name)).forEach(x=>{const o=document.createElement('option');o.value=x.id;o.textContent=x.name;o.dataset.name=x.name;o.dataset.batch=x.batch;poRecipient.appendChild(o)});
+        if(!poRecipient.options.length){const o=document.createElement('option');o.value="";o.textContent="No available friends in this batch";poRecipient.appendChild(o)}
+      }
+    };
+    document.querySelectorAll('input[name="poRecipientType"]').forEach(r=>r.addEventListener('change',poLoadRecipients));
+
+    const basePoResetComposerV21=poResetComposer;
+    poResetComposer=function(){basePoResetComposerV21();poReplyingTo=null;const teacherRadio=document.querySelector('input[name="poRecipientType"][value="teacher"]');if(teacherRadio)teacherRadio.checked=true};
+
+    poSave=async function(status){
+      poFormError.textContent="";const body=poBody.value.trim();
+      if(status!=="draft"&&!body){poFormError.textContent="Please write your letter first.";return}
+      if(isAdmin&&!poRecipient.value){poFormError.textContent="Please choose a student.";return}
+      const type=isAdmin?"teacher":poRecipientType();
+      if(type==="friend"&&status!=="draft"){
+        if(body.length<30){poFormError.textContent="A friend letter must contain at least 30 characters.";return}
+        if(poContainsBlockedContact(body+" "+poTitle.value)){poFormError.textContent="Phone numbers, email addresses, social usernames and outside links are not allowed.";return}
+        if(!poRecipient.value){poFormError.textContent="Please choose a friend.";return}
+        if(await poBlockedByEither(currentUser.uid,poRecipient.value)){poFormError.textContent="This friend is not available for letters.";return}
+        if(!poReplyingTo&&await poFriendHasOpenLetter(currentUser.uid,poRecipient.value)){poFormError.textContent="Please wait until your friend replies before sending another letter.";return}
+        if(!poReplyingTo&&await poFriendSentToday(currentUser.uid,poRecipient.value)){poFormError.textContent="You can send only one letter to the same friend per day.";return}
+      }
+      const ref=poEditingId?db.collection("letters").doc(poEditingId):db.collection("letters").doc();
+      try{
+        poSaveDraft.disabled=poSendLetter.disabled=true;setSync(status==="draft"?"Saving draft…":"Sending letter…");
+        const senderId=currentUser.uid;const studentId=isAdmin?poRecipient.value:currentUser.uid;
+        let studentName=ownState?.name||"Student",batch=ownState?.batch||"";let receiverId="",receiverName="";let teacher=null;
+        if(isAdmin){const opt=poRecipient.selectedOptions[0];studentName=opt?.dataset.name||"Student";batch=opt?.dataset.batch||"";receiverId=studentId;receiverName=studentName;teacher=poTeacherForBatch(batch)}
+        else if(type==="friend"){const opt=poRecipient.selectedOptions[0];receiverId=poRecipient.value;receiverName=opt?.dataset.name||"Friend"}
+        else{teacher=poTeacherForBatch(batch)}
+        if(type==="teacher"&&!teacher){poFormError.textContent=poBatchNumber(batch)===2?"Batch 2 is currently closed.":"No Ustaza is assigned to this batch.";return}
+        const existing=poEditingId?(await ref.get()).data()||{}:{};const uploaded=poFiles.length?await poUploadFiles(poFiles,ref.id,isAdmin?"teacher":"student"):[];
+        const data={studentId,studentName,batch,title:poTitle.value.trim(),body,padId:poSelectedPad,attachments:[...(existing.attachments||[]),...uploaded],senderRole:isAdmin?"teacher":"student",senderId,recipientType:type,status,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),readByTeacher:isAdmin,readByRecipient:false};
+        if(type==="teacher"){data.recipientTeacherKey=teacher.key;data.recipientTeacherName=teacher.name;if(isAdmin){data.receiverId=receiverId;data.receiverName=receiverName}}
+        else{data.receiverId=receiverId;data.receiverName=receiverName;data.senderName=ownState.name;data.friendReplySent=false;if(poReplyingTo)data.replyToLetterId=poReplyingTo.id}
+        if(!poEditingId)data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+        await ref.set(data,{merge:true});
+        if(poReplyingTo)await db.collection('letters').doc(poReplyingTo.id).set({friendReplySent:true,status:'replied',updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+        showToast(status==="draft"?"Draft saved ✓":type==="friend"?`Letter sent to ${receiverName} ✓`:`Letter sent to ${teacher.name} ✓`);setSync("Saved","ok");poResetComposer();poShow(poHome);await poRefreshAllNotifications();
+      }catch(e){poFormError.textContent=friendlyError(e);setSync("Error","bad")}finally{poSaveDraft.disabled=poSendLetter.disabled=false}
+    };
+
+    poGetLetters=async function(){
+      if(isAdmin){const snap=await db.collection('letters').get();return snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>((b.updatedAt?.seconds||b.createdAt?.seconds||0)-(a.updatedAt?.seconds||a.createdAt?.seconds||0)))}
+      const maps=new Map();
+      const queries=[db.collection('letters').where('senderId','==',currentUser.uid),db.collection('letters').where('receiverId','==',currentUser.uid),db.collection('letters').where('studentId','==',currentUser.uid)];
+      for(const q of queries){try{const snap=await q.get();snap.docs.forEach(d=>maps.set(d.id,{id:d.id,...d.data()}))}catch(_){}}
+      return [...maps.values()].sort((a,b)=>((b.updatedAt?.seconds||b.createdAt?.seconds||0)-(a.updatedAt?.seconds||a.createdAt?.seconds||0)));
+    };
+
+    poRenderList=function(list){
+      poLetterList.innerHTML="";if(!list.length){poLetterList.innerHTML='<div class="po-empty">No letters here yet. ✉️</div>';return}
+      list.forEach(l=>{const card=document.createElement('article');card.className='po-letter-card';const incoming=!isAdmin&&l.receiverId===currentUser.uid;const unread=incoming&&!l.readByRecipient||(!isAdmin&&l.teacherReply&&!l.readByStudent)||isAdmin&&(l.recipientType!=='friend'&&l.senderRole==='student'&&!l.readByTeacher);if(unread)card.classList.add('po-unread');const date=l.updatedAt?.toDate?.().toLocaleDateString()||"";const teacher=poTeacherFromLetter(l);let direction='';if(l.recipientType==='friend'){direction=isAdmin?`From: ${escapeHtml(l.senderName||l.studentName||'Student')}<br>To: ${escapeHtml(l.receiverName||'Friend')}`:incoming?`From: ${escapeHtml(l.senderName||'Friend')}`:`To: ${escapeHtml(l.receiverName||'Friend')}`}else{direction=isAdmin?`From: ${escapeHtml(l.studentName||"Student")}<br>To: ${escapeHtml(teacher.name)}`:l.senderRole==="teacher"?`From: ${escapeHtml(teacher.name)}`:`To: ${escapeHtml(teacher.name)}`}
+        card.innerHTML=`<img src="${escapeHtml(l.padId||PO_DEFAULT_PAD)}" alt="pad"><div><h4>${escapeHtml(l.title||"A little letter")}</h4><p>${direction}</p><p>${escapeHtml(l.batch||"")} · ${escapeHtml(date)}</p><span class="po-badge">${unread?'new · ':''}${escapeHtml(l.status||"sent")}</span></div>`;const b=document.createElement('button');b.className='po-btn secondary';b.textContent=l.status==="draft"?"Continue":"Open";b.onclick=()=>l.status==="draft"?poStartComposer(l):poOpenLetter(l);card.appendChild(b);poLetterList.appendChild(card)})
+    };
+
+    const basePoOpenLetterV21=poOpenLetter;
+    poOpenLetter=async function(l){
+      await basePoOpenLetterV21(l);
+      const isFriend=l.recipientType==='friend';const incoming=isFriend&&l.receiverId===currentUser.uid;
+      poFriendActions.classList.toggle('hidden',!isFriend||isAdmin);
+      poReplyFriend.classList.toggle('hidden',!incoming||l.friendReplySent);
+      poViewMeta.textContent=isFriend?(isAdmin?`From: ${l.senderName||l.studentName||'Student'} · To: ${l.receiverName||'Friend'} · ${l.batch||''}`:incoming?`From: ${l.senderName||'Friend'}`:`To: ${l.receiverName||'Friend'}`):poViewMeta.textContent;
+      if(incoming&&!l.readByRecipient){await db.collection('letters').doc(l.id).set({readByRecipient:true},{merge:true});l.readByRecipient=true}
+      if(!isAdmin&&l.teacherReply&&!l.readByStudent){await db.collection('letters').doc(l.id).set({readByStudent:true},{merge:true});l.readByStudent=true}
+      await poRefreshAllNotifications();
+    };
+
+    poReplyFriend.addEventListener('click',async()=>{if(!poCurrentLetter)return;const original=poCurrentLetter;poReplyingTo=original;await poStartComposer();const radio=document.querySelector('input[name="poRecipientType"][value="friend"]');radio.checked=true;await poLoadRecipients();poRecipient.value=original.senderId;poReplyingTo=original;poTitle.value=original.title?`Re: ${original.title}`:"Reply letter";poShow(poComposer)});
+    poReportLetter.addEventListener('click',async()=>{if(!poCurrentLetter)return;await db.collection('letterReports').doc(`${poCurrentLetter.id}_${currentUser.uid}`).set({letterId:poCurrentLetter.id,reporterId:currentUser.uid,reportedUserId:poCurrentLetter.senderId||'',batch:ownState.batch,createdAt:firebase.firestore.FieldValue.serverTimestamp()});showToast('Letter reported to the teacher.')});
+    poBlockFriend.addEventListener('click',async()=>{if(!poCurrentLetter)return;const other=poCurrentLetter.senderId===currentUser.uid?poCurrentLetter.receiverId:poCurrentLetter.senderId;if(!other)return;await db.collection('letterBlocks').doc(`${currentUser.uid}_${other}`).set({ownerId:currentUser.uid,blockedId:other,createdAt:firebase.firestore.FieldValue.serverTimestamp()});showToast('Friend blocked.');poShow(poHome)});
+
+    async function poRefreshAllNotifications(){
+      if(!currentUser)return;try{const list=await poGetLetters();let count=0;if(isAdmin)count=list.filter(l=>l.recipientType!=='friend'&&l.senderRole==='student'&&l.status!=='draft'&&!l.readByTeacher).length;else count=list.filter(l=>(l.receiverId===currentUser.uid&&!l.readByRecipient)||(l.teacherReply&&!l.readByStudent)||(l.senderRole==='teacher'&&l.receiverId===currentUser.uid&&!l.readByRecipient)).length;
+        if(studentLetterCount)studentLetterCount.textContent=!isAdmin&&count?String(count):'';if(teacherLetterCount)teacherLetterCount.textContent=isAdmin&&count?String(count):'';poGiftBadge.textContent=!isAdmin&&count?`(${count})`:'';
+      }catch(_){}}
+    poRefreshBadge=poRefreshAllNotifications;
+    studentLetterNotify.addEventListener('click',async()=>{await openPostOffice();await poOpenList('all')});teacherLetterNotify.addEventListener('click',async()=>{await openPostOffice();await poOpenList('all')});
+
+    const baseInitializeSessionV21=initializeSession;
+    initializeSession=async function(user){await baseInitializeSessionV21(user);renderTrackerDays();await poRefreshAllNotifications()};
+
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js").catch(console.error);
+      });
+    }
+  </script>
+
+</body>
+</html>
