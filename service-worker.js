@@ -1,4 +1,4 @@
-const CACHE_NAME = "iqra-smooth-premium-garden-v33-text-letters-only";
+const CACHE_NAME = "iqra-premium-svg-stages-v34-text-letters-only";
 const APP_SHELL = [
   "./",
   "./index.html",
